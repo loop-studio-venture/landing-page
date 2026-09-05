@@ -1,0 +1,19 @@
+/* ============================================================
+   Fassung 16 — liegt zuoberst.
+   ============================================================ */
+/* PDF-Blaetter: alle starten sofort, die hinteren brauchen laenger */
+.dl:hover .stapel i{transition-delay:0s!important}
+.stapel i:nth-child(5){transition-duration:1s}
+.stapel i:nth-child(4){transition-duration:1.3s}
+.stapel i:nth-child(3){transition-duration:1.6s}
+.stapel i:nth-child(2){transition-duration:1.9s}
+.stapel i:nth-child(1){transition-duration:2.2s}
+
+/* Footer-Kalender: Leiste beim Hover tuerkis, Rand bleibt weiss */
+.termin:hover .termin__fuss{background:var(--tuerkis);color:#12301F}
+.termin:hover{outline-color:rgba(255,255,255,.14)}
+
+/* Calendly-Popup wieder in Originalgroesse */
+.calendly-overlay .calendly-popup{max-width:1000px!important;max-height:730px!important}
+/* Steine im Handy: keine CSS-Uebergaenge — die haben jedes gsap.set in ein Hochrutschen von unten verwandelt */
+.reel-rahmen .kasten2__turm .stein,.flug{transition:none!important}

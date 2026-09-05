@@ -1,0 +1,13 @@
+/* ============================================================
+   Fassung 14 — liegt zuoberst.
+   ============================================================ */
+.termin{border-color:rgba(255,255,255,.85);outline-color:rgba(255,255,255,.12)}
+.termin__grid i.leer{background:transparent}
+.fuss__unten{justify-content:flex-end}
+.fuss__leiste{grid-template-columns:auto 1fr auto}
+.fuss__links{justify-content:center;gap:6px 22px}
+/* Steine: feste Plaetze, Flugklon */
+.flug{position:fixed;z-index:60;pointer-events:none;will-change:transform,left,top}
+.flug{display:block;margin:0;opacity:1}
+.flug svg{max-width:none}
+.flug .stein__label{top:61%}
