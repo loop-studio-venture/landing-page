@@ -1,0 +1,177 @@
+/* =============================================================================
+   Loop Studio — Legosteine, Zustaende und Bewegung
+   -----------------------------------------------------------------------------
+   Gehoert zu web/lego.js. Enthaelt NUR das Modul; keine Seitentypografie,
+   keine Farben ausser den Marken-Tokens. Alles ist ueber Custom Properties
+   auf .lego (oder :root) verstellbar.
+
+   KEIN box-shadow, text-shadow oder drop-shadow — die Steine bekommen ihre
+   Tiefe aus Flaechen und Kanten, und dieselbe Datei soll auch dann noch
+   stimmen, wenn jemand die Seite als PDF druckt.
+   ========================================================================== */
+
+:root,
+.lego {
+  --lego-hebung:       -5px;    /* wie weit sich ein Stein beim Ueberfahren hebt */
+  --lego-tempo:        .18s;
+  --lego-kurve:        cubic-bezier(.2,.8,.3,1);
+  --lego-fuge:         rgba(255,255,255,.30);  /* Umriss der leeren Stelle */
+  --lego-fuge-fuellung: rgba(255,255,255,.05);
+  --lego-flug-z:       9999;
+}
+
+/* Auf hellem Grund (Creme statt Navy) die Fuge dunkel setzen. */
+.lego--hell {
+  --lego-fuge:          rgba(36,48,96,.40);
+  --lego-fuge-fuellung: rgba(36,48,96,.06);
+}
+
+/* --------------------------------------------------------------- Die Auswahl */
+.lego-auswahl {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 14px 12px;
+  min-width: 0;   /* sonst waechst ein Flex-/Grid-Elternteil auf die
+                     min-content-Breite des breitesten Steins mit */
+}
+
+/* Ein waehlbarer Stein. Der Knopf ist nur die Huelle — gezeichnet wird das
+   <svg> darin, das lego.js einsetzt. */
+.lego-stein {
+  position: relative;
+  display: block;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
+  line-height: 0;
+  color: inherit;
+  cursor: pointer;
+  border-radius: 3px;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--lego-tempo) var(--lego-kurve);
+  /* Ein Stein darf nie breiter werden als der Platz, den er hat. Ohne das
+     sprengt auf schmalen Schirmen der breiteste Stein die Grid-Spalte, die
+     Spalte den Container und der Stapel daneben laeuft aus dem Bild. */
+  max-width: 100%;
+  min-width: 0;
+}
+
+.lego-stein > .lego-svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  overflow: visible;
+  transition: opacity var(--lego-tempo) linear;
+}
+
+/* 1 · Der Stein hebt sich beim Ueberfahren leicht an. */
+@media (hover: hover) {
+  .lego-stein:hover { transform: translateY(var(--lego-hebung)); }
+}
+.lego-stein:active { transform: translateY(calc(var(--lego-hebung) * .35)); }
+
+.lego-stein:focus-visible {
+  outline: 2px solid var(--lego-fuge);
+  outline-offset: 4px;
+}
+
+/* Gewaehlt = der Stein liegt jetzt im Stapel, im Kasten bleibt seine Luecke.
+   Dieselbe Optik waehrend des Rueckflugs (--faehrt), damit der Stein nicht
+   an zwei Orten gleichzeitig steht. */
+.lego-stein[aria-pressed="true"] > .lego-svg,
+.lego-stein--faehrt > .lego-svg { opacity: 0; }
+
+.lego-stein[aria-pressed="true"]::after,
+.lego-stein--faehrt::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 8%;                 /* die Tiefenflaeche gehoert nicht zur Standflaeche */
+  bottom: 3%;
+  height: 62%;
+  border: 1.5px dashed var(--lego-fuge);
+  border-radius: 3px;
+  background: var(--lego-fuge-fuellung);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .lego-stein[aria-pressed="true"]:hover { transform: none; }
+  .lego-stein[aria-pressed="true"]:hover::after { border-style: solid; }
+}
+
+/* Vom Filter ausgeblendet. */
+.lego-stein--aus {
+  opacity: .22;
+  pointer-events: none;
+  transform: none;
+}
+
+/* ---------------------------------------------------------------- Der Stapel */
+.lego-stapel {
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  transition: height .34s var(--lego-kurve);
+}
+
+.lego-kachel {
+  position: absolute;
+  line-height: 0;
+  will-change: transform;
+}
+
+.lego-kachel > .lego-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Der Platzhalter, solange nichts gewaehlt ist. */
+.lego-leer[hidden] { display: none; }
+
+/* -------------------------------------------------------- Der fliegende Stein
+   Ein Klon, der ueber allem liegt und nichts anfassen kann. Er wird von
+   lego.js erzeugt und nach der Landung wieder entfernt. */
+.lego-flug {
+  position: fixed;
+  z-index: var(--lego-flug-z);
+  pointer-events: none;
+  line-height: 0;
+  will-change: transform;
+}
+.lego-flug > .lego-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* ------------------------------------------------------------- Ohne Bewegung
+   Wer prefers-reduced-motion gesetzt hat, bekommt harte Uebergaenge.
+   lego.js legt dann gar keinen Flugklon erst an; hier wird nur noch
+   abgeraeumt, was rein per CSS animiert wuerde. */
+@media (prefers-reduced-motion: reduce) {
+  .lego-stein,
+  .lego-stein > .lego-svg,
+  .lego-stapel {
+    transition: none !important;
+  }
+  .lego-stein:hover,
+  .lego-stein:active { transform: none; }
+  /* Statt der Hebung ein sichtbarer, aber ruhiger Zustand. */
+  @media (hover: hover) {
+    .lego-stein:hover::before {
+      content: '';
+      position: absolute;
+      inset: -4px -4px -2px -4px;
+      border: 2px solid var(--lego-fuge);
+      border-radius: 4px;
+      pointer-events: none;
+    }
+  }
+  .lego-flug { display: none; }
+}
