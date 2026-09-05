@@ -106,7 +106,7 @@
     var zustand = {};
     saeulen.forEach(function (b) { zustand[b.dataset.s] = b.classList.contains('ls-saeule--an'); });
     var ERGEBNIS = {
-      keine: { name: 'Nur das Werkzeug', txt: 'Ideen, Dreh, Schnitt und Planen machst du komplett selbst mit Loop Studio (15 €/Monat). Dafür reicht dir das Tool schon.' },
+      keine: { name: 'Nur das Werkzeug', txt: 'Ideen, Dreh, Schnitt und Planen machst du komplett selbst mit Loop Studio. Dafür reicht dir das Tool schon — Preise dazu findest du weiter unten.' },
       idee: { name: 'Ideen & Planen mit uns', txt: 'Die Software übernimmt Ideenfindung und Planung, den Rest machst du selbst.' },
       mitte: { name: 'Dein Fokus: Produktion & Schnitt', txt: 'Du willst bei Dreh und/oder Schnitt Unterstützung? Genau dafür gibt es Consulting „Auf Anfrage" — wir sprechen im Gespräch über deinen genauen Zuschnitt.' },
       alle: { name: 'Rundum-Unterstützung', txt: 'Von der Idee bis zum Posten willst du begleitet werden — auch das ist Teil von Consulting „Auf Anfrage". Kein Paketpreis hier, sondern ein Gespräch über deinen Bedarf.' }
