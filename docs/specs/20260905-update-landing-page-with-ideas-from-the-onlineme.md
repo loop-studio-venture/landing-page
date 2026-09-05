@@ -8,259 +8,296 @@ base: dev
 design: none
 ---
 
-# Bring the onlinemedianer.de example's structure, motion, and copy ideas into the Loop Studio landing page
+# Bring the onlinemedianer.de example's nav, hero, scroll sequence and mascot into loopstudio.app, on one motion stack
 
 ## Goal
-Christian Arns posted a new example version of the Loop Studio landing page, live at
-onlinemedianer.de and snapshotted in the knowledge base, and asked to update this repo's
-landing page with the ideas from that example rather than replacing it wholesale. Per
-Christian's own follow-up answers (2026-09-05): adopt the example's nav, hero, scroll
-sequence, and mascot assets (visual language), add GSAP/Lenis-driven scroll motion and a
-Calendly booking widget (recording that as an ADR), keep the currently published pricing
-unchanged (15 €/month tool, consulting "Auf Anfrage"), treat the example's FAQ and
-founder-story copy as a draft for Christian to review, and skip the Designer round because
-the example itself is the design source.
+
+Update the Loop Studio marketing site (`landing-page`, this repo) with ideas from the
+onlinemedianer.de example version Christian Arns shared (live site + `Arnswald/loop-studio-webseite`,
+snapshotted at `knowledge-base/references/landing-page-example-onlinemedianer-2026-09-05/`):
+adopt the example's navigation, hero, scroll-driven "how it works" sequence, and mascot artwork
+as visual/structural ideas — not a wholesale replacement of the current site. Retire the page's
+Webflow interaction runtime (`js/webflow.js` + achunks, IX2 fade-ins) in favour of a single
+Lenis + GSAP/ScrollTrigger motion stack, record that plus the approved Calendly booking widget
+as an ADR, keep the currently published pricing (15 €/month, Consulting "Auf Anfrage") and the
+currently self-hosted Plus Jakarta Sans font, and wire the real Calendly link
+(`calendly.com/christianarns/15min`) as the booking CTA. FAQ and founder-story copy are carried
+over from the example as a draft, explicitly flagged for Christian's review before promotion to
+`main`.
 
 ## Context found
-- `index.html` (repo root — this worktree has no `landing-page/` subfolder; root **is** the
-  landing-page repo): single-file static page. Nav is a plain Webflow `nav_component`; hero
-  has a headline + sub-headline + YouTube (`RoZh2NASzNE`, nocookie) embed, no mascot; the
-  "So funktioniert Loop Studio" section (`#features`) is 5 tabs (Inspiration, Analyse, Idee
-  nutzen, Skript, Planung) auto-advanced by a hand-written inline `<script>` timer (not GSAP);
-  pricing (`#pricing`) has two cards, Loop Studio `15€`/month with `7 Tage Kostenlos` and
-  Consulting `Auf Anfrage`, both real published values; footer has Home/Impressum/Datenschutz
-  only. `js/gsap.min.js` and `js/ScrollTrigger.min.js` are already vendored and linked at the
-  end of `<body>` but nothing in `index.html` currently drives them — likely leftover from the
-  Webflow export's own IX2 tooling. No FAQ, no founder-story section, no Calendly, no Lenis.
-- `CLAUDE.md` / `README.md` (repo root): source of truth is the hand-maintained HTML/CSS/JS
-  (Webflow retired); prefer a small hand-written file over editing `css/*.min.css` /
-  `js/webflow.js`; no build step, must work from `serve.ps1`; German copy, Du/Sie register
-  matches existing pages; links into the app always `https://app.loopstudio.app/...`; legal
-  pages (`impressum.html`, `privacy-policy.html`) change only on explicit instruction (none
-  given here); no third-party scripts/fonts without a recorded decision; branch from `dev`,
-  never commit to `main`/`dev`.
-- `docs/specs/20260904-landing-html-validate-script-type-void-style.md`: `index.html` was
-  just cleaned of `script-type`/`void-style` html-validate findings (no `type="text/javascript"`,
-  no self-closing void elements) — new markup must keep that style, not reintroduce it.
-- `knowledge-base/references/landing-page-example-onlinemedianer-2026-09-05/source/` — the
-  approved reference, per Christian: `index.html` (final, "Fassung 19") plus
-  `README.md`/`BILDHERKUNFT.md` documenting 19 iterative CSS override files
-  (`web/fassung2.css` … `web/fassung19.css` layered over `web/stil.css`), `web/bewegung.js`
-  (GSAP + ScrollTrigger + Lenis motion), `web/seite.js` (nav/FAQ/slot logic), `web/lego.js`
-  (a "Baukasten" Lego-brick builder, its own module), `web/lib/{gsap,ScrollTrigger,lenis}.min.js`
-  (vendored, no CDN), fonts (`Thunder-BoldLC.woff2`, Inter, JetBrains Mono, all self-hosted),
-  and `bilder/` assets (mascot "monster" PNGs, logo files, customer-reel videos, Pexels persona
-  photos, tool screenshots, Christian's photo). `BILDHERKUNFT.md` confirms the mascot PNGs are
-  "eigenes Material" (Loop Studio's own), safe to copy into this repo; the Pexels persona
-  photos and outreel.de customer-reel videos are third-party-licensed for that site, not ours
-  to reuse for fabricated quotes.
-- The example is **not** just a restyle: it changes the business model shown on the page —
-  a 3-tier consulting price ladder (Basis 490 €/Editing 1.690 €/Produktion 3.900 €), a
-  toggleable "Vier Stationen" package calculator, a "Spielregeln" Du/Wir matrix, a Lego
-  "Baukasten" content-pillar builder, a monster-feeding mini-game, 5 fabricated customer
-  quotes with stock photos, and an unwired PDF-download lead form. Christian's explicit
-  instruction ("Pricing stays as currently published") keeps our page on the current
-  15 €-tool / Auf-Anfrage-consulting model, which does not need any of that machinery — see
-  Out of scope.
-- `knowledge-base/architecture/decisions/0006-passkey-webauthn-library-choice.md`: precedent
-  for how an ADR is recorded when the decision belongs to `knowledge-base` (its own git
-  checkout, separate from the repo doing the implementation) rather than to the feature
-  branch's diff — same pattern applies here for the GSAP/Lenis/Calendly decision.
-- `design/STATUS.md`: no landing-page screen design is in flight there; consistent with
-  Christian's instruction to skip the Designer round for this task.
+
+- `index.html` — the entire page; built by Webflow (2026-08) and hand-maintained since Webflow
+  was retired (2026-09-04). Structure today: pill-less top nav (`.nav_component`, Webflow's
+  `.w-nav`, mobile burger driven by `js/webflow.js`), hero (`#hero`, static headline + YouTube
+  iframe demo, `data-w-id`/`style="opacity:0"` IX2 fade-in), a static 5-icon "Weg zum Content"
+  row (`#path-to-content`), a "Kennst du das?" 3-card grid, a "So funktioniert Loop Studio"
+  Webflow-native tab player (`.w-tabs`/`.w-tab-link`/`.w-tab-pane`, custom progress-bar script
+  that relies on Webflow's tab-click handler), a Finsweet CMS-slider block
+  (`#how-it-works`/`.fs-slider-2_instance`, driven by `js/finsweetcomponentsconfig-1.0.3.js` +
+  `js/fs-components.js`, loaded as an ES module — independent of Webflow's own runtime), the
+  pricing section (`#pricing`, 15 €/month + Consulting "Auf Anfrage", the Consulting CTA
+  currently mis-points to `https://app.loopstudio.app/login` instead of a contact path), and a
+  short footer.
+- `js/webflow.js` + 19 `js/webflow.achunk.*.js` files — the Webflow-exported IX2/interaction
+  runtime: nav collapse, native tab switching, and the `data-w-id` fade-ins (hero content/video,
+  the `#how-it-works` wrapper). Confirmed (grep) these are referenced **only** from `index.html`;
+  `impressum.html`, `privacy-policy.html`, and `404.html` load only `js/jquery-3.5.1.min.js` +
+  `js/webflow-legal.js` and carry no nav — removing the achunks/`webflow.js` cannot break the
+  legal pages or 404.
+- `js/gsap.min.js`, `js/ScrollTrigger.min.js` — already vendored in this repo, but their
+  provenance/version is unverified here (they ship as part of the Webflow export bundle, not
+  added deliberately for hand-written motion code); not currently referenced by any
+  hand-written script.
+- `js/finsweetcomponentsconfig-1.0.3.js`, `js/fs-components.js` — loaded on every page
+  (`type="module"`), pre-existing, unrelated to Webflow's own IX2 runtime. Out of scope for this
+  task; flagged as a risk to re-check visually once `webflow.js` is gone (see Risks).
+- `fonts/plusjakartasans.css`, `fonts/*.woff2` — the only self-hosted font today (Plus Jakarta
+  Sans, Google/OFL, free for commercial use). Per `landing-page/CLAUDE.md`: "No third-party
+  scripts, trackers, or fonts from external hosts without a recorded decision."
+- `knowledge-base/references/landing-page-example-onlinemedianer-2026-09-05/` — full snapshot of
+  the example: `source/index.html` (Fassung 19, the final/live version) plus `source/web/*.css`
+  (19 cascading override files, one per design round — a change history, not a stylesheet to
+  copy), `source/web/bewegung.js`/`seite.js`/`lego.js` (the example's own hand-rolled motion/UI
+  code), `source/web/lib/{gsap.min.js,ScrollTrigger.min.js,lenis.min.js}` (GSAP/ScrollTrigger
+  3.12.5, GreenSock standard license, free; Lenis 1.1.18, MIT — versions/licenses per that
+  folder's own `source/web/README.md`), `source/bilder/` (mascot/monster artwork, own Loop
+  Studio corporate-design material per `source/BILDHERKUNFT.md`), and `source/README.md`
+  (a "Fassung 1…19" changelog documenting every design round, useful for understanding *why* a
+  given element looks the way it does, not something to port verbatim).
+- `knowledge-base/architecture/decisions/0006-passkey-webauthn-library-choice.md` — precedent
+  for recording a cross-repo decision as an ADR that lives in `knowledge-base` "as a second,
+  independent commit — not part of that feature branch's diff", i.e. the ADR for this task is a
+  separate commit against the `knowledge-base` repo, not part of this branch's diff.
+- Requester's constraints (Christian, 2026-09-05, both channel messages): adopt nav / hero /
+  scroll sequence / mascot assets from `source/`; GSAP+Lenis and Calendly approved, record an
+  ADR; pricing copy stays exactly as published; FAQ/founder copy usable as a draft pending
+  review; skip the Designer round (the example is the design); use the exact Calendly link as
+  the real booking link; retire Webflow's motion/interaction engine entirely in favour of one
+  Lenis+GSAP stack; keep Plus Jakarta Sans, no font that needs a commercial license (rules out
+  Thunder unless separately verified free — not attempted here, so it is not used); run as one
+  L-size task, no split, single Implementer round.
 
 ## Approach
-Extend the existing pattern (hand-written override file + hand-written script, vendored local
-JS, no build step) rather than introducing a build tool or rewriting the page wholesale.
-Concretely:
 
-1. **Visual language, not a rebuild.** Add one new hand-written stylesheet,
-   `css/loopstudio-onlinemedianer.css`, linked *after* `css/loopstudio-app.webflow.shared.min.css`
-   so its rules override cleanly, carrying the example's palette (Creme `#F4EFE6`, Navy
-   `#243060`, Blau `#4D8EF7`, Türkis `#74C19E`) and a Thunder display-font treatment for
-   headlines. Body copy stays in the already-self-hosted Plus Jakarta Sans (`fonts/plusjakartasans.css`)
-   rather than switching to Inter — extends the existing font pattern instead of replacing it;
-   flagged as an assumption below, reversible if Christian wants the full Inter pairing too.
-2. **Nav**: rebuild as a floating pill (matches the example's `.nav`), keeping the existing
-   in-page links plus a new `#faq` link, the existing `https://app.loopstudio.app/login` CTA,
-   and a new "Gespräch buchen" CTA that opens the Calendly popup.
-3. **Hero**: keep the current headline's message and sub-headline copy, add the mascot
-   (`images/monster-web.png`, copied from the reference's `bilder/`) and a rotating-word box
-   cycling through words describing the output ("Content." / "Skripte." / "Shotlisten."),
-   built in a new hand-written script `js/loopstudio-motion.js`. The existing YouTube embed
-   moves out of the hero into the new founder-story section (below) instead of being
-   duplicated.
-4. **Scroll sequence**: replace the current inline-`<script>` tab auto-rotator in `#features`
-   with a GSAP + ScrollTrigger pinned sequence styled like the example's `#zeigen`, but keeping
-   our own 5 existing steps and our own 5 existing screenshots already in `images/`
-   (`…Inspiration_page…`, `…example_inspiration_video…`, `…use_this_idea…`,
-   `…generated_script…`, `…Planung…`) — not the example's fictional tool mockups. This is the
-   "ideas in, not replaced wholesale" line: we borrow the scroll-driven presentation, not the
-   example's invented screens.
-5. **Founder story** (new section): short copy adapted from the example's "Warum es Loop
-   Studio gibt", reusing the existing `RoZh2NASzNE` YouTube embed (click-to-play) instead of
-   self-hosting a new video file we don't have distribution rights confirmed for in this repo.
-6. **FAQ** (new section, `id="faq"`): accordion adapted from the example's FAQ, trimmed to the
-   questions that make sense under our unchanged pricing model (drop every question that only
-   exists because of the example's 3-tier consulting ladder — see Out of scope). Marked in an
-   HTML comment as draft copy pending Christian's review, per his own instruction.
-7. **Pricing**: visual restyle only via the new stylesheet; the two cards keep their exact
-   current copy and numbers. The Consulting card's "Kontakt aufnehmen" button changes from
-   linking to `/login` (today's placeholder behavior) to opening the Calendly popup — a real
-   fix enabled by the same widget, not a pricing change.
-8. **Motion library decision**: keep the already-vendored `js/gsap.min.js` /
-   `js/ScrollTrigger.min.js` (no new dependency there) and add `js/lenis.min.js` (vendored
-   locally, MIT, copied from the reference's `web/lib/lenis.min.js` — not a CDN, matching this
-   repo's existing vendoring style) for smooth scrolling. Add the Calendly `widget.js`/
-   `widget.css` from `assets.calendly.com` — the one CDN exception, because Calendly does not
-   support self-hosting its embeddable widget. Record both as one ADR in `knowledge-base/`,
-   following the `0006-*.md` precedent (separate commit there, not part of this branch's diff).
-9. **Accessibility**: every new animation (mascot motion, word rotation, pinned sequence, nav
-   shrink) must no-op under `prefers-reduced-motion: reduce`, matching the example's own stated
-   convention (`web/README.md`, Fassungen 4/19 notes).
+Curate, don't clone: the example is 19 rounds of design iteration layered as cascading CSS
+overrides (`fassung2.css` … `fassung19.css`) plus three purpose-built JS modules
+(`bewegung.js`, `seite.js`, `lego.js`). Copying those files verbatim would import dead CSS
+history and UI modules (the Lego-Baukasten builder, the growing/feeding monster mini-game, the
+multi-tier Consulting pricing cards, the PDF downloads section) that Christian did not ask for
+and that would contradict "pricing stays as published." Instead: preview the example locally
+(it is a static site — `python3 -m http.server` or open `source/index.html` directly) to see the
+*rendered* result, then hand-author one new stylesheet (`css/site.css`) and one new script
+(`js/site.js`) for **only** the four adopted ideas, following this repo's existing convention of
+adding a small hand-written file next to the generated/minified ones rather than editing them.
 
-Rejected alternatives:
-- **Copying the example's `index.html` and CSS cascade wholesale** — rejected per Christian's
-  own framing ("update our current landing page with the ideas ... rather than replacing it
-  wholesale") and because it would import a different, unapproved consulting pricing model,
-  fabricated customer quotes, and an unwired lead-generation form.
-- **Adopting the example's 19-layer CSS-override cascade (`fassung2.css` … `fassung19.css`)
-  as-is** — that history is the example project's own iteration log; this repo gets one clean
-  override stylesheet reflecting the final state, not the iteration trail.
-- **Self-hosting `bilder/story.mp4`** — rejected; the existing YouTube embed already serves
-  the same video and needs no new asset or hosting decision.
-- **View Transitions API instead of GSAP/Lenis** for the scroll sequence — not evaluated
-  further here since Christian already approved GSAP/Lenis specifically.
+1. **Motion stack.** Vendor `js/lenis.min.js` from the knowledge-base reference's
+   `source/web/lib/`. Replace the repo's existing (unverified-provenance) `js/gsap.min.js` and
+   `js/ScrollTrigger.min.js` with the same-named files from that same `source/web/lib/` (verified
+   version/license). Delete `js/webflow.js` and all 19 `js/webflow.achunk.*.js` files and their
+   `<script>` tags in `index.html` — confirmed safe (see Context found: no other page depends on
+   them). Reimplement, in `js/site.js`, the behaviours `webflow.js` used to provide for
+   `index.html`: mobile nav open/close (new markup, see below), the tab-pane switching for the
+   existing "So funktioniert Loop Studio" player (the pane must still change on click without
+   `.w-tabs` runtime), and a GSAP-driven reveal for the hero content/video and the
+   `#how-it-works` wrapper (both currently `style="opacity:0"`, invisible forever once
+   `webflow.js` no longer runs the IX2 timeline that used to reveal them). Wrap
+   scroll-linked/animated behaviour in a `prefers-reduced-motion` check that falls back to plain
+   CSS visibility and native scroll. This is the part of the task that is not "an idea from the
+   example" but is required by Christian's explicit instruction not to mix two motion libraries.
+2. **Nav** (idea from the example). Replace `.nav_component`/`.w-nav` with a floating pill nav
+   (own markup/classes in `index.html`, styled in `css/site.css`) that narrows and gains a
+   translucent background once scrolled, following the *pattern* in `source/index.html`'s
+   `<nav class="nav">`. Keep this site's existing anchors (`#path-to-content` renamed in-place to
+   host the new sequence, see point 3; `#features`; `#pricing`) and existing CTA
+   ("Kostenlos testen" → `https://app.loopstudio.app/login`, unchanged), and add a second CTA,
+   "Gespräch buchen", that opens the Calendly popup (point 5). Add `#faq` to the nav once the FAQ
+   section exists (point 4).
+3. **Hero** (idea from the example). Keep the current headline/sub-headline copy and the
+   existing YouTube demo embed unchanged (Christian did not ask for new hero copy — only FAQ and
+   founder-story copy were approved as draft). Add the Loop Studio mascot artwork
+   (`images/monster-web.png`, optionally `images/monster-mund-auf.png` for a hover state) as a
+   decorative element beside/behind the hero content, following the *layout idea* (mascot +
+   floating content) from `source/index.html`'s `<div class="szene">`, not its interactive
+   feeding/growth mechanics (out of scope, see below).
+4. **Scroll sequence** (idea from the example). Replace the static 5-icon `#path-to-content` row
+   with a pinned, scroll-driven sequence (GSAP ScrollTrigger `pin`/`scrub` + Lenis), following
+   the structural idea of `source/index.html`'s `#zeigen` section, but keeping this site's
+   existing five steps and copy verbatim (Reel entdecken → Per DM senden → Import & Transkription
+   → Skript & Shotliste → Planen & Posten) — no new claims, no step count change. Below ~900px,
+   turn pinning off and stack the steps normally (same responsive fallback the example uses).
+   Add a new, short "Gründer-Story" text section afterwards, using the founder narrative from
+   `source/index.html`'s `#story` section as a **draft** (marked with an HTML comment,
+   `<!-- DRAFT: Text aus dem Beispiel, von Christian noch nicht freigegeben -->`) — without
+   re-embedding a second copy of the same YouTube video already used in the hero (the example's
+   `#story` video is the identical video ID, `RoZh2NASzNE`; duplicating the same embed lower on
+   the page would be redundant, not "an idea," so this task adds the story as text only). Add a
+   new `#faq` accordion section, adapting (not copying verbatim) the example's five FAQ entries:
+   drop or rewrite any entry that references Consulting details not published on this site
+   (fixed package names, 490 €/1.690 €/3.900 € prices) since pricing stays exactly as currently
+   published; mark this section with the same draft comment.
+5. **Calendly** (approved, ADR required). Load Calendly's official `widget.js`/`widget.css` from
+   `assets.calendly.com` (the one third-party, external-host script this task adds — recorded in
+   the ADR per the "no third-party scripts without a recorded decision" rule). Wire every
+   "Gespräch buchen" control (nav, hero if present, footer, and the Consulting pricing card,
+   whose CTA currently wrongly points at the app login) to open Calendly's popup widget for
+   `https://calendly.com/christianarns/15min` — the exact link Christian named as the real
+   booking link, not a placeholder.
+6. **Fonts.** No new font is introduced. Everything continues to use the self-hosted Plus
+   Jakarta Sans (`fonts/plusjakartasans.css`); the example's Thunder/Inter/JetBrains Mono are not
+   used (Thunder's commercial license was not verified — per Christian's instruction, it is
+   therefore not used at all; JetBrains-Mono-style label styling, if wanted for small UPPERCASE
+   labels, is approximated with a system monospace stack (`ui-monospace, SFMono-Regular, Menlo,
+   monospace`), which needs no font file or license).
+
+**Rejected alternative:** copying the example's `web/fassung*.css` files wholesale and loading
+them after the current stylesheet. Rejected because (a) it imports 19 rounds of cascading,
+sometimes-contradictory overrides instead of a clean stylesheet, (b) it pulls in CSS for
+features explicitly out of scope (Lego-Baukasten, monster-feeding game, multi-tier Consulting
+cards, PDF downloads), and (c) this repo's own convention is "prefer adding a small hand-written
+stylesheet... over editing the minified files" — the same principle argues for one clean,
+purpose-built `css/site.css` here rather than 8+ imported override layers.
+
+**Design round:** skipped on Christian's explicit instruction ("the example is the design");
+the knowledge-base snapshot plus this spec's scoping (point 1–6 above) stand in for a
+`design/handoff/` folder. No `design/` artifact is produced by this task.
+
+**No split:** Christian decided (2026-09-05, dev channel) to run this as one L-size task with a
+single Implementer round rather than slicing it — see the brief's clarifications. This spec
+therefore covers the whole goal above, not a narrowed slice.
 
 ## Files to change
+
 | File | Change | Why |
 |---|---|---|
-| `index.html` | Rebuild nav (pill, +Calendly CTA, +FAQ link); hero (+mascot, +rotating word, remove duplicate video embed); replace `#features` tab auto-rotator markup with pinned scroll-sequence markup; add founder-story section; add FAQ section (`id="faq"`); restyle pricing markup hooks (classes only, copy/numbers unchanged) and repoint Consulting CTA to Calendly; add new `<link>`/`<script>` tags for the new CSS/JS files, `fonts/thunder.css`, and Calendly's CDN widget | Carries the example's structure/visual-language ideas into the real page without a rewrite |
-| `css/loopstudio-onlinemedianer.css` (new) | Palette tokens, Thunder headline treatment, pill nav, hero mascot layout, rotating-word box, scroll-sequence panel, founder-story layout, FAQ accordion, pricing card refresh, Calendly popup overlay tweak | Hand-written override file per repo convention; keeps the minified Webflow CSS untouched |
-| `fonts/thunder.css` (new) + `fonts/Thunder-BoldLC.woff2` (new, copied from the reference) | `@font-face` for the headline display font | Self-hosted, follows the existing `fonts/plusjakartasans.css` pattern; no external font host |
-| `images/monster-web.png` (new, copied from the reference's `bilder/`) | Mascot artwork for hero + founder-story visual language | Explicitly approved by Christian ("mascot assets from bilder/"); confirmed own material in `BILDHERKUNFT.md` |
-| `js/lenis.min.js` (new, vendored copy v1.1.18, MIT, from the reference's `web/lib/lenis.min.js`) | Smooth-scroll library | Approved by Christian; vendored locally, consistent with how `gsap.min.js`/`ScrollTrigger.min.js` are already vendored |
-| `js/loopstudio-motion.js` (new, hand-written, commented) | Lenis init; nav shrink-on-scroll; hero mascot motion + word rotator; pinned scroll-sequence (GSAP ScrollTrigger) driving the existing 5 steps/screenshots; FAQ accordion open/close; Calendly popup open handlers; `prefers-reduced-motion` guard throughout | Replaces the ad hoc inline `<script>` tab timer with one readable, vendored-library-driven file |
-| `knowledge-base/architecture/decisions/000X-landing-page-scroll-motion-and-booking-widget.md` (new, separate commit in the `knowledge-base` checkout) | ADR recording the Lenis + Calendly (+ continued use of already-vendored GSAP/ScrollTrigger) decision, alternatives rejected | Required by Christian ("record the decision as an ADR"); follows the `0006-*.md` precedent for cross-cutting decisions living outside the implementing repo's branch |
+| `index.html` | Rewrite nav to a floating pill nav (new markup/classes, existing anchors + new `#faq`, add "Gespräch buchen" CTA); keep hero copy/video, add mascot artwork; replace the `#path-to-content` icon row with a pinned GSAP/Lenis scroll sequence using the existing 5 steps' copy; add a new "Gründer-Story" text section (draft copy, marked) and a new `#faq` accordion (draft copy, adapted, marked); fix the Consulting CTA to open Calendly instead of `app.loopstudio.app/login`; remove `js/webflow.js`/achunk `<script>` tags and now-dead `data-w-id`/IX2 `opacity:0` styles; add `<link>`/`<script>` tags for the Calendly widget and for `js/lenis.min.js`/`css/site.css`/`js/site.js`. | Carries every adopted idea; central page. |
+| `css/site.css` (new) | Hand-written stylesheet (pill nav, hero mascot layout, scroll-sequence panel, founder-story, FAQ accordion, Calendly popup override), loaded after `css/loopstudio-app.webflow.shared.min.css`; Plus Jakarta Sans only. | New visual language, added the way this repo already adds hand-written CSS instead of editing the generated file. |
+| `js/site.js` (new) | Lenis init + GSAP ticker sync; nav scroll-shrink + mobile menu toggle (replaces `.w-nav` behaviour); tab-pane switch for the existing "So funktioniert Loop Studio" player (replaces `.w-tabs` behaviour); GSAP reveal for hero content/video and the `#how-it-works` wrapper (replaces the removed IX2 fade-ins); ScrollTrigger pin/scrub for the sequence section; FAQ accordion; Calendly popup wiring for every "Gespräch buchen" control; `prefers-reduced-motion` guard disabling all of the above. | Single hand-written motion/interaction layer replacing the retired Webflow runtime. |
+| `js/lenis.min.js` (new) | Vendor from `knowledge-base/references/landing-page-example-onlinemedianer-2026-09-05/source/web/lib/lenis.min.js` (1.1.18, MIT). | Approved dependency (Christian, 2026-09-05); no CDN per repo rule. |
+| `js/gsap.min.js`, `js/ScrollTrigger.min.js` (replace) | Replace the repo's existing, unverified-provenance copies with the same-named files from the same `source/web/lib/` (3.12.5, GreenSock standard license, free). | One verified, documented version instead of an unverified Webflow-bundle copy. |
+| `js/webflow.js`, `js/webflow.achunk.*.js` (19 files) — delete | Remove entirely; confirmed used only by `index.html`. | Retires the Webflow interaction/IX2 engine, per Christian's instruction not to mix motion libraries. |
+| `images/monster-web.png`, `images/monster-mund-auf.png` (new) | Copy from `knowledge-base/.../source/bilder/` (Loop Studio's own corporate-design mascot artwork, per that folder's `BILDHERKUNFT.md`). | Mascot assets Christian named explicitly. |
+| `knowledge-base/architecture/decisions/0007-landing-page-motion-stack-and-calendly-widget.md` (new; separate repo/commit, not part of this branch's diff) | ADR recording: (1) GSAP + ScrollTrigger + Lenis as the landing page's motion stack, replacing Webflow's IX2 runtime, versions/licenses as vendored; (2) Calendly's hosted widget/popup script as an approved external-host third-party embed, with the real link `https://calendly.com/christianarns/15min`. | Required by Christian; follows the existing ADR convention (`0006-passkey-webauthn-library-choice.md`). |
 
 ## Acceptance criteria
-1. `npx --yes html-validate@8 "*.html"` reports no new findings for `index.html` beyond
-   whatever the pre-change baseline already had (no reintroduced `script-type`/`void-style`
-   issues); `404.html`, `impressum.html`, and `privacy-policy.html` are byte-for-byte
-   unchanged.
-2. `index.html`'s `<nav>` renders as a floating pill containing the existing in-page anchors,
-   a new `#faq` link, the unchanged `https://app.loopstudio.app/login` CTA, and a "Gespräch
-   buchen" CTA that opens the Calendly popup widget.
-3. The hero shows `images/monster-web.png` and a rotating-word element cycling through at
-   least three words describing Loop Studio's output; the hero's message/sub-headline keeps
-   its current meaning (copy may be lightly adapted, not replaced with the example's unrelated
-   claims).
-4. The former `#features` tab auto-rotator is replaced by a GSAP-ScrollTrigger-pinned scroll
-   sequence that presents the same 5 existing steps (Inspiration, Analyse, Idee nutzen,
-   Skript, Planung) using the same 5 screenshots already present under `images/` — no new
-   fictional tool-screenshot images are added.
-5. A new founder-story section exists with adapted copy and the existing `RoZh2NASzNE`
-   YouTube (nocookie) embed, click-to-play; no new video file is added to the repo.
-6. A new `id="faq"` section exists with an accordion of questions adapted from the example,
-   containing no question tied to the example's 3-tier consulting price ladder; the section
-   carries an HTML comment marking the copy as draft pending Christian's review.
-7. The pricing section's two cards keep their exact current text and numbers (`15 €`/month,
-   `7 Tage Kostenlos`, the five existing feature bullets; Consulting `Auf Anfrage`) — visual
-   classes may change, wording/numbers must not; the Consulting card's CTA opens the Calendly
-   popup instead of linking to `/login`.
-8. `impressum.html` and `privacy-policy.html` are not modified.
-9. All newly added scroll/motion effects (mascot motion, word rotation, nav shrink, pinned
-   sequence, FAQ accordion transition) are inert when the browser/OS is set to
-   `prefers-reduced-motion: reduce`, verified in the local preview.
-10. `js/gsap.min.js`, `js/ScrollTrigger.min.js`, and the newly added `js/lenis.min.js` are all
-    loaded from local files under `js/`, not a CDN. The only new CDN resources are Calendly's
-    `widget.js`/`widget.css` from `assets.calendly.com`.
-11. An ADR file exists under `knowledge-base/architecture/decisions/` documenting the
-    Lenis + Calendly decision, in the same format as the existing ADRs in that folder (Status,
-    Context, Decision, Rejected alternative, Consequences).
-12. The page opens and works from `.\serve.ps1` with no build step; every relative asset path
-    (`css/…`, `fonts/…`, `images/…`, `js/…`) resolves; every link into the app still points to
-    `https://app.loopstudio.app/...`.
-13. All new copy on `index.html` is German, Du-form, matching the existing site's register.
+
+1. `npx --yes html-validate@8 "*.html"` run from the repo root reports no new errors on
+   `index.html` beyond any pre-existing, already-documented findings.
+2. `js/webflow.js` and every `js/webflow.achunk.*.js` file are deleted from the repo and no
+   `<script>` tag in `index.html` references them.
+3. `index.html` contains no `data-w-id`, `data-collapse`, `data-easing`, `data-duration`,
+   `data-animation` (Webflow IX2/nav attributes) and no element is left permanently invisible
+   (no orphaned `style="opacity:0"` without a corresponding GSAP reveal in `js/site.js`).
+4. Opening `index.html` via `.\serve.ps1` at desktop width shows a floating pill nav with links
+   to the scroll-sequence section, `#features`, `#pricing`, and `#faq`, plus a "Gespräch buchen"
+   button and the existing "Kostenlos testen" button; the nav visibly narrows/gains a translucent
+   background after scrolling down.
+5. The mobile burger menu (below the nav's collapse breakpoint) opens and closes the mobile menu
+   using `js/site.js`, with no console errors, and without `js/webflow.js` present.
+6. The hero section still shows the existing headline, sub-headline, and YouTube demo embed
+   unchanged in wording, plus the Loop Studio mascot artwork copied into `images/`.
+7. The "So funktioniert Loop Studio" tab player still switches panes on click (five tabs,
+   matching today's copy) without `js/webflow.js` present.
+8. The former `#path-to-content` icon row is replaced by a pinned, scroll-driven sequence
+   presenting the same five existing steps, unchanged in wording and order; below ~900px width
+   the section is not pinned and the steps stack and remain readable top to bottom.
+9. A new "Gründer-Story" text section and a new `#faq` accordion (at least five items) are
+   present, each carrying an HTML comment marking the copy as a draft pending Christian's review;
+   the FAQ contains no reference to a Consulting price or package name not published on this site
+   (no 490 €/1.690 €/3.900 €, no fixed package names).
+10. Every "Gespräch buchen" control on the page (nav, footer, Consulting pricing card) opens
+    Calendly's popup widget for `https://calendly.com/christianarns/15min`; the Consulting
+    pricing card's CTA no longer links to `https://app.loopstudio.app/login`.
+11. The pricing section is unchanged in numbers and copy: Loop Studio 15 €/month with today's
+    feature list, Consulting "Auf Anfrage" with today's feature list.
+12. With the browser's `prefers-reduced-motion: reduce` emulation on, the sequence section does
+    not pin/scrub, Lenis smooth-scroll easing is off (native scroll), and all content is visible
+    without relying on a scroll-triggered reveal.
+13. `index.html` continues to use only `fonts/plusjakartasans.css` for typography; no new
+    `@font-face`, Google Fonts/Adobe Fonts `<link>`, or additional font files are added.
+14. `js/lenis.min.js`, `js/gsap.min.js`, and `js/ScrollTrigger.min.js` are loaded from this
+    repo's own `js/` folder (no CDN `<script src>` for any of the three).
+15. `impressum.html`, `privacy-policy.html`, and `404.html` are byte-for-byte unchanged.
+16. All internal anchors used by the new/kept nav (`#faq`, `#pricing`, `#features`, and the
+    scroll-sequence section's id) resolve to an element that exists in `index.html`; all links to
+    `https://app.loopstudio.app/...` remain unchanged and unbroken.
+17. `knowledge-base/architecture/decisions/0007-landing-page-motion-stack-and-calendly-widget.md`
+    exists, names the motion-stack and Calendly decisions, states the vendored versions/licenses,
+    and is committed as a separate commit against the `knowledge-base` repo (not part of this
+    branch's diff), per the `0006` ADR's own stated convention.
 
 ## Test plan
-No automated test suite exists for this static site (per `CLAUDE.md`). The Tester must run and
-report, explicitly, these checks:
-1. **Lint**: `npx --yes html-validate@8 "*.html"` from the worktree root — confirm `index.html`
-   introduces no new finding versus the pre-change baseline, and the three untouched pages are
-   unaffected.
-2. **Preview**: `.\serve.ps1`, open `index.html` at desktop width and a phone width (per
-   `CLAUDE.md`'s existing convention); additionally: (a) toggle `prefers-reduced-motion:
-   reduce` (DevTools rendering emulation) and confirm nav/hero/sequence/FAQ still render
-   correctly with motion suppressed; (b) open DevTools console and scroll the full page,
-   confirming no JS errors from Lenis/GSAP/ScrollTrigger/Calendly; (c) click the "Gespräch
-   buchen" CTAs and confirm the Calendly popup opens (report explicitly if this fails in an
-   offline/sandboxed preview environment, since it depends on reaching `assets.calendly.com`);
-   (d) exercise the FAQ accordion by mouse and keyboard (Enter/Space on the focused question).
-3. **Link check**: confirm every relative link/asset path resolves and every app link is
-   `https://app.loopstudio.app/...`.
+
+There is no automated test suite for this static site (per `landing-page/CLAUDE.md`). The Tester
+must run and report, explicitly, the three checks that repo defines, plus the behaviour checks
+below that this task specifically requires:
+
+1. `npx --yes html-validate@8 "*.html"` — report pass/fail and any findings.
+2. `.\serve.ps1` local preview — check `index.html` at a desktop width and a phone width (per
+   repo rule); additionally verify, at both widths and with a plain click-through:
+   - nav shrink-on-scroll, mobile burger open/close, "Gespräch buchen" opens the Calendly popup
+     with the correct link, "Kostenlos testen" still goes to `https://app.loopstudio.app/login`;
+   - the hero renders with the mascot artwork and unchanged copy/video;
+   - the "So funktioniert Loop Studio" tab player still switches panes;
+   - the scroll sequence pins and scrubs at desktop width and stacks (unpinned) at phone width;
+   - the FAQ accordion opens/closes each item;
+   - the Consulting pricing card's CTA opens Calendly, not the app login;
+   - the pre-existing `#how-it-works` Finsweet slider block still renders (flagged as a risk,
+     see below — confirm it isn't silently broken by removing `webflow.js`);
+   - `prefers-reduced-motion: reduce` (DevTools emulation) turns off pinning/scrub and smooth
+     scroll, with all content still visible;
+   - the browser console shows no JavaScript errors on load or during the above interactions.
+3. Link check — every internal anchor and every `https://app.loopstudio.app/...` link resolves;
+   the Calendly link matches `https://calendly.com/christianarns/15min` exactly.
+
+Report all three checks explicitly in the implementation/test report, per repo convention; there
+is nothing to add under a `test/` directory for this static site.
 
 ## Risks and open questions
-- **Calendly account/link is assumed, not confirmed.** The reference example uses
-  `calendly.com/christianarns/15min`; this spec assumes reusing the same handle as a
-  placeholder. Does not block the Implementer/Tester round (the popup structurally works
-  regardless of which Calendly account it points to), but Christian must confirm the correct
-  Loop Studio booking link before this branch is merged toward `main`.
-- **Lenis vs. the existing Webflow IX2 fade-ins.** The current hero markup has
-  `style="opacity:0"` elements with `data-w-id` attributes that Webflow's own `js/webflow.js`
-  fades in on load/scroll via IX2. Lenis intercepts native scroll and could interact oddly
-  with IX2's scroll-position assumptions. Not blocking — this is a known integration point
-  (Lenis's documented `lenis.on('scroll', ScrollTrigger.update)` pattern) the Implementer must
-  verify visually and adjust if the fade-in double-fires or fails to fire.
-- **Font-pairing scope is an assumption.** Only the Thunder headline font is added; body copy
-  stays Plus Jakarta Sans rather than switching to Inter, and JetBrains Mono (used for small
-  labels in the example) is not adopted. This extends the existing font pattern rather than
-  replacing it wholesale, per the task's own framing — but if Christian wants the full
-  Thunder/Inter/JetBrains-Mono pairing, that is a small follow-up, not a blocker here.
-- **FAQ and founder-story copy are explicitly drafts** (Christian's own instruction) — the
-  Reviewer should check structure/testability, not final wording precision.
-- **Mascot's other poses** (`monster-neugier.png`, `monster-satt.png`, `monster-portrait.png`,
-  `monster-mund-auf.png`, `monster-kaut.png`) exist in the reference and could support a future
-  "monster feeding" interaction, but only the base `monster-web.png` pose is copied in for this
-  task — see Out of scope.
 
-## Proposed split (Christian decides)
-This is sized L because it touches the whole public marketing page and adds two new
-dependencies (Lenis, Calendly). It can run as one Implementer round, or as four independently
-mergeable slices:
-
-1. **Foundation** — vendor `js/lenis.min.js`, add `fonts/Thunder-BoldLC.woff2` +
-   `fonts/thunder.css`, copy `images/monster-web.png`, add
-   `css/loopstudio-onlinemedianer.css` with palette/font tokens only (not yet widely applied),
-   and write the ADR. No visible page change beyond a possible headline-font accent. Cheapest
-   to verify (html-validate + preview) and everything else depends on it.
-2. **Nav + hero** — floating pill nav, Calendly popup wiring, hero mascot + rotating-word
-   headline.
-3. **Scroll sequence + founder story** — replace the tab auto-rotator with the pinned GSAP
-   sequence (reusing existing steps/screenshots); add the founder-story section reusing the
-   existing YouTube embed.
-4. **FAQ + pricing + footer** — new FAQ accordion (draft copy), pricing cards reskinned
-   (values unchanged), Consulting CTA repointed to Calendly.
-
-Recommended first slice: **Foundation** — it carries all the new-dependency risk (Lenis
-vendoring, ADR, new font/asset licensing) in one small, low-visual-risk change, so any
-integration surprise (e.g. the Lenis/Webflow-IX2 interaction noted above) surfaces before the
-larger, harder-to-revert markup changes in slices 2–4.
+- **Finsweet slider (`#how-it-works`/`fs-slider-2`) after removing `webflow.js`.** This component
+  is loaded independently of Webflow's own runtime (`js/finsweetcomponentsconfig-1.0.3.js` +
+  `js/fs-components.js`, an ES module), so it is expected to keep working, but this is
+  unverified — the Tester must specifically confirm this section still renders/behaves correctly
+  in the local preview. Not blocking; if it breaks, the fix is scoped to this section only.
+- **Decorative Lottie loaders** (`data-animation-type="lottie"` inside the feature-card grid,
+  `images/...skeleton%20loader.json`) are rendered today by Webflow's own runtime. Removing
+  `js/webflow.js` will likely stop these from playing (the divs will just sit empty/static). This
+  is a minor, decorative regression, not a page-breaking one; out of scope to reimplement a
+  Lottie player for this task unless the Tester finds it materially degrades the page — flagged
+  here rather than silently accepted. Not blocking.
+- **Founder-story factual claim.** The adapted founder-story draft copy (from the example) states
+  "10 Jahre Videoproduktion" (10 years of video production experience). This is a factual claim
+  about Christian's background that this spec cannot verify. It is shipped as an explicitly
+  marked draft per Christian's own instruction ("use as a draft to be reviewed"); it must be
+  confirmed accurate before the `dev`→`main` promotion, but does not block this task or this
+  branch's merge to `dev`. Not blocking for this task.
+- **`jquery-3.5.1.min.js` retained on `index.html`.** Kept in place (not removed) because it is
+  unverified whether the Finsweet slider bundle expects a global `jQuery`; removing it is a
+  low-value, higher-risk cleanup outside this task's scope. Not blocking.
+- **Exact rotating/adopted hero wording, if the Implementer chooses to add a rotating word to the
+  existing headline** as part of "hero visual language": Christian approved the *visual pattern*,
+  not new hero copy. If a rotating word is added, it must be built only from words already used
+  on this page (e.g. "Skripte." / "Shotlisten." / "Content." / "Planung."), not new claims. Not
+  blocking, but the Reviewer should check no new marketing claim was introduced this way.
 
 ## Out of scope
-- Any change to `impressum.html`, `privacy-policy.html`, or `404.html`.
-- Adopting the example's 3-tier consulting price ladder (Basis 490 €/Editing 1.690 €/
-  Produktion 3.900 €) or its toggleable "Vier Stationen" package calculator and "Spielregeln"
-  Du/Wir matrix — Christian's instruction keeps pricing exactly as currently published.
-- The example's Lego "Baukasten" content-pillar builder module (`web/lego.js`/`lego.css`) and
-  its own animated brick-stacking demo.
-- The interactive "monster feeding" mini-game (click-to-feed counter, growth animation) —
-  only the static mascot pose is adopted this round.
-- The example's 5 fabricated customer quotes with stock Pexels persona photos — not real Loop
-  Studio customers, not ours to publish as testimonials.
-- The example's downloadable Content-Handbook/Workbook PDFs and their unwired email-capture
-  form — no backend exists to receive or send them.
-- Self-hosting the founder-story video file (`bilder/story.mp4`); the existing YouTube embed
-  is reused instead.
-- Any backend/API/CRM wiring for Calendly beyond the client-side popup embed.
-- A full Inter/JetBrains-Mono body-copy font swap — only a Thunder headline accent is added.
+
+- The example's interactive "Monster füttern" feeding/growth mini-game, the Lego-Baukasten
+  builder module, the multi-tier Consulting pricing cards (Basis/Editing/Produktion with fixed
+  prices), the "Zitate"/testimonial-quotes section, and the PDF-downloads section are not part of
+  this task (pricing and Consulting stay exactly as currently published; these modules are the
+  example's own bespoke, unapproved additions).
+- `impressum.html`, `privacy-policy.html`, and `404.html` are not touched — they currently carry
+  no top nav and are explicitly excluded ("legal pages change only on Christian's instruction").
+  Their visual language will remain the old Webflow style until a separate task addresses them;
+  this inconsistency is accepted for this task.
+- Introducing Thunder, Inter, or JetBrains Mono (or any other new font) — not attempted, per
+  Christian's font constraint; if a future task wants Thunder specifically, its commercial
+  license needs to be verified first.
+- Reimplementing the decorative Lottie skeleton-loader animations with an independent
+  Lottie player.
+- Any change to `js/finsweetcomponentsconfig-1.0.3.js`, `js/fs-components.js`, or the
+  `#how-it-works` Finsweet slider's own configuration.
+- Deploying/publishing to `onlinemedianer.de`, or anything about that domain — this task only
+  changes `loopstudio.app` (this repo), merged to `dev`, not `main`.
