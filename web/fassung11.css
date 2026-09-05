@@ -1,0 +1,71 @@
+/* ============================================================
+   Fassung 11 — liegt nach dem Calendly-CSS, damit die Overrides greifen.
+   ============================================================ */
+/* Calendly-Popup: kein weisser Kasten, nur die Karte */
+.calendly-overlay{background:rgba(20,27,61,.96)!important}
+.calendly-overlay .calendly-popup{background:transparent!important;box-shadow:none!important;border-radius:22px;overflow:hidden}
+.calendly-overlay .calendly-popup-content{background:transparent!important}
+.calendly-overlay .calendly-popup-close{background-color:rgba(255,255,255,.14)!important;border-radius:50%}
+
+/* Nav: am Anfang groesser, Schrumpfen weich (nur Groesse, kein Text) */
+.nav__in{height:68px;padding:0 12px 0 26px;transition:max-width .7s cubic-bezier(.22,.8,.2,1),height .7s cubic-bezier(.22,.8,.2,1),background .4s}
+.nav__logo img{height:36px;transition:height .7s cubic-bezier(.22,.8,.2,1)}
+.nav__link{font-size:.98rem;padding:9px 13px}
+.nav--fest .nav__in{height:58px}
+.nav--fest .nav__logo img{height:28px}
+.nav--fest .btn--sm{padding:11px 18px;font-size:.88rem}
+.nav .btn--sm{transition:background .18s,color .18s}
+
+/* Monster-Knopf buendig */
+.futter__knopf{margin-left:0}
+
+/* Stationen: Badges in einer Reihe */
+.saeule .wer{flex-wrap:nowrap;white-space:nowrap}
+
+/* Baukasten: Steine mittig, fester Stapel, pulsierender Rand */
+.reel-rahmen{position:relative;outline:2px solid rgba(116,193,158,.25);outline-offset:5px;animation:pulsRand 3.2s ease-in-out infinite}
+@keyframes pulsRand{0%,100%{outline-color:rgba(116,193,158,.12)}50%{outline-color:rgba(116,193,158,.75)}}
+.reel-rahmen .kasten2__turm{display:block;position:relative;flex:1;padding:0;min-height:0}
+.reel-rahmen .kasten2__turm .stein{position:absolute;left:50%;margin:0;will-change:transform}
+.reel-rahmen .kasten2__turm .stein+.stein{margin:0}
+@media(prefers-reduced-motion:reduce){.reel-rahmen{animation:none}}
+
+/* Preise: alles zentriert */
+#pakete .lede--mitte .h2{max-width:none}
+.preise__trenn{margin-left:auto;margin-right:auto;text-align:center}
+.preise__trenn .eyebrow{justify-content:center}
+.preise__trenn .gross{margin-left:auto;margin-right:auto}
+.paket2 li::before{width:6px;height:6px;border-radius:50%;top:15px;background:var(--blau)}
+.paket2 li{padding-left:18px}
+
+/* Aussagen: mehr Bewegung, Hover groesser */
+.zitat{transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .3s;cursor:default}
+.zitat:hover{transform:scale(1.045) translateY(-4px)!important;border-color:var(--tinte);animation-play-state:paused}
+@keyframes treiben{0%,100%{transform:translateY(0) rotate(-.4deg)}50%{transform:translateY(-12px) rotate(.4deg)}}
+
+/* PDF-Stapel: fuenf Blaetter, kommen nacheinander raus */
+.stapel i{transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.stapel i:nth-child(4),.stapel i:nth-child(5){position:absolute;inset:14px 16px 4px 16px;background:#fff;border:1px solid var(--linie);border-radius:10px}
+.stapel i:nth-child(4){transform:rotate(-1.2deg)}.stapel i:nth-child(5){transform:rotate(.8deg)}
+.dl:hover .stapel i:nth-child(1){transform:rotate(-7deg) translateX(-26px);transition-delay:0s}
+.dl:hover .stapel i:nth-child(2){transform:rotate(6deg) translateX(26px);transition-delay:.12s}
+.dl:hover .stapel i:nth-child(4){transform:rotate(-4deg) translateX(-14px) translateY(4px);transition-delay:.24s}
+.dl:hover .stapel i:nth-child(5){transform:rotate(3deg) translateX(14px) translateY(4px);transition-delay:.36s}
+.dl:hover .stapel i:nth-child(3){transform:rotate(-1deg) translateY(8px);transition-delay:.48s}
+
+/* Footer: Rufknopf */
+.ruf{display:flex;flex-direction:column;align-items:center;gap:18px;justify-self:center}
+.ruf__knopf{position:relative;width:220px;height:220px;border-radius:50%;border:0;background:transparent;cursor:pointer;padding:0}
+.ruf__ring{position:absolute;inset:0;border-radius:50%;border:2px solid var(--tuerkis);animation:rufRing 2.4s ease-out infinite}
+.ruf__ring::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:2px solid var(--tuerkis);animation:rufRing 2.4s ease-out infinite;animation-delay:1.2s}
+@keyframes rufRing{0%{transform:scale(.72);opacity:.9}100%{transform:scale(1.15);opacity:0}}
+.ruf__text{position:absolute;inset:0;width:100%;height:100%;animation:rufDreh 22s linear infinite}
+.ruf__text text{font-family:var(--mono);font-size:12.5px;letter-spacing:2.6px;fill:rgba(255,255,255,.85);text-transform:uppercase}
+@keyframes rufDreh{to{transform:rotate(360deg)}}
+.ruf__mitte{position:absolute;left:50%;top:50%;width:118px;height:118px;margin:-59px 0 0 -59px;border-radius:50%;background:var(--tuerkis);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.ruf__mitte img{width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:50% 20%;border:2px solid #fff}
+.ruf__mitte b{font-family:var(--display);font-size:1.3rem;color:#12301F;letter-spacing:.02em;line-height:1}
+.ruf__knopf:hover .ruf__mitte{transform:scale(1.08)}
+.ruf__knopf:focus-visible{outline:2px solid #fff;outline-offset:6px}
+.ruf__hinweis{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);margin:0;text-align:center}
+@media(prefers-reduced-motion:reduce){.ruf__ring,.ruf__ring::after,.ruf__text{animation:none}}

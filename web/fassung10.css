@@ -1,0 +1,58 @@
+/* ============================================================
+   Fassung 10 — Liegt zuoberst.
+   ============================================================ */
+.sec{border-top:0}
+.szene__monster{bottom:13%}
+.held__titel{font-size:clamp(3rem,5.2vw,5.8rem)}
+.kasten{justify-items:start}
+
+/* Tool: Basierend-auf hochkant */
+.tool__box--basis img{aspect-ratio:9/16;height:auto;max-height:190px;width:auto;object-fit:cover;border-radius:10px;align-self:flex-start}
+.tool__liste{overflow:hidden}
+
+/* Monster-Knopf */
+.futter__knopf{margin:12px 0 0 -12px}
+
+/* Matrix-Logo */
+.matrix__logo{height:22px;width:auto;display:block;opacity:.9}
+
+/* Stationen: Ergebnisbox gleich hoch */
+.ergebnis{min-height:196px;align-items:center}
+.ergebnis__txt{max-width:38rem;padding-right:24px}
+
+/* Baukasten: Reel-Rahmen behaelt den Turm unten mittig */
+.reel-rahmen .kasten2__turm{justify-content:flex-start;padding:0 0 44px}
+
+/* Preise: Karte wie auf der alten Seite, Trenner zum Consulting */
+.preiskarte{position:relative;max-width:440px;margin:56px auto 0;background:#fff;border:2px solid var(--tinte);border-radius:22px;padding:44px 34px 34px;display:flex;flex-direction:column;gap:14px}
+.preiskarte__badge{position:absolute;top:-16px;left:50%;transform:translateX(-50%);background:var(--tuerkis);color:#12301F;font-family:var(--sans);font-weight:600;font-size:.82rem;padding:8px 16px;border-radius:999px;white-space:nowrap}
+.preiskarte__titel{font-family:var(--sans);font-weight:700;font-size:1.3rem;margin:0;color:var(--tinte)}
+.preiskarte__preis{display:flex;align-items:baseline;gap:8px;margin:0}
+.preiskarte__preis b{font-family:var(--display);font-size:3.4rem;line-height:.9;color:var(--tinte);letter-spacing:.01em}
+.preiskarte__preis span{color:var(--text-leise);font-size:1rem}
+.preiskarte__liste{list-style:none;padding:0;margin:8px 0 10px;display:flex;flex-direction:column;gap:12px}
+.preiskarte__liste li{display:flex;align-items:center;gap:12px;font-size:.98rem;color:var(--text)}
+.preiskarte__liste li::before{content:"";width:22px;height:22px;border-radius:50%;background:var(--tuerkis) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2312301F' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/13px no-repeat;flex:none}
+.preiskarte .btn{background:var(--tinte);color:#fff;padding:18px 24px;font-size:1rem;border-radius:14px}
+.preise__trenn{margin:clamp(120px,14vw,190px) 0 36px;padding-top:56px;border-top:1px solid var(--linie);max-width:44rem}
+.preise__trenn .h3{margin-top:10px}
+.pakete2{margin-top:0}
+
+/* Aussagen: kleiner, treiben */
+.zitat p,.zitat--unten p{font-size:clamp(1.5rem,2vw,2rem)}
+.zitat{animation:treiben 9s ease-in-out infinite}
+.zitat:nth-child(2){animation-delay:-3s}.zitat:nth-child(3){animation-delay:-6s}.zitat:nth-child(4){animation-delay:-1.5s}.zitat:nth-child(5){animation-delay:-4.5s}
+@keyframes treiben{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@media(prefers-reduced-motion:reduce){.zitat{animation:none}}
+
+/* Mitnehmen: Blaetter kommen beim Hover seitlich raus, unten mehr Luft */
+#downloads{padding-bottom:clamp(140px,14vw,200px)}
+.dl{padding-bottom:34px}
+.dl:hover .stapel i:nth-child(1){transform:rotate(-5deg) translateX(-18px)}
+.dl:hover .stapel i:nth-child(2){transform:rotate(4deg) translateX(18px)}
+.dl:hover .stapel i:nth-child(3){transform:rotate(-1deg) translateY(8px)}
+.dl:hover .stapel i{animation:none}
+/* Calendly im Footer */
+.kalender--calendly{padding:10px;overflow:hidden}
+.kalender--calendly .calendly-inline-widget{border-radius:18px;overflow:hidden;background:transparent}
+.kalender__ersatz{margin-top:12px}
