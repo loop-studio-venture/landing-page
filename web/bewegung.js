@@ -40,8 +40,15 @@
   var calBereit = function () { return !!(window.Calendly && window.Calendly.initPopupWidget); };
 
   var calAusweichen = function () {
-    var w = window.open(CALENDLY, '_blank', 'noopener');
-    if (!w) window.location.href = CALENDLY;  /* Popup blockiert: dann im Tab */
+    /* Kein 'noopener' als drittes Argument: window.open(url, name, 'noopener')
+       liefert laut Spezifikation immer null. Ein blockiertes Popup war damit
+       nicht von einem geoeffneten zu unterscheiden, und die Notbremse darunter
+       hat die Seite zusaetzlich weggeschickt — der Besucher verlor also jedes
+       Mal die Landingpage. Darum oeffnen und danach opener kappen: gleiche
+       Absicherung wie noopener, aber ein pruefbarer Rueckgabewert. */
+    var w = window.open(CALENDLY, '_blank');
+    if (w) { w.opener = null; return; }
+    window.location.href = CALENDLY;  /* Popup wirklich blockiert: im selben Tab */
   };
 
   var calLaden = function (dann) {
