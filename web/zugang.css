@@ -20,6 +20,14 @@
    ein reiner Navy-Ring waere dort unsichtbar. */
 .sec--navy :focus-visible,.fuss :focus-visible,.hero :focus-visible,.schluss :focus-visible,.footer :focus-visible{outline-color:var(--tuerkis,#74C19E)}
 
+/* Der Hinweis unter dem Termin-Knopf (L6): Calendly laedt erst auf Klick.
+   Der Wrapper uebernimmt justify-self und Breite vom Knopf, damit das
+   Footer-Raster seine zwei Spalten behaelt und der Knopf so steht wie
+   vorher. Farbe ist das vorhandene Token --text-hell auf Navy, keine
+   neue Farbe. Liegt hier und nicht in stil.css: die gehoert 1c. */
+.fuss__termin{justify-self:center;display:flex;flex-direction:column;align-items:center;width:min(300px,100%)}
+.fuss__hinweis{margin:14px 0 0;font-size:.78rem;line-height:1.45;text-align:center;color:var(--text-hell,rgba(255,255,255,.82))}
+
 /* Die drei alten Webflow-Seiten: loopstudio-app.webflow.shared.min.css
    setzt auf diesen Klassen outline:0 fuer :focus. Das ist (0,2,0) und
    schlaegt die Regel oben. Gleiche Spezifitaet, spaeteres Stylesheet —

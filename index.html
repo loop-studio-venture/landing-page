@@ -26,8 +26,8 @@
 <link rel="stylesheet" href="web/fassung8.css">
 <link rel="stylesheet" href="web/fassung9.css">
 <link rel="stylesheet" href="web/fassung10.css">
-<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<!-- Calendly wird erst beim Klick geladen (web/bewegung.js). Das Stylesheet
+     haengt sich dann vor fassung11.css ein, damit die Overrides dort greifen. -->
 <link rel="stylesheet" href="web/fassung11.css">
 <link rel="stylesheet" href="web/fassung12.css">
 <link rel="stylesheet" href="web/fassung13.css">
@@ -558,12 +558,15 @@
         <p class="gross">Wir schauen auf deinen Account und sagen dir, welches Paket passt — oder dass dir das Tool reicht.</p>
         <div class="fuss__kontakt"><img src="bilder/christian.jpg" alt="Christian Arns" width="72" height="72" loading="lazy"><div><b>Christian Arns</b><span>Gründer und dein Ansprechpartner</span><a href="mailto:contact@loopstudio.app">contact@loopstudio.app</a></div></div>
       </div>
+      <div class="fuss__termin">
       <button type="button" class="termin" id="rufKnopf" aria-label="Gespräch buchen, 15 Minuten, Termin wählen">
         <span class="termin__kopf"><b>15-Min-Erstgespräch</b><span id="terminMonat">September</span></span>
         <span class="termin__tage" aria-hidden="true"><i>Mo</i><i>Di</i><i>Mi</i><i>Do</i><i>Fr</i><i>Sa</i><i>So</i></span>
         <span class="termin__grid" aria-hidden="true"></span>
         <span class="termin__fuss"><span>Termin wählen</span><i>→</i></span>
       </button>
+      <p class="fuss__hinweis">Den Kalender laden wir erst, wenn du klickst — dabei baut dein Browser eine Verbindung zu calendly.com auf.</p>
+      </div>
     </div>
     <div class="fuss__leiste">
       <img class="fuss__logo" src="bilder/logo/loop-studio-hell.png" alt="Loop Studio" width="180">
