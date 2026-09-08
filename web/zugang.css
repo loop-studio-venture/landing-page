@@ -16,9 +16,19 @@
 
 :focus-visible{outline:3px solid var(--navy,#243060);outline-offset:3px;border-radius:6px}
 
-/* .fuss ist der Footer dieser Seite — stil.css:69 listet ihn nicht mit,
-   ein reiner Navy-Ring waere dort unsichtbar. */
-.sec--navy :focus-visible,.fuss :focus-visible,.hero :focus-visible,.schluss :focus-visible,.footer :focus-visible{outline-color:var(--tuerkis,#74C19E)}
+/* Die dunklen Flaechen sind nicht geraten, sondern nachgemessen: ein
+   Tab-Durchlauf ueber alle vier Seiten hat fuer jeden Fokus-Halt die
+   naechste Elternflaeche mit deckender Hintergrundfarbe ausgelesen. Genau
+   diese vier tragen Navy #243060, alles andere ist Creme oder Weiss:
+     .sec--navy    dunkle Sektion (stil.css:69 kennt nur diese)
+     .fuss         Footer von index.html mit dem Termin-Knopf
+     .ergebnis     Ergebniskarte des Stationen-Rechners in #saeulen
+     .dl__form     Download-Formular, Eingabefeld und Absende-Knopf
+   Frueher standen hier zusaetzlich .hero, .schluss und .footer. .hero und
+   .schluss gibt es in keiner Seite, und .footer ist auf den drei alten
+   Webflow-Seiten ein HELLER Abschnitt (#FAFAFA) — dort hat die Regel den
+   Ring auf Tuerkis gedreht und ihn auf 2,04:1 gedrueckt. */
+.sec--navy :focus-visible,.fuss :focus-visible,.ergebnis :focus-visible,.dl__form :focus-visible{outline-color:var(--tuerkis,#74C19E)}
 
 /* Der Hinweis unter dem Termin-Knopf (L6): Calendly laedt erst auf Klick.
    Der Wrapper uebernimmt justify-self und Breite vom Knopf, damit das
