@@ -126,6 +126,23 @@ Correct me at gate 1, otherwise I proceed with these.
 - `design/handoff/landing/README.md` + `design/STATUS.md`: round 1c approved 2026-09-07. Its target
   files are `web/stil.css` and, if unavoidable, a new `web/theme-live.css`. Palette: green `#1ba17b`,
   blue `#273ea2`, navy/creme unchanged, "dark text on green or blue, never white".
+- **CTA surfaces on `index.html`, read for criterion 20** (amend pass): `.btn--tuerkis` /
+  `.btn--blau` are `--tinte` `#243060` with `#fff` (`fassung2.css:47`), except inside `.sec--navy`,
+  `.schluss` and `.dl__form`, where they are `--tuerkis` `#74C19E` with `#12301F`
+  (`fassung2.css:49`); `.preiskarte .btn` is `--tinte` with `#fff` (`fassung10.css:36`).
+  `.btn--rand` and `.btn--rand-hell` are **`background:transparent`** with `color:var(--tinte)`
+  (`fassung2.css:51`), so their computed `background-color` is `rgba(0,0,0,0)` and a ratio only
+  exists against the surface behind them: `.held{background:var(--creme)}` `#F4EFE6`
+  (`fassung4.css:26`) for the hero pair, `.paket2{background:var(--papier)}` `#FAF7F1`
+  (`fassung5.css:107`) for the package cards. `.nav` itself has **no background at any scroll
+  position** — `stil.css:126` sets none, `stil.css:137` gives `.nav--fest`
+  `rgba(255,255,255,.96)` but `fassung5.css:5` overrides it back to `background:transparent
+  !important` — so the two nav CTAs sit over whatever section scrolls underneath.
+  `fassung2.css:76` hides `.nav__rechts .btn--rand-hell` below 1000 px, and
+  `.mobmenu .btn--blau` (`index.html:71`) only renders while the mobile menu is open.
+  Button type scale: `.btn` `.95rem` (`fassung2.css:45`), `.btn--sm` `.88rem`, `.btn--gross`
+  `1.1rem` (`fassung5.css:66`), `.preiskarte .btn` `1rem`, weight 600–700 — every one below the
+  WCAG large-text threshold, so the size exception is not expected to apply anywhere.
 
 ## Step 0 — re-verify every finding before changing anything
 This is the first work item, not a formality: the audit ran against a different site. The
@@ -204,7 +221,10 @@ already above 4.5:1 by hand calculation. The Tester measures the computed foregr
 every CTA and reports the ratios; if one measures below 4.5:1, the fix is the darker tone the
 handoff allows (`--tuerkis-tief` / `--blau-tief`, or `#111111` text on green per the handoff's token
 table) applied in `web/zugang.css`, never a new colour — and the report says which of the two
-routes (colour vs. the ≥24 px / bold ≥19 px size exception) was used.
+routes (colour vs. the size exception of criterion 20c) was used. Criterion 20 fixes what "every
+CTA", "background" and "the exception" mean, because three of the CTAs are transparent-background
+buttons whose ratio only exists against the surface behind them, and the fixed nav bar has no
+background of its own at any scroll position.
 
 **Consent before embeds (L6).** Two independent halves:
 1. *Calendly, `index.html`.* Delete the two `<head>` tags. In `web/bewegung.js`, `kalenderOeffnen`
@@ -263,8 +283,15 @@ the minified Webflow CSS.
    that same page (`/`, `/impressum.html`, `/privacy-policy.html`, `/404.html`).
 6. Each of the four pages has a `<title>` that is non-empty, ≤70 characters, unique across the four,
    and not the Webflow default "A platform for creating and sharing AI-powered content".
-7. Each of the four pages has a non-empty, unique `<meta name="description">` between 50 and 160
-   characters that describes that page and states nothing the page does not contain.
+7. Each of the four pages has a non-empty `<meta name="description">`, and the four values are
+   unique across the four pages. The **50–160 character window applies to the three descriptions
+   this task writes** — `impressum.html`, `privacy-policy.html` and `404.html` — each of which must
+   describe that page and state nothing the page does not contain. **`index.html` is exempt from the
+   window**: criterion 8 freezes its description byte-identical to the base branch, where it is 223
+   characters; 50–160 is a search-result display convention, not a validity rule, and shortening
+   that string is a marketing-copy change *Will not do* excludes (see *Risks*). Length is measured
+   on the decoded `content` value exactly as written, untrimmed, counted in UTF-16 code units
+   (JavaScript `String.length`, so `ü` and `€` count as one each).
 8. `index.html`'s `<title>`, `<meta name="description">`, `og:title`, `og:description`, `og:type`
    and `og:url` are byte-identical to their values on the base branch.
 9. Each of the four pages has `og:image` = `https://loopstudio.app/bilder/og-default.png`, an
@@ -294,10 +321,38 @@ the minified Webflow CSS.
 19. Tabbing through each page shows a clearly visible focus ring on every focusable element; on the
     nav links, the nav CTAs, the hero CTAs, the footer booking button and the download-form input,
     the ring colour measures ≥3:1 against the surface directly behind it.
-20. Every CTA on `index.html` — the nav CTAs, the hero CTAs, the pricing CTAs and the three package
-    CTAs — has a measured text-to-background contrast ≥4.5:1 in its default state, or the report
-    names the pair, its ratio, and the WCAG large-text exception (≥24 px, or bold ≥19 px) that
-    covers it. No colour outside the 1c handoff's palette is introduced.
+20. **CTA contrast on `index.html`.** Measured in the default state (no `:hover`, `:focus` or
+    `:active`), at 1440 px and at 390 px viewport width, with each CTA scrolled into view:
+    - **20a — the set.** Exactly these elements count as a CTA, addressed by selector:
+      `.nav__rechts .btn--rand-hell` (nav "Gespräch buchen"), `#navTool`, `.held__cta .btn--tuerkis`,
+      `.held__cta .btn--rand`, `#futtern`, the "Paket ansehen" `.btn` in `#saeulen`,
+      `.preiskarte .btn`, the three `.paket2 .btn`, the `.dl__form` submit button, and the footer
+      booking button `#rufKnopf` — for `#rufKnopf`, its two text-bearing parts `.termin__kopf` and
+      `.termin__fuss` are measured separately, because they sit on different backgrounds.
+      `.mobmenu .btn--blau` is measured only with the mobile menu open. A CTA that is not rendered
+      at a width (`.nav__rechts .btn--rand-hell` is `display:none` below 1000 px, `fassung2.css:76`)
+      is recorded as "not rendered at this width" — that is neither a pass nor a failure.
+    - **20b — what "background" means.** Foreground is the computed `color` of the element that
+      renders the text. Background is that element's computed `background-color`; when it is fully
+      transparent (`rgba(…, 0)`, which is the case for `.btn--rand` and `.btn--rand-hell`,
+      `fassung2.css:51`), it is the nearest ancestor with a non-transparent `background-color`,
+      composited with any partially transparent layer in between. The report gives both colour
+      values and the ratio to two decimals, computed with the WCAG 2.x relative-luminance formula.
+      A CTA whose background reads as transparent is not reported as unmeasurable.
+    - **20c — the threshold.** ≥4.5:1, unless the same measurement shows WCAG large text — computed
+      `font-size` ≥24 px, or ≥18.66 px at computed `font-weight` ≥700 — in which case ≥3:1. The
+      exception may be claimed only from those two measured values, quoted in the report; naming it
+      in prose without them does not satisfy this criterion. On today's type scale no CTA is
+      expected to qualify (see *Context found*).
+    - **20d — the fixed nav bar is report-only.** `.nav` has no background of its own at any scroll
+      position (`stil.css:126`; `fassung5.css:5` forces the scrolled `.nav--fest` transparent
+      again), so the two nav CTAs sit over whatever section scrolls underneath. Their ratio is
+      measured and reported over each surface they can overlap — `.held` `#F4EFE6`, `.sec--weiss`,
+      `.sec--creme-hell` and `.sec--navy` `#243060` — but only the value at scroll position 0 (over
+      the hero) is pass/fail for this task. A low value over a dark section is recorded as a
+      finding for the palette task and does **not** fail this one: making the nav opaque is a
+      `web/*.css` change *Will not do* forbids here (see *Risks*).
+    - **20e** No colour outside the 1c handoff's palette is introduced.
 21. `privacy-policy.html` contains no `http://loopstudio.app` link; the self-link is
     `https://loopstudio.app/`.
 22. The footer copyright line of `impressum.html` and `privacy-policy.html` reads "Loop Studio", and
@@ -324,8 +379,11 @@ This repo has **no test suite** and no test directories — the Test Writer writ
    the booking trigger, assert the `assets.calendly.com` requests appear and the popup opens. If
    `npx` Playwright is unavailable, the fallback is the DevTools network panel with a screenshot of
    the request list before and after the click, stated as such in the report.
-5. Contrast: read `getComputedStyle` foreground/background of each CTA and each focus ring in
-   DevTools and compute the ratio (criteria 19, 20); report the numbers, not "looks fine".
+5. Contrast: for each focus ring (criterion 19) and each CTA in the criterion 20a set, read
+   `getComputedStyle` `color`, `background-color`, `font-size` and `font-weight`; where the
+   background is transparent, walk up to the nearest ancestor with a non-transparent
+   `background-color` and composite (criterion 20b); compute the ratio and report the numbers, not
+   "looks fine". Runs ad hoc in Playwright or DevTools; nothing is added to the repo.
 
 ## Tests to write
 No automated test can be written in this repo, so every row is a manual check with the exact command
@@ -337,13 +395,15 @@ or measurement that proves the criterion.
 | 2, 3 | manual (curl) | `robots.txt`, `sitemap.xml` | `curl -s http://localhost:8843/robots.txt` and `…/sitemap.xml`; XML well-formedness via `[xml](Get-Content sitemap.xml)` in PowerShell | none |
 | 4 | manual (curl) | `serve.ps1` MIME table | `curl -sI http://localhost:8843/robots.txt` and `…/sitemap.xml`, read the `Content-Type` header | none |
 | 5–12 | manual (served HTML) | the four pages' `<head>` | `curl -s http://localhost:8843/<page>` and grep for `rel="canonical"`, `<title>`, `name="description"`, `og:image`, `og:url`, `twitter:card`, `<html lang`, `name="robots"` | none |
+| 7 | manual (length check) | the four pages' `<meta name="description">` | one-off `node -e` over the served HTML, `String.length` of the decoded `content`; the 50–160 window is asserted for `impressum.html`, `privacy-policy.html`, `404.html` only, `index.html`'s value is recorded and compared against criterion 8, not against the window; uniqueness across all four | none; the `node -e` snippet is ad hoc and not committed |
 | 8 | manual (git) | `index.html` | `git diff <base> -- index.html` shows no change to the title/description/`og:*` lines | none |
 | 10 | manual | `bilder/og-default.png` | PowerShell `System.Drawing.Image::FromFile(...)` → `.Width`/`.Height`; file size from `Get-Item` | none |
 | 13–15 | Playwright, ad hoc (not committed) | `index.html` + the three legacy pages; `web/bewegung.js` `kalenderOeffnen` | `page.on('request')` listener asserting off-origin hosts before the click; `page.click('#rufKnopf')`; assert the Calendly overlay element exists after the click; block `assets.calendly.com` once to prove the `window.open` fallback | Playwright's own request interception; no repo fixture |
 | 16, 25 | manual (screenshots) | `index.html`, the Calendly popup | before/after screenshots at 1440 px and 390 px | none |
 | 17 | manual (served HTML) | the note element under `#rufKnopf` | grep the served `index.html`; read the German wording for du-form | none |
 | 18 | manual (grep + network) | the three legacy pages | `grep finsweet *.html` returns no `<script src=…>` hit; `git status` shows `js/finsweetcomponentsconfig-1.0.3.js` unmodified | none |
-| 19, 20 | manual (DevTools) | `web/zugang.css` rules; every CTA on `index.html` | Tab through each page; `getComputedStyle` for `outline-color`/`color`/`background-color`; compute the ratio; screenshot of a focused header link | none |
+| 19 | manual (DevTools) | `web/zugang.css` rules | Tab through each page; `getComputedStyle` `outline-color` against the surface directly behind the element; compute the ratio; screenshot of a focused header link | none |
+| 20 | Playwright or DevTools, ad hoc (not committed) | the eleven CTA selectors named in criterion 20a on `index.html` | at 1440 px and 390 px, in the default state: read `color`, `background-color`, `font-size`, `font-weight`; for a transparent `background-color` walk up to the nearest ancestor with a non-transparent one and composite (20b); compute the ratio; assert ≥4.5:1, or ≥3:1 with the measured large-text values (20c); for the two nav CTAs, repeat over `.held`, `.sec--weiss`, `.sec--creme-hell` and `.sec--navy` and report all four, with only the scroll-0 value asserted (20d); a not-rendered CTA is logged as such, not failed | none; the script is ad hoc and not committed |
 | 21, 22 | manual (grep + git) | `privacy-policy.html`, `impressum.html` | `grep "http://loopstudio.app"` returns nothing; `git diff <base>` shows only the two intended one-line changes per file | none |
 | 23 | manual (command) | all root `*.html` | `npx --yes html-validate@8 "*.html"` before and after | none |
 | 24 | manual | the four pages | browser console + `serve.ps1` window, one page at a time | none |
@@ -354,15 +414,21 @@ The close-out must show, per item, the artefact — not a claim:
 - **Step 0 (criterion 1)**: the filled-in re-verification table, with what was observed for each id.
 - **S1/S2 (2–4)**: the two `curl -sI` outputs (status + `Content-Type`) and the two `curl -s` bodies.
 - **S3/S4/S5/A1 (5–12)**: for each of the four pages, the grepped `<head>` lines from the **served**
-  HTML (not the file on disk), pasted into the report; plus the `git diff` proving `index.html`'s
-  existing metadata is untouched; plus the og-image dimensions read back from the file.
+  HTML (not the file on disk), pasted into the report; the four measured description lengths listed
+  next to each other, with `index.html`'s marked "exempt, frozen by criterion 8"; plus the
+  `git diff` proving `index.html`'s existing metadata is untouched; plus the og-image dimensions
+  read back from the file.
 - **L6 (13–18)**: the Playwright (or DevTools) request list before the click — showing only
   same-origin requests — and after the click, showing `assets.calendly.com`; the before/after popup
   screenshots; the fallback demonstrated with the script blocked.
 - **A4 (19)**: a screenshot of a focused header link and of the focused footer booking button, plus
   the measured `outline-color` / background pair and its ratio for each surface (light and navy).
-- **A5 (20)**: a table of every CTA with its computed foreground, background and ratio, and — if any
-  is below 4.5:1 — which handoff-allowed remedy was applied and why.
+- **A5 (20)**: one table with a row per CTA of the 20a set × viewport, each row carrying the
+  selector, the computed `color`, the background used and where it came from (own
+  `background-color`, or the composited ancestor named), `font-size`, `font-weight`, the ratio to
+  two decimals, and pass / fail / "not rendered at this width". The two nav CTAs get their extra
+  per-surface rows from 20d, marked "report-only" except the scroll-0 row. If any asserted row is
+  below 4.5:1, the table also names which handoff-allowed remedy was applied and why.
 - **Build check (23)**: the html-validate output from the base branch and from the branch, side by
   side, so "no new finding" is visible rather than asserted.
 - **Preview + links (24, 25)**: the three `CLAUDE.md` checks reported explicitly, with the
@@ -389,8 +455,10 @@ The close-out must show, per item, the artefact — not a claim:
 
 ## Stop conditions
 - Step 0 finds a listed finding in a materially different shape than the table above (for example a
-  YouTube embed that does exist, or a CTA measuring below 4.5:1) → report the measurement and ask
-  before inventing a fix, since A5's remedy is the 1c handoff's to give.
+  YouTube embed that does exist, or a CTA measuring below 4.5:1 on an asserted row of criterion 20)
+  → report the measurement and ask before inventing a fix, since A5's remedy is the 1c handoff's to
+  give. A nav CTA measured over a dark section under the transparent nav bar is the report-only case
+  of criterion 20d, not a stop.
 - A 1200×630 PNG cannot be produced without adding a dependency → stop and ask; do not ship a
   differently sized image and do not add a package.
 - Any `fs-*` attribute turns up in the HTML (i.e. Finsweet *is* used somewhere) → stop; removing the
@@ -410,6 +478,17 @@ The close-out must show, per item, the artefact — not a claim:
   two-attribute change (`impressum.html`, `privacy-policy.html`), but it is not one of the notes the
   brief enumerated and the footer may be touched by 1c. **Does not block**: default is to leave it;
   say the word at gate 1 and it goes in.
+- **`index.html`'s description is 223 characters**, about 60 over what a search result renders
+  before truncating. It is not a validity error and criterion 8 (approved at gate 1) freezes the
+  string; shortening it is a marketing-copy decision on German copy that carries the price claims,
+  which *Will not do* excludes here. **Does not block**: one word from Christian turns it into a
+  small copy task, and the trailing "Und wenn du willst…" sentence is the obvious cut.
+- **The nav bar has no background at any scroll position** (`stil.css:126`, `fassung5.css:5`), so
+  the two nav CTAs are dark navy text over whatever section scrolls beneath them — over
+  `.sec--navy` `#243060` that approaches 1:1. Criterion 20d makes this measured and reported but
+  not pass/fail, because the only fixes (an opaque nav, or a lighter nav CTA colour) are
+  `web/*.css` and palette changes that belong to task 20260907-apply-colour-direction-1c. **Does
+  not block**: the numbers land in the close-out so the palette task can pick it up.
 - **`web/lego-demo.html` and `web/monster-buehne.html`** are internal workbenches that Netlify
   publishes. An allow-all `robots.txt` invites them to be indexed. I follow the brief (allow all) and
   leave them out of the sitemap. **Does not block**: a `Disallow: /web/` line would fix it if wanted.
