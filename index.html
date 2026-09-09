@@ -9,6 +9,12 @@
 <meta property="og:description" content="Software, die aus deinen gespeicherten Reels Skripte und Shotlisten macht — und ein Consulting, das dich jede Woche anruft.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://loopstudio.app/">
+<link rel="canonical" href="https://loopstudio.app/">
+<meta property="og:image" content="https://loopstudio.app/bilder/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Loop Studio">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="web/fonts/Thunder-BoldLC.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="web/stil.css">
 <link rel="stylesheet" href="web/lego.css">
@@ -20,8 +26,8 @@
 <link rel="stylesheet" href="web/fassung8.css">
 <link rel="stylesheet" href="web/fassung9.css">
 <link rel="stylesheet" href="web/fassung10.css">
-<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<!-- Calendly wird erst beim Klick geladen (web/bewegung.js). Das Stylesheet
+     haengt sich dann vor fassung11.css ein, damit die Overrides dort greifen. -->
 <link rel="stylesheet" href="web/fassung11.css">
 <link rel="stylesheet" href="web/fassung12.css">
 <link rel="stylesheet" href="web/fassung13.css">
@@ -30,6 +36,7 @@
 <link rel="stylesheet" href="web/fassung16.css">
 <link rel="stylesheet" href="web/fassung17.css">
 <link rel="stylesheet" href="web/fassung19.css">
+<link rel="stylesheet" href="web/zugang.css">
 <link rel="icon" type="image/svg+xml" href="bilder/logo/icon-gradient.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="bilder/logo/favicon-32.png">
 <link rel="apple-touch-icon" href="bilder/logo/apple-touch-icon.png">
@@ -551,12 +558,15 @@
         <p class="gross">Wir schauen auf deinen Account und sagen dir, welches Paket passt — oder dass dir das Tool reicht.</p>
         <div class="fuss__kontakt"><img src="bilder/christian.jpg" alt="Christian Arns" width="72" height="72" loading="lazy"><div><b>Christian Arns</b><span>Gründer und dein Ansprechpartner</span><a href="mailto:contact@loopstudio.app">contact@loopstudio.app</a></div></div>
       </div>
+      <div class="fuss__termin">
       <button type="button" class="termin" id="rufKnopf" aria-label="Gespräch buchen, 15 Minuten, Termin wählen">
         <span class="termin__kopf"><b>15-Min-Erstgespräch</b><span id="terminMonat">September</span></span>
         <span class="termin__tage" aria-hidden="true"><i>Mo</i><i>Di</i><i>Mi</i><i>Do</i><i>Fr</i><i>Sa</i><i>So</i></span>
         <span class="termin__grid" aria-hidden="true"></span>
         <span class="termin__fuss"><span>Termin wählen</span><i>→</i></span>
       </button>
+      <p class="fuss__hinweis">Den Kalender laden wir erst, wenn du klickst — dabei baut dein Browser eine Verbindung zu calendly.com auf.</p>
+      </div>
     </div>
     <div class="fuss__leiste">
       <img class="fuss__logo" src="bilder/logo/loop-studio-hell.png" alt="Loop Studio" width="180">
