@@ -26,10 +26,74 @@
     gsap.ticker.lagSmoothing(0);
   }
   var CALENDLY = 'https://calendly.com/christianarns/15min?hide_gdpr_banner=1&background_color=243060&text_color=ffffff&primary_color=74c19e';
+
+  /* ---------- 1b Calendly erst auf Klick (L6) ----------
+     Frueher lagen widget.css und widget.js fest im <head>. Damit ging bei
+     jedem Seitenaufruf eine Anfrage an assets.calendly.com raus, bevor der
+     Besucher irgendetwas getan hat. Jetzt laedt das Widget beim ersten
+     Klick auf einen Buchen-Knopf, danach wird es wiederverwendet.        */
+  var CAL_CSS = 'https://assets.calendly.com/assets/external/widget.css';
+  var CAL_JS = 'https://assets.calendly.com/assets/external/widget.js';
+  var calStand = 'leer';   /* leer | laedt | da | fehler */
+  var calWartend = [];     /* Klicks, die auf das Skript warten */
+
+  var calBereit = function () { return !!(window.Calendly && window.Calendly.initPopupWidget); };
+
+  var calAusweichen = function () {
+    /* Kein 'noopener' als drittes Argument: window.open(url, name, 'noopener')
+       liefert laut Spezifikation immer null. Ein blockiertes Popup war damit
+       nicht von einem geoeffneten zu unterscheiden, und die Notbremse darunter
+       hat die Seite zusaetzlich weggeschickt — der Besucher verlor also jedes
+       Mal die Landingpage. Darum oeffnen und danach opener kappen: gleiche
+       Absicherung wie noopener, aber ein pruefbarer Rueckgabewert. */
+    var w = window.open(CALENDLY, '_blank');
+    if (w) { w.opener = null; return; }
+    window.location.href = CALENDLY;  /* Popup wirklich blockiert: im selben Tab */
+  };
+
+  var calLaden = function (dann) {
+    if (calStand === 'da') { dann(true); return; }
+    if (calStand === 'fehler') { dann(false); return; }
+    calWartend.push(dann);
+    if (calStand === 'laedt') return;         /* zweiter Klick haengt sich nur an */
+    calStand = 'laedt';
+
+    /* Das Calendly-Stylesheet muss vor fassung11.css stehen: dort liegen
+       die .calendly-overlay-Overrides, die danach greifen sollen. */
+    var css = document.createElement('link');
+    css.rel = 'stylesheet';
+    css.href = CAL_CSS;
+    var davor = document.querySelector('link[href="web/fassung11.css"]');
+    if (davor) davor.parentNode.insertBefore(css, davor);
+    else document.head.appendChild(css);
+
+    var fertig = false;
+    var melden = function (ok) {
+      if (fertig) return;
+      fertig = true;
+      clearTimeout(uhr);
+      calStand = ok ? 'da' : 'fehler';
+      var warteten = calWartend;
+      calWartend = [];
+      warteten.forEach(function (dann) { dann(ok); });
+    };
+    var uhr = setTimeout(function () { melden(false); }, 8000);
+
+    var js = document.createElement('script');
+    js.src = CAL_JS;
+    js.async = true;
+    js.onload = function () { melden(calBereit()); };
+    js.onerror = function () { melden(false); };
+    document.head.appendChild(js);
+  };
+
   var kalenderOeffnen = function (e) {
     e.preventDefault();
-    if (window.Calendly && Calendly.initPopupWidget) Calendly.initPopupWidget({ url: CALENDLY });
-    else window.open(CALENDLY, '_blank', 'noopener');
+    if (calBereit()) { window.Calendly.initPopupWidget({ url: CALENDLY }); return; }
+    calLaden(function (ok) {
+      if (ok && calBereit()) window.Calendly.initPopupWidget({ url: CALENDLY });
+      else calAusweichen();
+    });
   };
   $$('a[href="#gespraech"], #rufKnopf').forEach(function (a) { a.addEventListener('click', kalenderOeffnen); });
   $$('a[href^="#"]').forEach(function (a) {
