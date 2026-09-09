@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Loop Studio &mdash; Legosteine fuers Web</title>
+
+<style>
+/* Schriften lokal, nie per Google-Fonts-Import: Chrome headless laedt externes
+   CSS in file://-Dokumenten nicht und faellt still auf Systemschriften zurueck. */
+@font-face{font-family:'Inter';src:url("file:///Users/christianarns/Projekte/06_Werkstatt/pdf-studio/fonts/Inter-Regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:'Inter';src:url("file:///Users/christianarns/Projekte/06_Werkstatt/pdf-studio/fonts/Inter-Medium.ttf") format("truetype");font-weight:500;font-display:swap}
+@font-face{font-family:'Inter';src:url("file:///Users/christianarns/Projekte/06_Werkstatt/pdf-studio/fonts/Inter-SemiBold.ttf") format("truetype");font-weight:600;font-display:swap}
+@font-face{font-family:'Inter';src:url("file:///Users/christianarns/Projekte/06_Werkstatt/pdf-studio/fonts/Inter-Bold.ttf") format("truetype");font-weight:700;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url("file:///Users/christianarns/Projekte/06_Werkstatt/pdf-studio/fonts/JetBrainsMono-Regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url("file:///Users/christianarns/Projekte/06_Werkstatt/pdf-studio/fonts/JetBrainsMono-Medium.ttf") format("truetype");font-weight:500;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url("file:///Users/christianarns/Projekte/06_Werkstatt/pdf-studio/fonts/JetBrainsMono-SemiBold.ttf") format("truetype");font-weight:600;font-display:swap}
+</style>
+
+<link rel="stylesheet" href="lego.css">
+
+<style>
+/* ---- Marken-Tokens ------------------------------------------------------- */
+:root{
+  --cream:#F4EFE6; --sand:#E9E0CE; --sand-d:#CBBDA2;
+  --navy:#243060;  --navy-d:#171F3E;
+  --blue:#4D8EF7;  --blue-d:#3567C9;
+  --teal:#74C19E;  --teal-d:#3D8163;
+  --muted:#6B6F7D; --line:#E4DCC9; --paper:#FCFAF4;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --sans:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family:var(--sans);
+  background:var(--cream);
+  color:var(--navy);
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(18px,4vw,44px)}
+
+.eyebrow{
+  font-family:var(--mono);font-size:.68rem;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--blue);
+  margin:0 0 12px;
+}
+h1{font-size:clamp(1.9rem,4.4vw,2.9rem);line-height:1.08;margin:0 0 14px;letter-spacing:-.02em}
+h2{font-size:clamp(1.25rem,2.6vw,1.7rem);line-height:1.15;margin:0 0 10px;letter-spacing:-.01em}
+p{line-height:1.6;margin:0 0 14px}
+.lead{font-size:1.05rem;max-width:56ch;color:#39405C}
+.klein{font-size:.86rem;color:var(--muted);max-width:60ch}
+
+header.kopf{padding:clamp(36px,6vw,64px) 0 clamp(24px,4vw,36px)}
+
+section{padding:clamp(30px,5vw,52px) 0}
+section.hell{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+section.dunkel{background:var(--navy);color:#fff}
+section.dunkel h2{color:#fff}
+section.dunkel .lead{color:rgba(255,255,255,.78)}
+section.dunkel .eyebrow{color:var(--teal)}
+section.dunkel .klein{color:rgba(255,255,255,.55)}
+
+/* ---- 1 Musterblatt ------------------------------------------------------- */
+.reihe{display:flex;flex-wrap:wrap;align-items:flex-end;gap:26px 30px;margin:22px 0 6px}
+.probe{display:flex;flex-direction:column;align-items:center;gap:9px}
+.probe figcaption{
+  font-family:var(--mono);font-size:.63rem;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--muted);
+}
+.linie{height:1.6px;background:var(--line);border-radius:2px;margin:2px 0 26px}
+
+/* ---- 2 Baukasten --------------------------------------------------------- */
+.baukasten{
+  display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);
+  gap:clamp(26px,4vw,52px);margin-top:clamp(28px,4vw,42px);align-items:start;
+}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.tabs button{
+  font-family:var(--mono);font-size:.66rem;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;padding:9px 15px;border-radius:999px;cursor:pointer;
+  border:1px solid rgba(255,255,255,.22);background:none;color:rgba(255,255,255,.66);
+  transition:.18s;
+}
+.tabs button[aria-pressed="true"]{background:#fff;color:var(--navy);border-color:#fff}
+
+.platte{
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:16px;padding:26px 22px 22px;
+  position:sticky;top:22px;
+}
+.platte__kopf{
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.6);margin-bottom:16px;
+}
+.platte__kopf b{color:var(--teal);font-size:1.5rem;font-family:var(--sans);letter-spacing:0}
+.bau{position:relative;margin-bottom:20px}
+.lego-leer{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.07em;line-height:1.9;
+  color:rgba(255,255,255,.4);border:1px dashed rgba(255,255,255,.22);
+  border-radius:10px;padding:24px 16px;text-align:center;margin:0;
+}
+.mix{display:grid;gap:10px;margin-top:4px}
+.mix__row{
+  display:grid;grid-template-columns:82px 1fr 36px;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:.62rem;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;color:rgba(255,255,255,.7);
+}
+.mix__bar{height:7px;border-radius:4px;background:rgba(255,255,255,.14);overflow:hidden}
+.mix__bar i{display:block;height:100%;width:0;border-radius:4px;transition:width .35s ease}
+.zuruecksetzen{
+  margin-top:18px;font-family:var(--mono);font-size:.62rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);
+  background:none;border:1px solid rgba(255,255,255,.2);border-radius:999px;
+  padding:8px 14px;cursor:pointer;transition:.18s;
+}
+.zuruecksetzen:hover{color:#fff;border-color:rgba(255,255,255,.5)}
+
+@media (prefers-reduced-motion: reduce){
+  .mix__bar i,.tabs button,.zuruecksetzen{transition:none}
+}
+@media (max-width:860px){
+  .baukasten{grid-template-columns:minmax(0,1fr)}
+  .platte{position:static}
+}
+
+/* ---- 3 Zustandstabelle --------------------------------------------------- */
+.zustaende{display:flex;flex-wrap:wrap;gap:30px 40px;margin-top:20px;align-items:flex-end}
+.zustand{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.zustand__label{
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--muted);
+}
+footer{padding:34px 0 54px;font-family:var(--mono);font-size:.64rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<header class="kopf">
+  <div class="wrap">
+    <p class="eyebrow">web/lego.js &middot; web/lego.css</p>
+    <h1>Dieselben Steine wie im PDF &mdash;<br>nur dass man sie anfassen kann.</h1>
+    <p class="lead">Die Geometrie ist ein Port von <code>quelle/lego_bauen.py</code>: echte
+      Lego-Masse, schiefwinklige Projektion, Noppen als Zylinder mit Fase, drei
+      Flaechenhelligkeiten, durchgehende Kontur. Kein einziger Schatten.
+      Die Bewegung ist FLIP ueber die Web Animations API, ohne Bibliothek.</p>
+  </div>
+</header>
+
+<!-- ============================================================ 1 MUSTERBLATT -->
+<section class="hell">
+  <div class="wrap lego lego--hell">
+    <p class="eyebrow">01 &middot; Der Stein</p>
+    <h2>Grundformen, Beschriftung, Groessen.</h2>
+    <p class="klein">Zum Danebenlegen: dieselbe Reihe steht auf Seite&nbsp;2 des
+      Baukasten-PDFs.</p>
+
+    <div class="reihe" id="probeReihe"></div>
+    <div class="linie"></div>
+
+    <div class="reihe" id="probeFormen"></div>
+    <div class="linie"></div>
+
+    <div class="reihe" id="probeGroessen"></div>
+  </div>
+</section>
+
+<!-- ============================================================= 2 BAUKASTEN -->
+<section class="dunkel">
+  <div class="wrap lego" id="baukasten">
+    <p class="eyebrow">02 &middot; Der Baukasten</p>
+    <h2>Klick auf die Steine, die zu dir gehoeren.</h2>
+    <p class="lead">Jeder Klick nimmt den Stein aus dem Kasten und setzt ihn auf
+      den Turm. Im Kasten bleibt die Luecke stehen &mdash; ein zweiter Klick
+      holt ihn zurueck.</p>
+
+    <div class="baukasten">
+      <div>
+        <div class="tabs" role="group" aria-label="Content-Pillar filtern">
+          <button type="button" data-filter="alle" aria-pressed="true">Alle</button>
+          <button type="button" data-filter="reichweite" aria-pressed="false">Reichweite</button>
+          <button type="button" data-filter="branding" aria-pressed="false">Branding</button>
+          <button type="button" data-filter="leads" aria-pressed="false">Leads</button>
+        </div>
+
+        <div class="lego-auswahl" data-lego-auswahl>
+          <button data-lego-stein data-text="HUMOR"          data-farbe="blue" data-gruppe="reichweite"></button>
+          <button data-lego-stein data-text="TREND-SOUND"    data-farbe="blue" data-gruppe="reichweite"></button>
+          <button data-lego-stein data-text="HIP-HOP"        data-farbe="blue" data-gruppe="reichweite"></button>
+          <button data-lego-stein data-text="FAIL-MOMENTE"   data-farbe="blue" data-gruppe="reichweite"></button>
+          <button data-lego-stein data-text="VORHER/NACHHER" data-farbe="blue" data-gruppe="reichweite"></button>
+
+          <button data-lego-stein data-text="GRUENDER-ALLTAG" data-farbe="teal" data-gruppe="branding"></button>
+          <button data-lego-stein data-text="TEAM ZEIGEN"     data-farbe="teal" data-gruppe="branding"></button>
+          <button data-lego-stein data-text="WERKSTATT"       data-farbe="teal" data-gruppe="branding"></button>
+          <button data-lego-stein data-text="HANDWERK"        data-farbe="teal" data-gruppe="branding"></button>
+          <button data-lego-stein data-text="KULISSEN"        data-farbe="teal" data-gruppe="branding"></button>
+
+          <button data-lego-stein data-text="HAEUFIGER FEHLER" data-farbe="sand" data-gruppe="leads"></button>
+          <button data-lego-stein data-text="PREIS ERKLAERT"   data-farbe="sand" data-gruppe="leads"></button>
+          <button data-lego-stein data-text="MYTHOS"           data-farbe="sand" data-gruppe="leads"></button>
+          <button data-lego-stein data-text="CASE IN 30 SEK"   data-farbe="sand" data-gruppe="leads"></button>
+          <button data-lego-stein data-text="FRAGE AUS DER DM" data-farbe="sand" data-gruppe="leads"></button>
+        </div>
+
+        <p class="klein" style="margin-top:26px">Das hier ist ein Ausschnitt. Im
+          Startblock kommst du auf 10 bis 25 eigene Bausteine.</p>
+      </div>
+
+      <div class="platte">
+        <p class="platte__kopf"><span>Dein Baukasten</span><b id="zahl">0</b></p>
+        <div class="bau">
+          <div data-lego-stapel data-lego-hoehe="420"></div>
+          <p class="lego-leer" data-lego-leer>Noch nichts gestapelt.<br>
+            Klick auf die Steine,<br>die zu dir gehoeren.</p>
+        </div>
+        <div class="mix">
+          <div class="mix__row"><span>Reichweite</span><span class="mix__bar"><i id="barR" style="background:#4D8EF7"></i></span><span id="pctR">0%</span></div>
+          <div class="mix__row"><span>Branding</span><span class="mix__bar"><i id="barB" style="background:#74C19E"></i></span><span id="pctB">0%</span></div>
+          <div class="mix__row"><span>Leads</span><span class="mix__bar"><i id="barL" style="background:#E9E0CE"></i></span><span id="pctL">0%</span></div>
+        </div>
+        <button class="zuruecksetzen" type="button" id="leeren">Kasten leeren</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= 3 ZUSTAENDE -->
+<section class="hell">
+  <div class="wrap lego lego--hell">
+    <p class="eyebrow">03 &middot; Zustaende</p>
+    <h2>Waehlbar, gewaehlt, ausgefiltert.</h2>
+    <p class="klein">Der mittlere Stein ist bereits im Stapel &mdash; im Kasten
+      bleibt seine Standflaeche als gestrichelte Luecke stehen.</p>
+    <div class="zustaende" id="zustaende"></div>
+  </div>
+</section>
+
+<footer><div class="wrap">Loop Studio &middot; Baukasten-Modul &middot; lego.js 1.0.0</div></footer>
+
+<script src="lego.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  /* ---------------------------------------------------- 1 Musterblatt ------- */
+  function probe(ziel, spec, unten){
+    var fig = document.createElement('figure');
+    fig.className = 'probe';
+    fig.style.margin = '0';
+    fig.appendChild(Lego.element(spec));
+    if(unten){
+      var c = document.createElement('figcaption');
+      c.textContent = unten;
+      fig.appendChild(c);
+    }
+    document.getElementById(ziel).appendChild(fig);
+  }
+
+  /* Die Reihe von Seite 2 des Baukasten-PDFs, 1:1 nachgestellt. */
+  [['SKRIPTE','blue',5],['SHOTLISTE','blue',6],['CONTENT-PILLARS','sand',8],
+   ['DREHTAG','teal',5],['TECHNIK-CALL','teal',6]
+  ].forEach(function(s){
+    probe('probeReihe', {noppen:s[2], farbe:s[1], text:s[0], u:26});
+  });
+
+  [[1,1,'1x1','sand'],[2,1,'1x2','blue'],[4,1,'1x4','navy'],
+   [2,2,'2x2','teal'],[4,2,'2x4','teal'],[6,2,'2x6','blue']
+  ].forEach(function(s){
+    probe('probeFormen', {noppen:s[0], tiefe:s[1], farbe:s[3], u:26}, s[2]);
+  });
+  probe('probeFormen', {noppen:2, farbe:'navy', u:26, hoehe:Lego.MASS.H_PLATTE}, 'Platte 1x2');
+  probe('probeFormen', {noppen:4, farbe:'blue', u:26, hoehe:Lego.MASS.H_PLATTE}, 'Platte 1x4');
+
+  [12,16,20,25,30].forEach(function(u){
+    probe('probeGroessen', {noppen:3, farbe:'blue', u:u}, 'U = ' + u);
+  });
+
+  /* ---------------------------------------------------- 3 Zustaende --------- */
+  [['waehlbar',''],['gewaehlt','an'],['ausgefiltert','aus']].forEach(function(z){
+    var d  = document.createElement('div'); d.className = 'zustand';
+    var b  = document.createElement('button');
+    b.type = 'button';
+    b.className = 'lego-stein' + (z[1] === 'aus' ? ' lego-stein--aus' : '');
+    b.setAttribute('aria-pressed', z[1] === 'an' ? 'true' : 'false');
+    b.appendChild(Lego.element({noppen:6, farbe:'teal', text:'DREHTAG', u:24}));
+    var l  = document.createElement('span');
+    l.className = 'zustand__label'; l.textContent = z[0];
+    d.appendChild(b); d.appendChild(l);
+    document.getElementById('zustaende').appendChild(d);
+  });
+
+  /* ---------------------------------------------------- 2 Baukasten --------- */
+  var wurzel = document.getElementById('baukasten');
+  var zahl   = document.getElementById('zahl');
+  var balken = {reichweite:['barR','pctR'], branding:['barB','pctB'], leads:['barL','pctL']};
+
+  var kasten = Lego.init(wurzel, {
+    u: 21,
+    versatz: 1,
+    aufAenderung: function(z){
+      zahl.textContent = z.anzahl;
+      Object.keys(balken).forEach(function(g){
+        var p = z.anzahl ? Math.round((z.gruppen[g] || 0) / z.anzahl * 100) : 0;
+        document.getElementById(balken[g][0]).style.width = p + '%';
+        document.getElementById(balken[g][1]).textContent = p + '%';
+      });
+    }
+  });
+
+  Array.prototype.forEach.call(wurzel.querySelectorAll('.tabs button'), function(b){
+    b.addEventListener('click', function(){
+      Array.prototype.forEach.call(wurzel.querySelectorAll('.tabs button'), function(x){
+        x.setAttribute('aria-pressed', String(x === b));
+      });
+      kasten.filtern(b.getAttribute('data-filter'));
+    });
+  });
+
+  document.getElementById('leeren').addEventListener('click', kasten.leeren);
+
+  /* Fuer den Screenshot: ?fuellen=5 setzt fuenf Steine ohne Klick. */
+  var m = /[?&]fuellen=(\d+)/.exec(location.search);
+  if(m){
+    var alle = kasten.steine(), n = Math.min(+m[1], alle.length);
+    for(var i = 0; i < n; i++) kasten.waehle(alle[(i * 4 + 1) % alle.length].id);
+  }
+})();
+</script>
+</body>
+</html>

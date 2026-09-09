@@ -1,0 +1,29 @@
+/* ============================================================
+   Fassung 17 — Christians Handy-Runde (04.09.2026). Liegt zuoberst.
+   ============================================================ */
+/* Monster in der Futter-Sektion: Klick fuettert (Desktop und Handy) */
+.futter__monster{cursor:pointer}
+
+@media(max-width:900px){
+  /* Nav: von Anfang an schmal, kein Schrumpfen; Logo etwas weiter vom Rand */
+  .nav__in{height:58px;padding:0 10px 0 32px;transition:background .4s}
+  .nav__logo img{height:28px;transition:none}
+  .nav .btn--sm{padding:11px 18px;font-size:.88rem}
+
+  /* Hero: Szene kleiner und hoeher, damit der Titel im ersten Bild steht */
+  .held{padding:calc(var(--nav-h) + 12px) 0 40px}
+  .held__grid{gap:28px}
+  .szene{max-width:300px}
+  .held__titel{margin-top:0}
+  .held__sub{margin-top:18px}
+  .held__cta{margin-top:24px}
+
+  /* Tool, Aussagen, FAQ: auf dem Handy nicht zeigen */
+  #tool,#fuer-wen,#faq,.mobmenu a[href="#faq"],.fuss a[href="#faq"]{display:none}
+
+  /* Futter-Monster kleiner */
+  .futter__buehne{max-width:340px}
+
+  /* Baukasten: der Haufen links faellt weg, nur das Handy bleibt */
+  .kasten2__pool{display:none}
+}

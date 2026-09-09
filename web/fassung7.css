@@ -1,0 +1,106 @@
+/* ============================================================
+   Fassung 7 — Desktop-Runde. Liegt zuoberst.
+   ============================================================ */
+.held{padding:calc(var(--nav-h) + 96px) 0 24px}
+.held__grid{gap:clamp(40px,6vw,96px)}
+.tool{margin-top:clamp(80px,9vw,128px)}
+
+/* ---------- Tool: drei Screens, feste Import-Leiste ---------- */
+.tool__import{flex-wrap:nowrap;gap:10px}
+.tool__feld{flex:0 0 300px;width:300px;min-width:0;overflow:hidden;white-space:nowrap}
+.tool__screen{display:none}.tool__screen--an{display:block}
+.tool__seite-unten{margin-top:auto;display:flex;flex-direction:column;gap:4px}
+.tool__nav--klein{font-size:.8rem;padding:8px 12px;color:#64748B}
+.tool__spalten{grid-template-columns:1fr 120px 90px}.tool__spalten span:first-child{grid-column:auto}
+.tool__zeile{grid-template-columns:44px 1fr 120px 90px}
+.tool__meta{display:block;font-size:.72rem;color:#64748B;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tool__leise{color:#94A3B8;font-size:.78rem}
+.tool__tabs{display:flex;background:#EEF0F4;border-radius:999px;padding:4px}
+.tool__tab{padding:6px 14px;border-radius:999px;font-size:.82rem;color:#64748B}.tool__tab--an{background:#fff;color:#1F2937;font-weight:600}
+.tool__projekt{display:grid;grid-template-columns:230px 1fr;gap:16px;margin-top:18px;align-items:start}
+.tool__box{background:#fff;border:1px solid #E6E8EE;border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;font-size:.85rem;color:#1F2937;margin-bottom:12px}
+.tool__label{font-size:.68rem;color:#94A3B8;margin-top:6px}
+.tool__pill--lead{align-self:flex-start;background:#FBE2E2;color:#B42323;border-radius:999px;padding:4px 10px;font-size:.72rem}
+.tool__box--basis img{width:100%;height:150px;object-fit:cover;border-radius:10px}
+.tool__hinweis{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#EEF2FF;border-radius:12px;padding:12px 14px;font-size:.8rem;color:#334155;margin-bottom:12px}
+.tool__hinweis b{background:var(--tuerkis-tief);color:#fff;border-radius:999px;padding:8px 14px;font-size:.78rem;white-space:nowrap;font-weight:600}
+.tool__box-kopf{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.tool__box-kopf b{font-size:.95rem}.tool__box-kopf span{font-size:.72rem;border:1px solid #E6E8EE;border-radius:999px;padding:4px 10px;color:#334155}
+.tool__box .tool__zeileS{margin:6px 0}
+.tool__box .tool__shot{margin:6px 0}
+.tool__monat{display:flex;gap:14px;align-items:center;margin:16px 0 12px;font-size:.9rem;color:#1F2937}
+.tool__monat span{width:28px;height:28px;border:1px solid #E6E8EE;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#64748B}
+.tool__kal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.tool__tag2{background:#fff;border:1px solid #EEF0F4;border-radius:8px;min-height:56px;padding:5px 6px;font-size:.62rem;color:#94A3B8}
+.tool__termin{display:block;margin-top:4px;background:#EEF2FF;color:#243060;border-left:3px solid #4D8EF7;border-radius:4px;padding:3px 5px;font-size:.6rem;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transform-origin:0 50%}
+.tool__termin--neu{background:var(--tinte);color:#fff;border-left-color:var(--tuerkis)}
+@media(max-width:820px){
+  .tool{grid-template-columns:1fr!important}
+  .tool__import{flex-wrap:wrap}.tool__feld{flex:1 1 100%;width:auto}
+  .tool__projekt{grid-template-columns:1fr}
+  .tool__spalten{display:none}.tool__zeile{grid-template-columns:36px 1fr}.tool__zeile>span{display:none}
+  .tool__kal{gap:3px}.tool__tag2{min-height:42px;padding:4px}.tool__termin{font-size:.5rem;padding:2px 4px}
+  .tool__hinweis{flex-direction:column;align-items:flex-start}
+}
+
+/* ---------- Sequenz: Satz, Button darunter, Flug in die Navigation ---------- */
+.zeigen__h2{display:block;max-width:none;text-align:center;line-height:1}
+.zeigen__slot{display:flex;justify-content:center;margin-top:36px;height:auto;min-width:0}
+.flieger{transform-origin:50% 50%}
+@media(max-width:900px){.zeigen__slot{display:none}}
+
+/* ---------- Monster: Knopf lockt ---------- */
+.futter__knopf{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+#futtern{position:relative}
+#futtern::after{content:"";position:absolute;inset:-6px;border-radius:999px;border:2px solid var(--tuerkis);animation:ring 1.8s ease-out infinite;pointer-events:none}
+@keyframes ring{0%{transform:scale(.96);opacity:.9}100%{transform:scale(1.22);opacity:0}}
+.futter__hinweis{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tuerkis-tief);animation:wink 1.6s ease-in-out infinite}
+@keyframes wink{50%{transform:translateX(-6px)}}
+@media(prefers-reduced-motion:reduce){#futtern::after,.futter__hinweis{animation:none}}
+
+/* ---------- Spielregeln: Trennlinie statt Grafik ---------- */
+.regeln__mitte{width:1px;background:var(--linie);align-self:stretch;justify-self:center;min-height:240px}
+
+/* ---------- Stationen ---------- */
+.saeulen__hinweis{font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blau);margin:0 0 14px}
+.saeule{cursor:pointer}
+
+/* ---------- Baukasten: Text mittig, Steine greifen ineinander ---------- */
+#lego .lede--mitte .gross{margin-left:auto;margin-right:auto}
+.kasten2__turm .stein+.stein{margin-bottom:-7px}
+.stein__label{top:61%}
+
+/* ---------- Zitate: fuenf, Foto unten links, Name daneben ---------- */
+.zitate{grid-template-columns:repeat(6,minmax(0,1fr));gap:20px;min-height:0;align-items:stretch}
+.zitat{grid-column:span 2;margin:0;padding:30px 28px 24px;animation:none;display:flex;flex-direction:column;gap:22px}
+.zitat--2,.zitat--3{margin-top:0}
+.zitat p{margin:0}
+.zitat footer{display:flex;align-items:center;gap:14px;margin-top:auto}
+.zitat footer img{width:56px;height:56px;border-radius:50%;object-fit:cover;flex:none;border:2px solid #fff;outline:1px solid var(--linie)}
+.zitat footer span{display:flex;flex-direction:column;gap:2px}
+.zitat footer b{font-size:.95rem;color:var(--tinte)}
+.zitat footer cite{font-size:.82rem;color:var(--text-leise);font-style:normal;font-family:var(--sans);letter-spacing:0;text-transform:none}
+.zitat--klein p{font-size:clamp(1.5rem,2vw,1.9rem)}
+.zitat--klein:nth-of-type(4){grid-column:2/4}.zitat--klein:nth-of-type(5){grid-column:4/6}
+@media(max-width:900px){.zitate{grid-template-columns:1fr}.zitat,.zitat--klein:nth-of-type(4),.zitat--klein:nth-of-type(5){grid-column:auto}}
+
+/* ---------- Downloads: Seitenstapel mit Icon ---------- */
+.dl{gap:22px}
+.stapel{position:relative;aspect-ratio:4/3;padding:26px 30px 10px}
+.stapel i{position:absolute;inset:26px 30px 10px 30px;background:#fff;border:1px solid var(--linie);border-radius:10px}
+.stapel i:nth-child(1){transform:rotate(-2.4deg)}.stapel i:nth-child(2){transform:rotate(1.8deg)}.stapel i:nth-child(3){transform:rotate(-.7deg) translateY(5px)}
+.stapel__blatt{position:relative;background:#fff;border:1px solid var(--linie);border-radius:10px;height:100%;padding:22px 24px;display:flex;flex-direction:column;gap:9px;box-sizing:border-box}
+.stapel__icon{position:absolute;right:20px;top:18px;width:32px;height:auto;opacity:.95}
+.stapel__mono{font-family:var(--mono);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--tuerkis-tief);padding-right:44px}
+.stapel__titel{font-family:var(--display);font-size:1.8rem;line-height:.95;color:var(--tinte);margin-bottom:6px;letter-spacing:.005em}
+.stapel__linie{display:block;height:8px;border-radius:4px;background:var(--creme-tief);width:var(--b)}
+.stapel__linie--blau{background:var(--blau)}.stapel__linie--gruen{background:var(--tuerkis)}
+.stapel__kasten{display:block;width:24px;height:24px;border:1.5px solid var(--linie-stark);border-radius:5px}
+.stapel__sticker{position:absolute;right:-10px;top:-16px;background:var(--tuerkis);color:#12301F;font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:8px 12px;border-radius:999px;transform:rotate(-6deg)}
+.stapel__sticker--gruen{background:var(--blau);color:#fff}
+
+/* ---------- Footer: Kontakt mit Foto ---------- */
+.fuss__kontakt{display:flex;align-items:center;gap:16px;margin-top:26px}
+.fuss__kontakt img{width:64px;height:64px;border-radius:50%;object-fit:cover;object-position:50% 20%;border:2px solid rgba(255,255,255,.6);flex:none}
+.fuss__kontakt div{display:flex;flex-direction:column;gap:2px}
+.fuss__kontakt b{color:#fff}.fuss__kontakt span{color:rgba(255,255,255,.7);font-size:.85rem}.fuss__kontakt a{color:var(--tuerkis);text-decoration:none;font-size:.9rem}

@@ -1,0 +1,7 @@
+/* ============================================================
+   Fassung 19 — Monster wird richtig dick (04.09.2026). Liegt zuoberst.
+   ============================================================ */
+/* Die Buehne waechst in der Hoehe mit; der Kreis bleibt unten und rund */
+#monster{overflow:clip}
+.futter__kreis{inset:auto 8% 8% 8%;aspect-ratio:1/1}
+.futter__panel{will-change:transform}

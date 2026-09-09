@@ -1,0 +1,19 @@
+/* ============================================================
+   Fassung 13 — liegt zuoberst.
+   ============================================================ */
+/* Monster: Ring blendet frueher aus */
+@keyframes ring{0%{transform:scale(.96);opacity:.9}55%{opacity:0}100%{transform:scale(1.22);opacity:0}}
+
+/* Baukasten: Steine nie gestaucht, mittig ohne Breitenbegrenzung */
+.reel-rahmen .kasten2__turm .stein{left:0;right:0;width:max-content;margin:0 auto}
+.reel-rahmen .kasten2__turm .stein svg{max-width:none;width:auto}
+
+/* PDF-Blaetter: keine Dauerbewegung, damit der Hover weich startet */
+.stapel i:nth-child(1),.stapel i:nth-child(2){animation:none}
+
+/* Footer-Kalender: erkennbarer Rand */
+.termin{border:2px solid rgba(255,255,255,.55);outline:8px solid rgba(255,255,255,.07);outline-offset:0}
+.termin__fuss{background:#2F3D7A;border-top:1px solid rgba(255,255,255,.22);margin:6px -20px -2px;border-radius:0 0 20px 20px}
+.termin:hover{outline-color:rgba(116,193,158,.25)}
+/* alle Steine mittig — die +.stein-Regel aus Fassung 11 hatte die Automargins der oberen Steine genullt */
+.reel-rahmen .kasten2__turm .stein+.stein{margin:0 auto}
