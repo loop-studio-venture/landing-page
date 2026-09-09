@@ -1,0 +1,225 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Monster-Bühne — Werkbank</title>
+<!--
+  Werkbank für die Monster-Bühne der Consulting-Seite.
+  Zweck: die Bühne in voller Auflösung bauen und prüfen, ohne
+  consulting-entwurf.html anzufassen. Ist sie fertig, wird nur das
+  <svg> und der Zeichen-Teil in die Seite übernommen.
+
+  Aufruf mit ?n=8 setzt die Zahl der gefütterten Reels für den Screenshot.
+-->
+<link rel="stylesheet" href="lego.css">
+<style>
+  :root{
+    --creme:#F4EFE6; --creme-hell:#FBF8F2; --weiss:#FFFFFF;
+    --sand:#E9E0CE; --sand-linie:#E4DCC9; --sand-d:#CBBDA2;
+    --navy:#243060; --blau:#4D8EF7; --blau-tief:#3567C9;
+    --tuerkis:#74C19E; --tuerkis-tief:#3D8163; --tuerkis-zart:#EAF6F0;
+    --text-leise:#6B6F7D; --r:10px; --r-lg:16px;
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+    --sans:Inter,system-ui,sans-serif;
+  }
+  body{margin:0;background:var(--creme);font-family:var(--sans);padding:28px}
+  .buehne{background:var(--weiss);border:1px solid var(--sand-linie);
+          border-radius:var(--r-lg);padding:18px 18px 20px;max-width:760px;overflow:hidden}
+  .buehne svg{width:100%;height:auto;display:block}
+  .leiste{max-width:760px;display:flex;gap:10px;margin-top:16px}
+  button{font-family:var(--sans);font-weight:600;font-size:.95rem;padding:12px 20px;
+         border-radius:999px;border:1px solid var(--navy);cursor:pointer}
+  .b1{background:var(--blau);border-color:var(--blau);color:#fff}
+  .b2{background:transparent;color:var(--navy)}
+  .zaehler{font-family:var(--mono);font-size:.8rem;color:var(--text-leise);
+           align-self:center;margin-left:auto}
+
+  /* Marken der Messlatte: aus, bis die Mauer sie erreicht hat. */
+  .marke line{stroke:var(--sand-d);stroke-width:1.6;transition:stroke .3s ease}
+  .marke .fuehrung{stroke:var(--sand-d);stroke-width:1;stroke-dasharray:3 4;opacity:.55;
+                   transition:opacity .3s ease,stroke .3s ease}
+  .marke text{fill:#A2977F;font-family:var(--mono);font-size:9.5px;font-weight:600;
+              letter-spacing:1.3px;transition:fill .3s ease}
+  .marke--an line{stroke:var(--tuerkis-tief)}
+  .marke--an .fuehrung{stroke:var(--tuerkis);opacity:.85}
+  .marke--an text{fill:var(--tuerkis-tief)}
+  #monsterBild{transform-box:fill-box;transform-origin:center bottom}
+  .mampf{animation:mampf .36s ease}
+  @keyframes mampf{0%,100%{transform:scale(1)}38%{transform:scaleY(.965) scaleX(1.02)}}
+</style>
+
+<div class="buehne">
+  <svg id="monsterSvg" viewBox="0 0 660 430" xmlns="http://www.w3.org/2000/svg" role="img"
+       aria-label="Ein Monster sitzt links. Rechts wächst eine Mauer aus Legosteinen an einer Messlatte hoch: 1 Woche, 1 Monat, 3 Monate, Mauer voll. Ganz oben liegt die gestrichelte Linie SATT, die nie erreicht wird.">
+
+    <!-- Die Linie, die nie erreicht wird -->
+    <path id="sattLinie" d="M392,58 H648" fill="none" stroke="#B4A488" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="648" y="47" text-anchor="end" font-family="JetBrains Mono, monospace"
+          font-size="11.5" font-weight="700" letter-spacing="2.4" fill="#8A7A5C">SATT</text>
+
+    <!-- Messlatte mit den Marken; wird von JS gefuellt -->
+    <g id="latte"></g>
+    <path d="M562,392 V64" fill="none" stroke="#DDD3BE" stroke-width="1.6"/>
+
+    <!-- Boden -->
+    <path d="M10,392 H650" fill="none" stroke="#CBBDA2" stroke-width="3" stroke-linecap="round"/>
+    <ellipse cx="186" cy="392" rx="176" ry="9" fill="#E6DCC8"/>
+
+    <!-- Die Figur -->
+    <image id="monsterBild" href="../bilder/monster-web.png" x="0" y="18" width="372" height="374"
+           preserveAspectRatio="xMidYMax meet"/>
+
+    <!-- Die Mauer waechst von unten; dahinter blass, wo sie enden wird -->
+    <g id="geist" opacity="0.085"></g>
+    <g id="turm"></g>
+    <g id="flugSchicht"></g>
+    <g id="kruemel"></g>
+    <text x="470" y="416" text-anchor="middle" font-family="JetBrains Mono, monospace"
+          font-size="10" font-weight="600" letter-spacing="1.8" fill="#9A8F79">WAS DU GEPOSTET HAST</text>
+  </svg>
+</div>
+
+<div class="leiste">
+  <button class="b1" id="fuettern">Reel füttern</button>
+  <button class="b2" id="reset">Zurücksetzen</button>
+  <span class="zaehler" id="z">0 Reels</span>
+</div>
+
+<script src="lego.js"></script>
+<script>
+(function(){
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var $ = function(s){ return document.querySelector(s); };
+  var turm = $('#turm'), flug = $('#flugSchicht'), kruemel = $('#kruemel'),
+      latte = $('#latte'), geist = $('#geist');
+
+  /* Laeuferverband: 3 Steine je Reihe, ungerade Reihen um eine Noppe versetzt.
+     In Fuellreihenfolge gezeichnet, damit der rechte Nachbar die Seitenflaeche
+     des linken und die obere Reihe die Noppen der unteren deckt. */
+  var T_U = 20, T_X = 396, T_BODEN = 392, T_PRO_REIHE = 3, T_REIHEN = 11,
+      T_MAX = T_PRO_REIHE * T_REIHEN, T_BASIS = 3,
+      T_FARBEN = ['blue','navy','teal'],
+      H_STEIN = 1.20;
+  var gefuettert = 0;
+
+  function svgGruppe(markup){
+    var g = document.createElementNS(SVGNS,'g');
+    g.innerHTML = markup;
+    return g;
+  }
+  function turmY(i){ return T_BODEN - (Math.floor(i/T_PRO_REIHE)+1)*H_STEIN*T_U; }
+  function turmX(i){
+    var reihe = Math.floor(i/T_PRO_REIHE), spalte = i % T_PRO_REIHE;
+    return T_X + spalte*2*T_U + (reihe % 2 ? T_U : 0);
+  }
+  function steinSetzen(i){
+    if(i >= T_MAX) return;
+    var farbe = T_FARBEN[(i + Math.floor(i/T_PRO_REIHE)) % 3];
+    turm.appendChild(svgGruppe(Lego.svg({x:turmX(i), y:turmY(i), noppen:2, farbe:farbe, u:T_U})));
+  }
+  /* Die volle Mauer als blasser Umriss. Sie steht von Anfang an da und zeigt,
+     wohin das fuehrt — und dass selbst voll ausgebaut die Linie SATT ueber
+     ihr liegen bleibt. Ohne sie war die rechte Spalte bei 0 Reels leer. */
+  function geistBauen(){
+    geist.textContent = '';
+    for(var i=0;i<T_MAX;i++){
+      geist.appendChild(svgGruppe(Lego.svg({x:turmX(i), y:turmY(i), noppen:2,
+                                            farbe:'sand', u:T_U})));
+    }
+  }
+  function turmBauen(){
+    turm.textContent = '';
+    var n = Math.min(T_BASIS + gefuettert, T_MAX);
+    for(var i=0;i<n;i++) steinSetzen(i);
+  }
+
+  /* ---- Die Messlatte -------------------------------------------------------
+     Die leere Flaeche rechts war vorher tot. Jetzt steht dort, was die Hoehe
+     der Mauer bedeutet: bei 2 Reels pro Woche ist jede Reihe ein Zeitraum.
+     Eine Marke leuchtet auf, sobald die Mauer sie erreicht hat. */
+  var MARKEN = [
+    { reels:2,  text:'1 WOCHE'    },
+    { reels:8,  text:'1 MONAT'    },
+    { reels:24, text:'3 MONATE'   },
+    { reels:30, text:'MAUER VOLL' }
+  ];
+  function markeY(reels){
+    var i = Math.min(T_BASIS + reels - 1, T_MAX - 1);
+    return turmY(i);
+  }
+  function lattenBauen(){
+    latte.textContent = '';
+    MARKEN.forEach(function(m, k){
+      var y = markeY(m.reels);
+      var g = document.createElementNS(SVGNS,'g');
+      g.setAttribute('class','marke');
+      g.setAttribute('data-reels', m.reels);
+      g.innerHTML =
+        '<line class="fuehrung" x1="392" y1="'+y+'" x2="556" y2="'+y+'"/>' +
+        '<line x1="556" y1="'+y+'" x2="568" y2="'+y+'"/>' +
+        '<text x="576" y="'+(y+3.4)+'">'+m.text+'</text>';
+      latte.appendChild(g);
+    });
+  }
+  function markenSetzen(){
+    [].forEach.call(latte.children, function(g){
+      g.classList.toggle('marke--an', gefuettert >= +g.getAttribute('data-reels'));
+    });
+  }
+
+  function kruemelStreuen(){
+    var u = Math.random() > .5 ? 16 : 14;
+    var x = 400 + Math.random()*150, dreh = (Math.random()*16-8).toFixed(1);
+    var g = svgGruppe(Lego.svg({x:0, y:-H_STEIN*u, noppen: Math.random() > .5 ? 2 : 1,
+                                farbe:T_FARBEN[Math.floor(Math.random()*3)], u:u}));
+    g.setAttribute('transform','translate('+x.toFixed(0)+','+(T_BODEN+12)+') rotate('+dreh+')');
+    kruemel.appendChild(g);
+  }
+
+  /* Flug auf einer quadratischen Bezierkurve von oben rechts in die Luecke. */
+  function fliegen(){
+    var i = T_BASIS + gefuettert;
+    var sanft = !Lego.reduziert();
+    if(i >= T_MAX || !sanft){ fertig(sanft); return; }
+    var zielX = turmX(i), zielY = turmY(i);
+    var farbe = T_FARBEN[(i + Math.floor(i/T_PRO_REIHE)) % 3];
+    var g = svgGruppe(Lego.svg({x:0, y:0, noppen:2, farbe:farbe, u:T_U}));
+    flug.appendChild(g);
+    var p0 = [640, 96], p1 = [590, 12], p2 = [zielX, zielY];
+    var start = null, dauer = 560;
+    function schritt(ts){
+      if(start === null) start = ts;
+      var p = Math.min((ts-start)/dauer, 1);
+      var e = 1 - Math.pow(1-p, 2.4), m = 1-e;
+      var x = m*m*p0[0] + 2*m*e*p1[0] + e*e*p2[0];
+      var y = m*m*p0[1] + 2*m*e*p1[1] + e*e*p2[1];
+      var sk = 0.45 + e*0.55;
+      g.setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') scale('+sk.toFixed(3)+')');
+      if(p < 1){ requestAnimationFrame(schritt); }
+      else { g.remove(); fertig(true); }
+    }
+    requestAnimationFrame(schritt);
+  }
+  function fertig(sanft){
+    gefuettert++;
+    var i = T_BASIS + gefuettert - 1;
+    if(i < T_MAX){ steinSetzen(i); } else { kruemelStreuen(); }
+    markenSetzen();
+    $('#z').textContent = gefuettert + ' Reels';
+    var bild = $('#monsterBild');
+    if(sanft && bild){ bild.classList.remove('mampf'); void bild.getBoundingClientRect(); bild.classList.add('mampf'); }
+  }
+
+  $('#fuettern').addEventListener('click', fliegen);
+  $('#reset').addEventListener('click', function(){
+    gefuettert = 0; turmBauen(); markenSetzen(); kruemel.textContent = '';
+    $('#z').textContent = '0 Reels';
+  });
+
+  lattenBauen(); geistBauen(); turmBauen(); markenSetzen();
+
+  /* ?n=8 setzt den Stand ohne Animation — fuer Screenshots. */
+  var n = +(location.search.match(/n=(\d+)/)||[])[1];
+  if(n){ for(var k=0;k<n;k++){ gefuettert++; var i=T_BASIS+gefuettert-1;
+           if(i<T_MAX) steinSetzen(i); else kruemelStreuen(); }
+         markenSetzen(); $('#z').textContent = gefuettert + ' Reels'; }
+})();
+</script>

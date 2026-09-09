@@ -1,0 +1,87 @@
+/* ============================================================
+   Fassung 8 — Liegt zuoberst.
+   ============================================================ */
+.held{padding:calc(var(--nav-h) + 150px) 0 110px}
+.tool{margin-top:clamp(110px,12vw,160px)}
+.tool__nav[data-s]{cursor:pointer}
+.tool__nav[data-s]:hover{background:#EEF0F4}
+
+/* Sequenz ohne Satz: Panel steht von Anfang an */
+.zeigen{height:440vh}
+.zeigen__panel{transform:none!important;top:14px}
+.visual--html{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;opacity:0;perspective:1400px;padding:0 24px}
+.dreh{position:relative;width:min(420px,100%);height:min(60vh,420px);transform-style:preserve-3d}
+.dreh__karte{position:absolute;inset:0;background:#fff;color:#1F2937;border-radius:22px;padding:26px 28px;display:flex;flex-direction:column;gap:14px;backface-visibility:hidden;transform-origin:50% 50%;will-change:transform}
+.dreh__karte--wir{background:var(--tinte);color:#fff;border:1px solid rgba(255,255,255,.18)}
+.dreh__karte header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.dreh__tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--blau);width:100%}
+.dreh__karte--wir .dreh__tag{color:var(--tuerkis)}
+.dreh__karte header b{font-family:var(--display);font-size:3.2rem;line-height:.9;letter-spacing:.01em}
+.dreh__karte header span:last-child{font-size:.9rem;opacity:.7}
+.dreh__karte ul{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:10px;flex:1}
+.dreh__karte li{display:flex;align-items:center;gap:12px;font-size:.95rem;line-height:1.3}
+.dreh__karte li i{width:34px;height:34px;border-radius:10px;background:var(--blau-zart);display:inline-flex;align-items:center;justify-content:center;flex:none}
+.dreh__karte--wir li i{background:rgba(255,255,255,.1)}
+.dreh__karte li svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;color:var(--blau)}
+.dreh__karte--wir li svg{color:var(--tuerkis)}
+.dreh__karte li em{margin-left:auto;width:20px;height:20px;border-radius:50%;background:var(--tuerkis);flex:none;position:relative;transform:scale(0)}
+.dreh__karte li em::after{content:"";position:absolute;left:6px;top:5px;width:6px;height:9px;border:solid #12301F;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.dreh__karte footer{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;opacity:.7;padding-top:12px;border-top:1px solid rgba(36,48,96,.12)}
+.dreh__karte--wir footer{border-top-color:rgba(255,255,255,.16)}
+.dreh__schalter{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.8)}
+.dreh__schalter i{position:relative;width:64px;height:30px;border-radius:999px;background:rgba(255,255,255,.12);display:block}
+.dreh__schalter i::after{content:"";position:absolute;left:4px;top:4px;width:22px;height:22px;border-radius:50%;background:var(--blau);transform:translateX(var(--k,0px));transition:background .3s}
+
+/* Monster: Hinweis weiter weg */
+.futter__knopf{gap:28px}
+
+/* Spielregeln: Wer-macht-was-Matrix */
+.matrix{max-width:56rem;margin:0 auto;background:var(--papier);border:1px solid var(--linie);border-radius:var(--r-lg);overflow:hidden}
+.matrix__kopf,.matrix__zeile{display:grid;grid-template-columns:1fr 110px 110px;align-items:center}
+.matrix__kopf{padding:18px 28px;border-bottom:1px solid var(--linie);font-family:var(--display);font-size:1.8rem;letter-spacing:.01em}
+.matrix__kopf span{text-align:center}.matrix__kopf span:first-child{text-align:left}
+.matrix__du{color:var(--blau)}.matrix__wir{color:var(--tuerkis-tief)}
+.matrix__zeile{padding:14px 28px;border-bottom:1px solid var(--linie);transition:background .2s}
+.matrix__zeile:last-child{border-bottom:0}
+.matrix__zeile:hover{background:#fff}
+.matrix__zeile>span{display:flex;align-items:center;gap:14px;font-size:1.02rem;color:var(--tinte)}
+.matrix__zeile i{width:36px;height:36px;border-radius:11px;background:var(--creme);display:inline-flex;align-items:center;justify-content:center;flex:none}
+.matrix__zeile svg{width:18px;height:18px;fill:none;stroke:var(--tinte);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.matrix__punkt{justify-self:center;width:14px;height:14px;border-radius:50%;background:transparent;border:1px solid var(--linie);transform:scale(.6);opacity:.5}
+.matrix__punkt--du{background:var(--blau);border-color:var(--blau);width:22px;height:22px;opacity:1}
+.matrix__punkt--wir{background:var(--tuerkis);border-color:var(--tuerkis);width:22px;height:22px;opacity:1}
+.matrix__punkt--halb{background:linear-gradient(90deg,var(--blau) 50%,transparent 50%);border-color:var(--blau)}
+.regeln__satz{margin-top:36px}
+@media(max-width:640px){.matrix__kopf,.matrix__zeile{grid-template-columns:1fr 64px 64px;padding-left:16px;padding-right:16px}.matrix__zeile>span{font-size:.9rem}.matrix__kopf{font-size:1.4rem}}
+
+/* Stationen: die Schalter spielen von selbst */
+.saeule--tick .schalter{animation:tick .5s ease}
+@keyframes tick{50%{transform:scale(1.25)}}
+
+/* Baukasten: Reel-Rahmen, Steine ineinander */
+.kasten2{align-items:center}
+.reel-rahmen{background:#141B3D;border:8px solid #1F2750;border-radius:34px;padding:0;position:relative;aspect-ratio:9/16;max-width:340px;width:100%;justify-self:center;display:flex;flex-direction:column;overflow:hidden}
+.reel-rahmen__kopf{display:flex;justify-content:space-between;padding:18px 20px 0;font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.reel-rahmen__kopf b{color:var(--tuerkis)}
+.reel-rahmen .kasten2__turm{flex:1;justify-content:center;padding:10px 0 30px;min-height:0}
+.reel-rahmen__ui{position:absolute;right:14px;bottom:70px;display:flex;flex-direction:column;gap:14px}
+.reel-rahmen__ui i{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.1);display:inline-flex;align-items:center;justify-content:center}
+.reel-rahmen__ui svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linejoin:round}
+.reel-rahmen__leiste{position:absolute;left:20px;right:20px;bottom:18px;height:3px;border-radius:2px;background:rgba(255,255,255,.18)}
+.reel-rahmen__leiste i{display:block;height:100%;width:38%;background:var(--tuerkis);border-radius:2px;animation:laeuft 6s linear infinite}
+@keyframes laeuft{from{width:0}to{width:100%}}
+.kasten2__turm .stein{margin:0}
+.kasten2__turm .stein+.stein{margin-bottom:-17px}   /* Deckfläche + Noppen des Steins darunter: (0,48 + 0,22) · 24 px */
+.reel-rahmen .stein__label{font-size:.66rem}
+
+/* Downloads: DIN A4, gleiche Struktur, Icon dezent */
+.dl{display:grid;grid-template-rows:auto auto 1fr;gap:14px;padding:26px 28px 28px}
+.dl>div:first-of-type{grid-row:3;align-self:end}
+.dl .h4{margin:0}
+.stapel{aspect-ratio:210/297;width:min(100%,240px);margin:22px auto 0;padding:14px 16px 4px 16px}
+.stapel i{inset:14px 16px 4px 16px}
+.stapel__blatt{padding:44px 18px 18px;gap:8px}
+.stapel__icon{left:16px;top:14px;right:auto;width:22px;opacity:.8}
+.stapel__mono{padding-right:0;font-size:.52rem}
+.stapel__titel{font-size:1.45rem}
+.stapel__sticker{right:-10px;top:-12px}
