@@ -12,7 +12,7 @@
   /* ---------- 1 Warteschlange nur als Rueckfall ----------
      Der Schnipsel im <head> hat window.plausible schon definiert. Hier wird
      nichts ueberschrieben — das wuerfe eine bereits gefuellte Warteschlange
-     weg. plausible.init() ruft diese Datei nie auf: die Initialisierung und
+     weg. Diese Datei initialisiert Plausible auch nie selbst: der Start und
      der Seitenaufruf gehoeren dem Schnipsel, sonst zaehlt er doppelt. */
   if (typeof window.plausible !== 'function') {
     window.plausible = function () {
