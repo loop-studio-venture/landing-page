@@ -82,6 +82,10 @@ It is public by nature (it ships in every visitor's page source) and is not a cr
 Correct me at gate 1, otherwise I proceed with these.
 
 ## Context found
+- **Gate 1 on this spec: approved by Christian via the front desk on 2026-09-13**, handled directly
+  there instead of him searching the full Notion board. The approval carried no correction: no
+  assumption above was overturned and no criterion, file or scope line below was changed, so the
+  design stands exactly as written and this is the approved version the Implementer builds from.
 - `docs/specs/20260911-add-plausible-analytics-to-loopstudio-app-landin.md`: the approved spec this
   one finishes. Its research is reused, not redone; every line reference below was re-confirmed
   against the current worktree today.
@@ -423,8 +427,8 @@ The close-out shows the evidence, not a claim:
 - **`calendly.event_scheduled` is unverified.** The brief spells it `calenderly.`; the approved
   20260911 spec spells it `calendly.`, and only a real booking on the live site would settle it —
   which would put an appointment in Christian Arns' calendar. The synthetic test proves the listener;
-  the first real booking after deploy proves the name. **Does not block**; correct the spelling at
-  gate 1 if I have it wrong.
+  the first real booking after deploy proves the name. **Does not block**; gate 1 passed without a
+  correction to the spelling, so `calendly.` stands.
 - **The script id in the snippet is site-specific.** If `loopstudio.app` is ever removed and re-added
   in Plausible, the URL changes and the four pages must be edited again. There is no include
   mechanism in this repo to avoid that. **Does not block**; ADR 0008 records it.
@@ -439,7 +443,7 @@ The close-out shows the evidence, not a claim:
   5 is not. **Does not block**; the PR flags it.
 - **The start page does not link to the privacy page** (`index.html:573`, footer "Datenschutz" is
   `href="#"`), so the new sentence is unreachable from the start page. Pre-existing; a one-attribute
-  fix. **Does not block**; say the word at gate 1 and it goes in.
+  fix. **Does not block**; gate 1 passed without asking for it, so it stays out of scope.
 - **Criterion 26 (visual parity) is not machine-checkable** and is not a click-check either — it is the
   Tester's before/after screenshot comparison at 1440 px and 390 px, named here so it is not mistaken
   for an automated result.
