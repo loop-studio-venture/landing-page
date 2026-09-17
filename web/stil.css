@@ -113,8 +113,8 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .btn--navy{background:var(--navy);color:#fff}
 .btn--navy:hover{background:var(--navy-tief)}
 .btn--weiss{background:#fff;color:var(--navy)}
-.btn--tuerkis{background:var(--tuerkis);color:#12301F}
-.btn--tuerkis:hover{background:var(--tuerkis-tief);color:#fff}
+.btn--tuerkis{background:var(--tuerkis);color:#111111}
+.btn--tuerkis:hover{background:var(--tuerkis);color:#111111}
 .btn--rand{border:2px solid var(--navy);color:var(--navy)}
 .btn--rand:hover{background:var(--navy);color:#fff}
 .btn--rand-hell{border:2px solid rgba(255,255,255,.35);color:#fff}

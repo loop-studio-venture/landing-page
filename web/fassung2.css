@@ -44,10 +44,16 @@ p.lede{display:block}
 /* ---------- Knoepfe, Chips, Karten ---------- */
 .btn{font-family:var(--sans);font-weight:600;font-size:.95rem;border-radius:999px;padding:15px 24px;border:1px solid transparent;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;cursor:pointer;line-height:1;transition:transform .18s,background .18s,color .18s,border-color .18s}
 .btn:hover{transform:translateY(-1px)}
-.btn--tuerkis,.btn--blau{background:var(--tinte);color:#fff}
-.btn--tuerkis:hover,.btn--blau:hover{background:var(--navy-tief)}
-.sec--navy .btn--tuerkis,.schluss .btn--tuerkis,.dl__form .btn--tuerkis{background:var(--tuerkis);color:#12301F}
-.sec--navy .btn--tuerkis:hover,.schluss .btn--tuerkis:hover{background:#8BD0AE}
+/* Farbrunde 1c: die Haupt-Knoepfe sind gruen, in JEDEM Abschnitt. Vorher stand
+   hier ein gemeinsames Navy fuer .btn--tuerkis und .btn--blau, und Gruen nur in
+   .sec--navy/.schluss/.dl__form — daher der navyfarbene Knopf auf Creme.
+   Schrift auf Gruen ist #111111 (5,78:1); Weiss waere 3,27:1 und faellt durch.
+   Der Hover behaelt Flaeche und Schrift und laesst den Versatz aus .btn:hover
+   die Arbeit machen. .btn--blau ist blau mit weisser Schrift (9,10:1). */
+.btn--tuerkis{background:var(--tuerkis);color:#111111}
+.btn--tuerkis:hover{background:var(--tuerkis);color:#111111}
+.btn--blau{background:var(--blau);color:#fff}
+.btn--blau:hover{background:var(--blau-tief);color:#fff}
 .btn--rand,.btn--rand-hell{background:transparent;color:var(--tinte);border-color:var(--linie-stark)}
 .btn--rand:hover,.btn--rand-hell:hover{border-color:var(--tinte)}
 .sec--navy .btn--rand{color:#fff;border-color:rgba(255,255,255,.35)}
