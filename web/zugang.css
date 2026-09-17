@@ -3,14 +3,17 @@
    Liegt bewusst als letztes Stylesheet auf jeder Seite und nicht in
    stil.css: stil.css gehoert der Farbrunde 1c, die parallel laeuft.
 
-   stil.css:68 setzt den Ring in --blau #4D8EF7. Auf dem Creme-Grund
-   #F4EFE6 sind das 2,81:1 — unter den 3:1, die WCAG 2.4.11 verlangt.
-   Navy auf Creme sind 11,0:1, und Navy aendert die Farbrunde 1c nicht.
+   stil.css:71 setzt den Ring in --blau. Mit dem hellen Blau, das vor der
+   Farbrunde 1c in --blau stand, waren das auf dem Creme-Grund #F4EFE6 nur
+   2,81:1 — unter den 3:1, die WCAG 2.4.11 verlangt; daher hier Navy mit
+   11,0:1. Seit der Farbrunde 1c ist --blau #273EA2 und kaeme auf 7,98:1,
+   wuerde also auch allein reichen. Der Ring bleibt trotzdem Navy: 1c ist
+   eine reine Farbrunde und dreht keine Regel um.
 
-   Auf dunklen Flaechen waere Navy unsichtbar, darum dort Tuerkis/Gruen:
-   5,92:1 heute, 3,86:1 nachdem 1c --tuerkis auf #1ba17b setzt — beides
-   ueber 3:1. Die Literale hinter dem Komma sind fuer die drei alten
-   Webflow-Seiten da, die stil.css und damit die Tokens nicht laden.
+   Auf dunklen Flaechen waere Navy unsichtbar, darum dort Gruen: 3,86:1
+   auf Navy #243060, ueber den geforderten 3:1 (vor 1c waren es 5,92:1).
+   Die Literale hinter dem Komma sind fuer die drei alten Webflow-Seiten
+   da, die stil.css und damit die Tokens nicht laden.
    Keine neue Markenfarbe.
    ============================================================ */
 
@@ -20,7 +23,7 @@
    Tab-Durchlauf ueber alle vier Seiten hat fuer jeden Fokus-Halt die
    naechste Elternflaeche mit deckender Hintergrundfarbe ausgelesen. Genau
    diese vier tragen Navy #243060, alles andere ist Creme oder Weiss:
-     .sec--navy    dunkle Sektion (stil.css:69 kennt nur diese)
+     .sec--navy    dunkle Sektion (stil.css:72 kennt nur diese)
      .fuss         Footer von index.html mit dem Termin-Knopf
      .ergebnis     Ergebniskarte des Stationen-Rechners in #saeulen
      .dl__form     Download-Formular, Eingabefeld und Absende-Knopf
@@ -28,7 +31,7 @@
    .schluss gibt es in keiner Seite, und .footer ist auf den drei alten
    Webflow-Seiten ein HELLER Abschnitt (#FAFAFA) — dort hat die Regel den
    Ring auf Tuerkis gedreht und ihn auf 2,04:1 gedrueckt. */
-.sec--navy :focus-visible,.fuss :focus-visible,.ergebnis :focus-visible,.dl__form :focus-visible{outline-color:var(--tuerkis,#74C19E)}
+.sec--navy :focus-visible,.fuss :focus-visible,.ergebnis :focus-visible,.dl__form :focus-visible{outline-color:var(--tuerkis,#1BA17B)}
 
 /* Der Hinweis unter dem Termin-Knopf (L6): Calendly laedt erst auf Klick.
    Der Wrapper uebernimmt justify-self und Breite vom Knopf, damit das
@@ -39,16 +42,16 @@
 .fuss__hinweis{margin:14px 0 0;font-size:.78rem;line-height:1.45;text-align:center;color:var(--text-hell,rgba(255,255,255,.82))}
 
 /* Login-Knopf im Mobilmenue (A5, gemessen bei 390 px mit offenem Menue).
-   fassung2.css:47 deklariert .btn--blau als Weiss auf --tinte (Navy).
+   Der Knopf traegt seit der Farbrunde 1c .btn--tuerkis wie der Login in der
+   Kopfzeile: fassung2.css deklariert ihn als #111111 auf --tuerkis.
    fassung2.css:74 faerbt danach jedes .mobmenu a auf --tinte um — das ist
-   (0,1,1) und schlaegt die (0,1,0) der Knopfregel. Ergebnis: Navy auf Navy,
-   gemessen 1,00:1, der Knopf war schlicht unsichtbar. Das ist ein Fehler,
-   den es auf dem Basiszweig genauso gibt.
-   Hier wird nur die in fassung2.css:47 schon deklarierte Paarung wieder
-   hergestellt (12,60:1). Keine neue Farbe, kein neuer Ton, keine Entscheidung
+   (0,1,1) und schlaegt die (0,1,0) der Knopfregel. Ergebnis war Navy auf
+   Gruen, vorher Navy auf Navy und damit ganz unsichtbar.
+   Hier wird nur die in fassung2.css schon deklarierte Paarung wieder
+   hergestellt (5,78:1). Keine neue Farbe, kein neuer Ton, keine Entscheidung
    ueber die Palette — die gehoert der Farbrunde 1c. Die Regel steht in dieser
    Datei und nicht in fassung2.css, weil fassung2.css 1c gehoert. */
-.mobmenu a.btn--blau{color:#fff}
+.mobmenu a.btn--tuerkis{color:#111111}
 
 /* Die drei alten Webflow-Seiten: loopstudio-app.webflow.shared.min.css
    setzt auf diesen Klassen outline:0 fuer :focus. Das ist (0,2,0) und

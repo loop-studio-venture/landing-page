@@ -23,8 +23,8 @@
 .saeule .wer{flex-wrap:nowrap;white-space:nowrap}
 
 /* Baukasten: Steine mittig, fester Stapel, pulsierender Rand */
-.reel-rahmen{position:relative;outline:2px solid rgba(116,193,158,.25);outline-offset:5px;animation:pulsRand 3.2s ease-in-out infinite}
-@keyframes pulsRand{0%,100%{outline-color:rgba(116,193,158,.12)}50%{outline-color:rgba(116,193,158,.75)}}
+.reel-rahmen{position:relative;outline:2px solid rgba(27,161,123,.25);outline-offset:5px;animation:pulsRand 3.2s ease-in-out infinite}
+@keyframes pulsRand{0%,100%{outline-color:rgba(27,161,123,.12)}50%{outline-color:rgba(27,161,123,.75)}}
 .reel-rahmen .kasten2__turm{display:block;position:relative;flex:1;padding:0;min-height:0}
 .reel-rahmen .kasten2__turm .stein{position:absolute;left:50%;margin:0;will-change:transform}
 .reel-rahmen .kasten2__turm .stein+.stein{margin:0}
@@ -64,7 +64,7 @@
 @keyframes rufDreh{to{transform:rotate(360deg)}}
 .ruf__mitte{position:absolute;left:50%;top:50%;width:118px;height:118px;margin:-59px 0 0 -59px;border-radius:50%;background:var(--tuerkis);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
 .ruf__mitte img{width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:50% 20%;border:2px solid #fff}
-.ruf__mitte b{font-family:var(--display);font-size:1.3rem;color:#12301F;letter-spacing:.02em;line-height:1}
+.ruf__mitte b{font-family:var(--display);font-size:1.3rem;color:#111111;letter-spacing:.02em;line-height:1}
 .ruf__knopf:hover .ruf__mitte{transform:scale(1.08)}
 .ruf__knopf:focus-visible{outline:2px solid #fff;outline-offset:6px}
 .ruf__hinweis{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);margin:0;text-align:center}
