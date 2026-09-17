@@ -232,7 +232,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .regel-liste li:last-child{border-bottom:none}
 .regel-liste i{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-family:var(--mono);font-size:.68rem;font-weight:700;margin-top:2px}
 .i-du{background:var(--blau);color:#fff}
-.i-wir{background:var(--tuerkis);color:#12301F}
+.i-wir{background:var(--tuerkis);color:#111111}
 .nicht{border:2px dashed var(--sand);border-radius:var(--r-lg);padding:34px;background:var(--creme-hell)}
 .nicht ul{display:grid;grid-template-columns:repeat(2,1fr);gap:2px 34px;margin-top:22px}
 .nicht li{padding:13px 0;border-bottom:1px solid var(--sand-linie);display:flex;gap:12px;align-items:flex-start}
@@ -263,7 +263,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 /* Farbgrammatik: blau = Loop Studio, gruen = wir, beige = du. */
 .w-soft{background:var(--blau);color:#fff}
 .w-du{background:var(--sand);color:var(--navy)}
-.w-wir{background:var(--tuerkis);color:#12301F}
+.w-wir{background:var(--tuerkis);color:#111111}
 .w-selbst{background:var(--sand);color:var(--navy);border:1px solid #CBBDA2}
 .wer .w-selbst{display:none}
 .saeule:not(.saeule--an) .wer span{display:none}
@@ -428,7 +428,7 @@ td.num{font-family:var(--mono);font-weight:700;color:var(--navy);white-space:now
 .slots{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .slot{padding:13px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.2);font-family:var(--mono);font-size:.8rem;font-weight:600;color:#fff;transition:.18s;text-align:center}
 .slot:hover{background:rgba(255,255,255,.14);border-color:var(--tuerkis)}
-.slot--an{background:var(--tuerkis);color:#12301F;border-color:var(--tuerkis)}
+.slot--an{background:var(--tuerkis);color:#111111;border-color:var(--tuerkis)}
 .slot--weg{opacity:.3;pointer-events:none;text-decoration:line-through}
 
 /* ---------- Footer ---------- */
@@ -444,8 +444,8 @@ td.num{font-family:var(--mono);font-weight:700;color:var(--navy);white-space:now
 
 /* ---------- Notizen fuer Martin ---------- */
 .martin{position:fixed;right:20px;bottom:20px;z-index:950;max-width:380px;font-size:.86rem}
-.martin__btn{background:#12301F;color:var(--tuerkis);border:1px solid var(--tuerkis);border-radius:999px;padding:11px 18px;font-family:var(--mono);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;float:right}
-.martin__box{display:none;background:#12301F;border:1px solid rgba(116,193,158,.45);border-radius:var(--r);padding:22px 24px;color:rgba(255,255,255,.82);margin-bottom:10px;line-height:1.55;max-height:62vh;overflow-y:auto}
+.martin__btn{background:#111111;color:var(--tuerkis);border:1px solid var(--tuerkis);border-radius:999px;padding:11px 18px;font-family:var(--mono);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;float:right}
+.martin__box{display:none;background:#111111;border:1px solid rgba(116,193,158,.45);border-radius:var(--r);padding:22px 24px;color:rgba(255,255,255,.82);margin-bottom:10px;line-height:1.55;max-height:62vh;overflow-y:auto}
 .martin__box--auf{display:block}
 .martin__box h5{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tuerkis);margin-bottom:12px}
 .martin__box li{padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1);display:flex;gap:10px}
@@ -464,7 +464,7 @@ td.num{font-family:var(--mono);font-weight:700;color:var(--navy);white-space:now
 .wds__zeile--top{background:var(--blau-zart)}
 .wds__wer{justify-self:start;font-family:var(--mono);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:7px 15px;border-radius:999px}
 .wds__wer--du{background:var(--sand);color:var(--navy)}
-.wds__wer--wir{background:var(--tuerkis);color:#12301F}
+.wds__wer--wir{background:var(--tuerkis);color:#111111}
 .wds__n{font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--navy)}
 .wds__preis{font-family:var(--display);font-size:clamp(1.4rem,2.4vw,1.9rem);line-height:1;color:var(--navy);justify-self:end;text-align:right}
 .wds__fuss{padding:16px 28px;background:var(--creme-hell);font-family:var(--mono);font-size:.63rem;font-weight:600;letter-spacing:.05em;color:var(--text-leise);line-height:1.95}

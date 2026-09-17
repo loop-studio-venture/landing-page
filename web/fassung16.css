@@ -10,7 +10,7 @@
 .stapel i:nth-child(1){transition-duration:2.2s}
 
 /* Footer-Kalender: Leiste beim Hover tuerkis, Rand bleibt weiss */
-.termin:hover .termin__fuss{background:var(--tuerkis);color:#12301F}
+.termin:hover .termin__fuss{background:var(--tuerkis);color:#111111}
 .termin:hover{outline-color:rgba(255,255,255,.14)}
 
 /* Calendly-Popup wieder in Originalgroesse */

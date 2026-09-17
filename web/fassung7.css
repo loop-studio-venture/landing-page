@@ -96,7 +96,7 @@
 .stapel__linie{display:block;height:8px;border-radius:4px;background:var(--creme-tief);width:var(--b)}
 .stapel__linie--blau{background:var(--blau)}.stapel__linie--gruen{background:var(--tuerkis)}
 .stapel__kasten{display:block;width:24px;height:24px;border:1.5px solid var(--linie-stark);border-radius:5px}
-.stapel__sticker{position:absolute;right:-10px;top:-16px;background:var(--tuerkis);color:#12301F;font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:8px 12px;border-radius:999px;transform:rotate(-6deg)}
+.stapel__sticker{position:absolute;right:-10px;top:-16px;background:var(--tuerkis);color:#111111;font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:8px 12px;border-radius:999px;transform:rotate(-6deg)}
 .stapel__sticker--gruen{background:var(--blau);color:#fff}
 
 /* ---------- Footer: Kontakt mit Foto ---------- */
