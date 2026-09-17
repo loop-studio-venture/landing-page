@@ -14,6 +14,6 @@
 /* Footer-Kalender: erkennbarer Rand */
 .termin{border:2px solid rgba(255,255,255,.55);outline:8px solid rgba(255,255,255,.07);outline-offset:0}
 .termin__fuss{background:#2F3D7A;border-top:1px solid rgba(255,255,255,.22);margin:6px -20px -2px;border-radius:0 0 20px 20px}
-.termin:hover{outline-color:rgba(116,193,158,.25)}
+.termin:hover{outline-color:rgba(27,161,123,.25)}
 /* alle Steine mittig — die +.stein-Regel aus Fassung 11 hatte die Automargins der oberen Steine genullt */
 .reel-rahmen .kasten2__turm .stein+.stein{margin:0 auto}

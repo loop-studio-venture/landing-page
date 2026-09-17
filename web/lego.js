@@ -90,8 +90,8 @@
   var GRUND = {
     /*        Basis      hell       dunkel     Schrift    versatz */
     navy:  ['#243060', '#C6CDE8', '#0A0E22', '#FFFFFF', 0.00],
-    blue:  ['#4D8EF7', '#DCEAFE', '#15295A', '#FFFFFF', 0.00],
-    teal:  ['#74C19E', '#DFF2E9', '#1D4534', '#12301F', 0.04],
+    blue:  ['#273EA2', '#E3E7F5', '#15295A', '#FFFFFF', 0.00],
+    teal:  ['#1BA17B', '#DFF2ED', '#1D4534', '#111111', 0.04],
     sand:  ['#E9E0CE', '#FBF7EF', '#8A7A5C', '#5A503F', 0.30],
     creme: ['#F4EFE6', '#FFFFFF', '#A08E70', '#5A503F', 0.34],
     /* gold ist NICHT im Marken-Set. Steht hier nur, weil die Leads-Pillar auf
