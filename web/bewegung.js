@@ -259,7 +259,7 @@
     /* Kalender fuer Schritt 4 bauen: 6 Reichweite, 4 Branding, 2 Leads auf 35 Tage */
     var grid = $('#v4grid'), SVGNS = 'http://www.w3.org/2000/svg';
     var belegung = { 2: 'r', 4: 'b', 8: 'r', 10: 'l', 12: 'b', 15: 'r', 18: 'r', 19: 'b', 23: 'r', 25: 'l', 29: 'r', 31: 'b' };
-    var farben = { r: '#4D8EF7', b: '#74C19E', l: '#D9A64A' }, zellen = [];
+    var farben = { r: '#273EA2', b: '#1BA17B', l: '#D9A64A' }, zellen = [];
     if (grid) for (var d = 0; d < 35; d++) {
       var r = document.createElementNS(SVGNS, 'rect'), sp = d % 7, ze = Math.floor(d / 7);
       r.setAttribute('x', 40 + sp * 70); r.setAttribute('y', 60 + ze * 50); r.setAttribute('width', 60); r.setAttribute('height', 40); r.setAttribute('rx', 8);

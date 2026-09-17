@@ -64,7 +64,7 @@ html.lenis,html.lenis body{height:auto}
 .tool__nav i{font-style:normal;font-size:.9rem}
 .tool__nav--an{background:#E9EBF0;font-weight:600}
 .tool__konto{margin-top:auto;display:flex;gap:10px;align-items:center;font-size:.82rem;color:#334155;padding:10px 12px;border:1px solid #E6E8EE;border-radius:12px;background:#fff}
-.tool__avatar{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#4D8EF7,#74C19E);flex:none}
+.tool__avatar{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#273EA2,#1BA17B);flex:none}
 .tool__haupt{padding:22px 26px 26px;position:relative;min-width:0}
 .tool__kopf{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
 .tool__kopf h4{font-size:1.25rem;font-weight:600;margin:0;font-family:var(--sans)}

@@ -23,8 +23,8 @@
 .saeule .wer{flex-wrap:nowrap;white-space:nowrap}
 
 /* Baukasten: Steine mittig, fester Stapel, pulsierender Rand */
-.reel-rahmen{position:relative;outline:2px solid rgba(116,193,158,.25);outline-offset:5px;animation:pulsRand 3.2s ease-in-out infinite}
-@keyframes pulsRand{0%,100%{outline-color:rgba(116,193,158,.12)}50%{outline-color:rgba(116,193,158,.75)}}
+.reel-rahmen{position:relative;outline:2px solid rgba(27,161,123,.25);outline-offset:5px;animation:pulsRand 3.2s ease-in-out infinite}
+@keyframes pulsRand{0%,100%{outline-color:rgba(27,161,123,.12)}50%{outline-color:rgba(27,161,123,.75)}}
 .reel-rahmen .kasten2__turm{display:block;position:relative;flex:1;padding:0;min-height:0}
 .reel-rahmen .kasten2__turm .stein{position:absolute;left:50%;margin:0;will-change:transform}
 .reel-rahmen .kasten2__turm .stein+.stein{margin:0}

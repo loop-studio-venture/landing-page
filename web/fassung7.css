@@ -32,7 +32,7 @@
 .tool__monat span{width:28px;height:28px;border:1px solid #E6E8EE;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#64748B}
 .tool__kal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
 .tool__tag2{background:#fff;border:1px solid #EEF0F4;border-radius:8px;min-height:56px;padding:5px 6px;font-size:.62rem;color:#94A3B8}
-.tool__termin{display:block;margin-top:4px;background:#EEF2FF;color:#243060;border-left:3px solid #4D8EF7;border-radius:4px;padding:3px 5px;font-size:.6rem;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transform-origin:0 50%}
+.tool__termin{display:block;margin-top:4px;background:#EEF2FF;color:#243060;border-left:3px solid #273EA2;border-radius:4px;padding:3px 5px;font-size:.6rem;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transform-origin:0 50%}
 .tool__termin--neu{background:var(--tinte);color:#fff;border-left-color:var(--tuerkis)}
 @media(max-width:820px){
   .tool{grid-template-columns:1fr!important}
