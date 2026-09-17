@@ -30,12 +30,15 @@
   --navy:#243060;
   --navy-tief:#1A2450;
   --navy-hoch:#37477F;
-  --blau:#4D8EF7;
-  --blau-tief:#3567C9;
-  --blau-zart:#E4EDFE;
-  --tuerkis:#74C19E;
-  --tuerkis-tief:#4C9A78;
-  --tuerkis-zart:#E2F2EA;
+  /* Farbrunde 1c ("Heller Hybrid, gruene CTAs", 2026-09-07): Blau und Gruen
+     der Marke. Schrift auf einer gruenen Flaeche ist #111111 (5,78:1),
+     Schrift auf einer blauen Flaeche bleibt weiss (9,10:1). */
+  --blau:#273EA2;
+  --blau-tief:#18306E;
+  --blau-zart:#E3E7F5;
+  --tuerkis:#1BA17B;
+  --tuerkis-tief:#18765B;
+  --tuerkis-zart:#DFF2ED;
   --sand:#CBBDA2;
   --sand-linie:#DFD4BE;
 
