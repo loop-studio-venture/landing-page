@@ -57,6 +57,14 @@
   --cta-bg:#22C194;
   --cta-fg:#111111;
 
+  /* Runde 2, Variante A: das Akzentwort in den vier Schritt-Ueberschriften
+     (.schritt h3 em) auf dem Navy-Panel --tinte #243060. Vorher stand dort
+     --blau #273EA2 — 1,38:1, blau auf dunkelblau. Jetzt 7,74:1, und immer
+     noch erkennbar eine zweite Farbe neben der weissen Ueberschrift.
+     --blau bleibt #273EA2: es steht auf hellem Grund ueberall sonst richtig.
+     Das Marken-Gruen taugt hier nicht — #1BA17B auf Navy sind nur 3,86:1. */
+  --akzent-navy:#7FDCC0;
+
   /* --- Schrift: KEIN Grau. Alles navy-getoent. --- */
   --text:#2B3557;
   --text-leise:#5A6795;
