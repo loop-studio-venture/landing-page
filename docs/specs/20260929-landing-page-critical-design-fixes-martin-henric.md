@@ -5,7 +5,7 @@ status: ready
 size: L
 branch: feature/landing-page-critical-design-fixes-martin-henric
 base: dev
-design: needed (Landing Page, / — `index.html`)
+design: handoff at design/handoff/landing-page/ (Landing Page)
 ---
 
 # Landing page: fix the five critical points from Martin Henrich's review (CTA pairing, hero frame alignment, step-headline accent, pricing explanation, offer-sequence clarity)
