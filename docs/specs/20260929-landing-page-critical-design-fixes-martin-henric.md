@@ -26,7 +26,7 @@ page — sections, motion, mascot art, fonts and structure stay (LS-82-D4).
 - The design round is started by the Dev Manager once this task reaches `awaiting-design` — not by
   the Architect and not by whoever filed the task; this spec posts nothing itself
   (`design/README.md` is the round's process, LS-82-D5 its gate).
-- Implementation starts only after the round's pick is exported into `design/handoff/landing/`
+- Implementation starts only after the round's pick is exported into `design/handoff/landing-page/`
   (LS-82-D5). If Christian waives the round in the task thread, the Implementer works straight from
   the acceptance criteria below and the same criteria still apply.
 - "Every primary CTA" means every element carrying `.btn--tuerkis` — 8 in `index.html`
@@ -67,12 +67,25 @@ Correct me at gate 1, otherwise I proceed with these.
 - `CLAUDE.md` (this repo): hand-maintained static site, no build step, German copy first, every page
   must work from `serve.ps1`, branch rule `fix/`/`feature/` off `dev`, and the three-step check
   (html-validate / preview at desktop + phone / links) that must be reported explicitly.
-- `design/handoff/landing/README.md`: the approved colour round 1c ("Light hybrid, green CTAs"),
-  including its rule *"every button or chip that sits on a green or blue background uses dark text —
-  never white"*, and its own token vocabulary (`--cta-bg`, `--cta-fg`) — the names this spec reuses.
+- `design/handoff/landing/README.md`: the approved colour round **1c** ("Light hybrid, green CTAs")
+  from the former `loop-studio-venture/landing-page` repo, including its rule *"every button or chip
+  that sits on a green or blue background uses dark text — never white"*, and its own token
+  vocabulary (`--cta-bg`, `--cta-fg`) — the names this spec reuses. Its `--cta-bg #1ba17b` is round
+  1c's value; this folder is **history and not this task's handoff** (round 2 exports to
+  `design/handoff/landing-page/`, see the next bullet and AC 2).
 - `design/README.md`: the current round format — `design/draft/<Screen>/round-<n>/` with
   `variant-<letter>.html` + `overview.html` + headless PNG renders, overview posted first to
-  `#design-loopstudio`, approved round exported to `design/handoff/<route-slug>/`.
+  `#design-loopstudio`, approved round exported to `design/handoff/<route-slug>/` — for this screen
+  `design/handoff/landing-page/`, the path this spec's `design:` frontmatter line and this task's
+  brief both name. That file's "Handoff README template" also requires a **Design tokens** section
+  ("Write every one of these sections"): the values tied to their real token names, not a hex dump.
+- `design/draft/Landing Page/round-2/README.md` (committed in `C:\code\loopstudio`): the round-2
+  decision table with the picked variant's token values and measured ratios (row 1 CTA
+  `#111111` on `#22C194` = 8.20:1, row 3 step accent `#7FDCC0` = 7.74:1) and the note that hover
+  keeps the rest-state surface colour, so the hover ratio equals the rest ratio.
+- `design/handoff/landing-page/README.md`: the round-2 export. It was produced **mechanically** (no
+  Designer session) and still lists "Design tokens" under "What this export could not fill in" —
+  AC 2a is what closes that gap.
 - `web/stil.css`: `:root` tokens (lines 24-60, including the 1c comment block at 33-35 that states
   the current pairings), `.btn--tuerkis` + `:hover` (116-117), `:focus-visible` (71-72).
 - `web/fassung2.css:53-54`: re-declares `.btn--tuerkis` and its hover **after** `stil.css` — a change
@@ -157,7 +170,8 @@ already called "Basis" (`index.html:431`). No block moves (LS-82-D3); no price c
 | `web/fassung4.css` | `.schritt h3 em` (113) uses the new step-accent token | AC 7 |
 | `web/fassung9.css` | `.kasten` / `.kasten__w` (7-8): the approved frame/baseline treatment, with a dated comment | AC 5, 6 |
 | `index.html` | Pricing section `#pakete` (404-426): the "what costs 20 €" line and the offer-sequence clarity copy; hero frame markup (99) **only** if the approved treatment needs a wrapper/modifier class | AC 8, 9, 10, 5 |
-| `design/handoff/landing/README.md` (workspace `C:\code\loopstudio\design`, **not this repo**) | Designer records the round-2 pick: new token values, their measured ratios, and whether the 1c "dark text on green, never white" rule still holds | AC 1, 2 |
+| `design/handoff/landing-page/README.md` (design workspace `C:\code\loopstudio`, **not this repo**; written and committed there by the design step, not by the Implementer) | Record the round-2 pick: which round and variant, the new token values, their measured contrast ratios, and whether the 1c "dark text on green, never white" rule still holds — i.e. fill the "Design tokens" section the mechanical export left empty | AC 1, 2 |
+| `design/handoff/landing/README.md` | **not changed** — round 1c, kept as history | AC 2d |
 
 ## Acceptance criteria
 
@@ -165,9 +179,25 @@ already called "Basis" (`index.html:431`). No block moves (LS-82-D3); no price c
    `overview` plus one `variant-<letter>` per direction, covering: the CTA pairing (both readings of
    LS-82-S1-Q2), the dashed-frame treatment, the step-headline accent, and the pricing/steps/packages
    clarity — and is posted to `#design-loopstudio` with the overview as the thread root.
-2. The picked direction is exported into `design/handoff/landing/` (an updated `README.md` section
-   naming round 2, its token values and its measured contrast ratios) **before** any CSS in this repo
-   is edited.
+2. The picked direction is exported at **`design/handoff/landing-page/`** in the design workspace
+   `C:\code\loopstudio` — that path and no other is this task's handoff (`design/README.md`'s
+   `handoff/<route-slug>/` rule, this spec's `design:` frontmatter line and the task brief all name
+   it). Specifically:
+   a. `design/handoff/landing-page/README.md` names round 2 and the picked variant, and states that
+      variant's token values — the `--cta-bg` and `--cta-fg` hex values and the `.schritt h3 em`
+      accent hex — each with its measured contrast ratio against its own ground (the values may be
+      copied from the committed `design/draft/Landing Page/round-2/README.md`, rows 1 and 3 of its
+      decision table). No token value and no ratio is left under "What this export could not fill
+      in".
+   b. That export exists **before any CSS in this repo is edited**: the export README's own round-2
+      draw line and the commit date of `design/draft/Landing Page/round-2/` in `C:\code\loopstudio`
+      are both earlier than the first commit on this branch that touches a file under `web/`.
+   c. `design/handoff/landing-page/` is tracked and committed in `C:\code\loopstudio` before this
+      task reports done — `git -C C:\code\loopstudio status --porcelain design/handoff/landing-page/`
+      prints nothing. An untracked export does not satisfy this criterion.
+   d. The pre-existing `design/handoff/landing/` (colour round 1c, from the former
+      `loop-studio-venture/landing-page` repo) is untouched: not updated, not deleted, and not read
+      as this task's handoff. Its `--cta-bg #1ba17b` is round 1c's value, not round 2's.
 3. Every element carrying `.btn--tuerkis` in `index.html` (the 8 listed under Assumptions) renders
    the approved pairing, and the pairing is declared exactly once as `--cta-bg`/`--cta-fg` in
    `web/stil.css`'s `:root`; no literal CTA background or label hex remains in `stil.css:116-117`,
@@ -252,9 +282,16 @@ top-to-bottom; and the link list of the changed sections.
 
 ## Verification and evidence
 
-- **AC 1-2:** the Slack permalink of the round's overview post in `#design-loopstudio`, plus the file
-  list of `design/draft/Landing Page/round-2/` and the diff of `design/handoff/landing/README.md`.
-  The close-out states that the handoff was updated before the first CSS commit (commit order shown).
+- **AC 1:** the Slack permalink of the round's overview post in `#design-loopstudio`, plus the file
+  list of `design/draft/Landing Page/round-2/`.
+- **AC 2:** four read-backs in the close-out, one per sub-point — (a) the token and ratio lines
+  quoted verbatim from `design/handoff/landing-page/README.md`; (b) the output of
+  `git -C C:\code\loopstudio log -1 --date=iso -- "design/draft/Landing Page/round-2"` next to
+  `git log --date=iso --diff-filter=M --name-only -- web/` on this branch, the former earlier than
+  the first `web/` commit; (c) `git -C C:\code\loopstudio status --porcelain design/handoff/landing-page/`
+  printing nothing, and `git -C C:\code\loopstudio log -1 --oneline -- design/handoff/landing-page/`
+  naming the commit that landed it; (d) `git -C C:\code\loopstudio status --porcelain design/handoff/landing/`
+  printing nothing and no diff for that folder. Folder mtimes are not evidence for any of the four.
 - **AC 3:** `rg "btn--tuerkis|--cta-bg|--cta-fg" web/` output in the report, showing the four
   declaration sites referencing the tokens, and one `grep -c 'btn--tuerkis' index.html` = 8.
 - **AC 4, 7:** a table in the implementation report: pairing → both hex values → measured ratio →
@@ -279,7 +316,11 @@ top-to-bottom; and the link list of the changed sections.
 - Not move the pricing block, not change any price, not restructure or reorder any section.
 - Not edit `impressum.html`, `privacy-policy.html`, `404.html`, `web/bewegung.js`, any image, any font,
   or the Lenis/GSAP motion.
-- Not edit `knowledge-base/`, `loop-studio-frontend`, `loop-studio-backend`, or any other repo.
+- Not edit `knowledge-base/`, `loop-studio-frontend`, `loop-studio-backend`, or any other repo. The
+  one exception is the design workspace `C:\code\loopstudio`, and there only
+  `design/handoff/landing-page/`, `design/draft/Landing Page/round-2/` and `design/STATUS.md`,
+  written and committed by the design step (Dev Manager / Designer) — the Implementer and the Tester
+  edit nothing outside this worktree, and nobody edits `design/handoff/landing/`.
 - Not fold in `design/DETAILS.md`'s open consolidation round (D-1…D-25) — it stays its own thread.
 - Not add a dependency, a build step, a tracker or an externally hosted font.
 - Not restart any process; nothing here runs under PM2.
@@ -288,8 +329,8 @@ top-to-bottom; and the link list of the changed sections.
 
 - The design round picks a pairing that breaks round 1c's rule *"dark text on green or blue — never
   white"* (LS-82-S1-Q2's option b): stop, get Martin's and Christian's confirmation recorded in the
-  `#design-loopstudio` thread, and update `design/handoff/landing/README.md` plus the `:root` comment
-  in `web/stil.css` in the same change before implementing.
+  `#design-loopstudio` thread, and update `design/handoff/landing-page/README.md` plus the `:root`
+  comment in `web/stil.css` in the same change before implementing.
 - A criterion's 4.5:1 cannot be reached without changing a token used beyond the CTAs or beyond
   `.schritt h3 em`: stop and ask rather than repainting the page.
 - The frame fix cannot be made without editing `web/bewegung.js` or changing `#kasten`/`.kasten__w`:
@@ -298,8 +339,10 @@ top-to-bottom; and the link list of the changed sections.
   numbers on the page need re-specifying before the copy lands.
 - html-validate reports a finding on the branch that is not on the base commit and is not explained by
   the diff: stop and report it rather than "fixing" unrelated markup.
-- Implementation is about to start and `design/handoff/landing/` has no round-2 entry, with no waiver
-  from Christian in the task thread: stop (LS-82-D5).
+- Implementation is about to start and `design/handoff/landing-page/` has no round-2 export carrying
+  the picked variant's token values and ratios (AC 2a), with no waiver from Christian in the task
+  thread: stop (LS-82-D5). Do not fall back to `design/handoff/landing/` — that folder is round 1c
+  and its values are the ones this task is changing.
 
 ## Risks and open questions
 
@@ -311,6 +354,15 @@ top-to-bottom; and the link list of the changed sections.
   to keep the slice as the concept cut it; a one-string fix if Christian says 20 € stands.
 - The JSON-LD `FAQPage` block (532-553) and the visible FAQ (522-528) contain different questions
   altogether — pre-existing, unrelated to this review, not touched here.
+- The round-2 handoff at `design/handoff/landing-page/` was written by the mechanical exporter, with
+  no Designer session: it links the variants but leaves "Design tokens" (and three other template
+  sections) under "What this export could not fill in". AC 2a therefore needs a hand edit in the
+  design workspace; it is not produced by the export step on its own, and no change in this repo can
+  satisfy it.
+- Two handoff folders exist for this one screen — `landing/` (round 1c, the former repo) and
+  `landing-page/` (round 2, the `<route-slug>` convention). AC 2 fixes which one this task uses;
+  consolidating or archiving the older folder is a design-workspace housekeeping item, not part of
+  this task.
 - Criterion 5 ("optically aligned") and criterion 10 ("reads as one offer") are not machine-provable.
   Both are covered by "What to click" lines 1 and 5 and by the screenshot evidence above; there is no
   automated check for either, and gate 3 is where they are actually decided.
@@ -338,6 +390,7 @@ top-to-bottom; and the link list of the changed sections.
   `web/lego-demo.html` / `web/monster-buehne.html`.
 - Refactoring the 19-file `fassung*.css` override stack into one stylesheet — tempting while in
   there, and a separate task.
+- Rewriting, merging or archiving `design/handoff/landing/` (round 1c) — history, left as it is.
 - Splitting this into smaller slices. The feature is cut as **one** slice (CONCEPT.md §Slices): one
   design round decides the CTA pairing, the frame treatment and the offer-sequence copy together,
   and a partial landing would put a reviewed page half on the old pairing. Size L is expected here.
