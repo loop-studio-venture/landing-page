@@ -1,0 +1,110 @@
+/* ============================================================
+   recht.css - the long legal text pages: impressum.html,
+   datenschutz.html and the privacy-policy.html transition page.
+
+   Loaded LAST, and only on those three pages. Everything else on
+   them (nav pill, buttons, eyebrow, footer, tokens, both fonts)
+   comes from the same stylesheet chain index.html loads; nothing
+   here invents a colour, a font or a radius. Design round
+   "Legal Pages" round-1, variant A (one column on the paper
+   ground) - design/handoff/legal-pages/.
+
+   Scope, per the spec: reading measure, h2/h3 rhythm, list
+   spacing and the anchor offset - plus the three page-level
+   overrides a standalone page needs that index.html gets from its
+   .seite/.blatt wrapper (body ground, static footer, nav gap).
+   ============================================================ */
+
+/* ---------- Page level ----------
+   fassung2.css:232 paints the body navy because on index.html the
+   footer lies BEHIND the scrolling sheet. A legal page has no
+   .seite/.blatt wrapper, so its own ground is the paper tone, and
+   the footer is a plain block at the end instead of a sticky one
+   (fassung2.css:249) that would otherwise hang in the viewport
+   over the whole text. */
+body{background:var(--papier)}
+.fuss{position:static;padding:clamp(48px,6vw,72px) 0 28px}
+
+/* The nav is fixed (stil.css:129 / fassung2.css:68), so an in-page
+   anchor has to stop below it. fassung2.css:12 already sets 100px;
+   restated here against the token so the two stay in step. */
+html{scroll-padding-top:calc(var(--nav-h) + 28px)}
+
+/* ---------- The sheet ---------- */
+.recht{background:var(--papier);padding:calc(var(--nav-h) + clamp(40px,5vw,72px)) 0 clamp(72px,8vw,120px)}
+.recht__kopf{max-width:40rem;margin:0 auto}
+.recht h1{font-family:var(--display);font-weight:700;font-size:clamp(3rem,5.6vw,4.6rem);line-height:.9;letter-spacing:.005em;color:var(--tinte);margin:20px 0 0}
+.recht__lead{margin-top:20px;font-size:1.12rem;line-height:1.55;color:var(--text)}
+.recht__stand{margin-top:22px;padding-top:14px;border-top:1px solid var(--linie)}
+.recht__hinweis{max-width:40rem;margin-top:20px;color:var(--text)}
+
+/* 40rem is roughly 75 characters at 17px - the wide end of the
+   45-75 band a long text wants, and wider than the marketing
+   --spalte (34rem), which is set for three-line claims. */
+.recht__spalte{max-width:40rem;margin:0 auto}
+
+/* ---------- Body text ---------- */
+.recht p{color:var(--text);margin-top:14px}
+.recht p:first-child{margin-top:0}
+.recht a[href^="mailto"]{color:var(--tuerkis-tief);border-bottom:1px solid var(--tuerkis);padding-bottom:1px}
+.recht ul{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+.recht ul li{position:relative;padding-left:26px;color:var(--text)}
+.recht ul li::before{content:"";position:absolute;left:0;top:.72em;width:14px;height:1px;background:var(--linie-stark)}
+.recht ul li b{color:var(--tinte);font-weight:600}
+
+/* Company facts as a hairline grid, one row per fact; on a narrow
+   screen the label sits above its value instead of beside it. */
+.recht dl{display:grid;grid-template-columns:minmax(0,13rem) minmax(0,1fr);gap:0}
+.recht dt{font-family:var(--mono);font-size:.64rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text-leise);padding:13px 0;border-top:1px solid var(--linie)}
+.recht dd{padding:13px 0;border-top:1px solid var(--linie);color:var(--tinte);font-weight:500}
+.recht dd a{color:var(--tuerkis-tief);border-bottom:1px solid var(--tuerkis)}
+@media(max-width:620px){
+  .recht dl{grid-template-columns:1fr}
+  .recht dt{padding-bottom:0;border-top:1px solid var(--linie)}
+  .recht dd{padding-top:4px;border-top:0}
+}
+
+.recht__karte{background:var(--weiss);border:1px solid var(--linie);border-radius:var(--r);padding:8px 26px 24px;margin-top:30px}
+.recht__karte dt:first-of-type,.recht__karte dd:first-of-type{border-top:0}
+
+.stand{font-family:var(--mono);font-size:.64rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--text-leise)}
+
+/* ---------- Table of contents ----------
+   Only on the nine-section Datenschutz page; four sections do not
+   need one (round-1 README, "it answers the question honestly
+   instead of uniformly"). */
+.recht__inhalt{margin-top:34px;padding-top:6px;border-top:1px solid var(--linie-stark)}
+.recht__inhalt h2{font-family:var(--mono);font-size:.64rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--text-leise);margin:16px 0 4px}
+.recht__inhalt ol{display:grid;grid-auto-flow:column;grid-template-rows:repeat(5,auto);grid-template-columns:1fr 1fr;gap:0 34px}
+.recht__inhalt li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--linie);font-size:.95rem}
+.recht__inhalt li i{font-family:var(--mono);font-style:normal;font-size:.7rem;font-weight:600;letter-spacing:.1em;color:var(--tuerkis-tief);padding-top:3px}
+.recht__inhalt a{color:var(--tinte)}
+@media(max-width:700px){.recht__inhalt ol{grid-auto-flow:row;grid-template-rows:none;grid-template-columns:1fr}}
+
+/* ---------- Section rhythm ----------
+   Inter, not Thunder: Thunder is a poster face and nine headings
+   in it read loud above fine print. The mono number is the eyebrow
+   pattern the site already uses, shrunk to a label. */
+.abschnitt{margin-top:38px;padding-top:32px;border-top:1px solid var(--linie)}
+.abschnitt__nr{font-family:var(--mono);font-size:.64rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--tuerkis-tief)}
+.abschnitt h2{font-family:var(--sans);font-weight:700;font-size:1.3rem;letter-spacing:-.01em;line-height:1.3;color:var(--tinte);margin:8px 0 18px}
+.abschnitt h3{font-family:var(--sans);font-weight:700;font-size:1.02rem;color:var(--tinte);margin:26px 0 0}
+.abschnitt h4{font-family:var(--sans);font-weight:600;font-size:.95rem;color:var(--tinte);margin:18px 0 0}
+.abschnitt p,.abschnitt li{font-size:17px;line-height:1.72}
+
+/* ---------- Footer ----------
+   The current page marks itself, so Impressum and Datenschutz are
+   one click from each other and from the start page. */
+.fuss__links a[aria-current="page"]{color:#fff;border-bottom:1px solid var(--tuerkis)}
+
+/* ---------- /privacy-policy.html: the transition page ----------
+   That address is today's canonical and sits in sitemap.xml, so it
+   keeps resolving. The meta refresh does the work; this is what a
+   visitor sees if the browser does not follow it. */
+.umzug{background:var(--papier);padding:calc(var(--nav-h) + clamp(56px,8vw,104px)) 0 clamp(72px,9vw,120px)}
+.umzug__in{max-width:34rem;margin:0 auto;text-align:center}
+.umzug h1{font-family:var(--display);font-weight:700;font-size:clamp(2.4rem,5vw,3.4rem);line-height:.92;color:var(--tinte);margin:18px 0 0}
+.umzug p{margin-top:16px;color:var(--text)}
+.umzug .btn{margin-top:26px}
+.umzug .stand{display:block;margin-top:22px}
+.umzug .eyebrow{justify-content:center}
