@@ -76,8 +76,13 @@ Correct me at gate 1, otherwise I proceed with these.
   document.cookie` over `landing-page/web/` returns no match. Plausible is loaded cookieless
   (`index.html:44`).
 - `landing-page/sitemap.xml` - three `<loc>`s: `/`, `/impressum.html`, `/privacy-policy.html`.
-- `landing-page/404.html` - still the old Webflow export (two `webflow` occurrences); its footer
-  links `impressum.html` and `privacy-policy.html`. Redesigning it is out of scope.
+- `landing-page/404.html` - still the retired Webflow export (two `webflow` occurrences), a single
+  minified line. **Corrected 2026-09-30 after the Tester's finding:** the file has no footer and no
+  legal link at all. Its only `<a>` is `<a href="index.html" class="button w-button">Go Home</a>`
+  inside `.utility-page_wrapper`; the strings `impressum` and `datenschutz` do not occur in it, and
+  neither does `privacy-policy`. There is therefore nothing in it to repoint, and this task does not
+  touch it. (The earlier version of this bullet claimed its footer linked `impressum.html` and
+  `privacy-policy.html` - that was wrong.)
 - `landing-page/CLAUDE.md` - the rules that bind this task: generated/minified exported files are
   not edited (add a small hand-written stylesheet instead), every page must work from `serve.ps1`
   with relative paths and no build step, links into the app use `https://app.loopstudio.app/...`,
@@ -120,15 +125,16 @@ legal basis); Calendly and the hosting provider Netlify are added as recipients 
 paragraph; the live heading typo "log files2" is fixed; the self-hosted fonts are stated so a reader
 can see no font CDN is contacted.
 
-Rejected: (a) renaming `privacy-policy.html` outright - that address is the current canonical, sits
-in `sitemap.xml` and is linked from `404.html`, so it must keep resolving; instead the new page is
-`datenschutz.html` (a German URL on a German site) and `privacy-policy.html` becomes a redirect,
-with both a `_redirects` 301 for Netlify and a meta-refresh page on disk so it also works from
-`serve.ps1` and on any host. (b) Keeping the new German text at the old `privacy-policy.html`
+Rejected: (a) renaming `privacy-policy.html` outright - that address is the current canonical and
+sits in `sitemap.xml`, so it must keep resolving; instead the new page is `datenschutz.html` (a
+German URL on a German site) and `privacy-policy.html` becomes a redirect, with both a `_redirects`
+301 for Netlify and a meta-refresh page on disk so it also works from `serve.ps1` and on any host.
+(b) Keeping the new German text at the old `privacy-policy.html`
 filename - fewer files, but leaves an English URL as the site's permanent privacy address.
 (c) Writing the legal text from scratch - Christian asked for the existing text reworked, and a
 fresh text would be harder for the lawyer to diff. (d) Touching the generated Webflow CSS or
-`404.html`'s design - both forbidden or out of scope.
+`404.html` - the CSS is a generated artifact, and `404.html` carries no legal link to repoint and
+no footer to add one to without redesigning it, which is a separate task.
 
 ## Files to change
 
@@ -137,14 +143,16 @@ fresh text would be harder for the lawyer to diff. (d) Touching the generated We
 | `landing-page/web/recht.css` | New. Hand-written, commented stylesheet for long legal text: measure, `h2`/`h3` rhythm, list spacing, anchor scroll offset. Loaded last, only on the two legal pages | `CLAUDE.md`: style by adding a small hand-written file, never by editing the minified export |
 | `landing-page/impressum.html` | Replaced. German page on the new template: section 5 DDG fields (name/legal form, address, Vertretungsberechtigte, e-mail, Registergericht + HRB) and the four disclaimer sections, reworked from the old English text. No USt-IdNr., no phone | Today it is the retired Webflow export in English and a different design |
 | `landing-page/datenschutz.html` | New. German Datenschutzerklaerung on the same template, adapted per Approach | A German URL for the German site, and the text has to match what the site really loads |
-| `landing-page/privacy-policy.html` | Replaced by a minimal redirect page: `<meta http-equiv="refresh">` to `datenschutz.html`, self-`canonical` pointing at `datenschutz.html`, one visible sentence and link, `noindex` | That address is today's canonical, is in `sitemap.xml` and is linked from `404.html`; it must not 404 |
+| `landing-page/privacy-policy.html` | Replaced by a minimal redirect page: `<meta http-equiv="refresh">` to `datenschutz.html`, self-`canonical` pointing at `datenschutz.html`, one visible sentence and link, `noindex` | That address is today's canonical and is in `sitemap.xml`; it must not 404 |
 | `landing-page/_redirects` | New, one line: `/privacy-policy.html /datenschutz.html 301!` | A real 301 on Netlify; the page above is the fallback if the publish root is not the repo root |
 | `landing-page/index.html` | Line 579: the two `href="#"` legal links become `impressum.html` and `datenschutz.html` | The links are dead today |
-| `landing-page/404.html` | Footer link `privacy-policy.html` -> `datenschutz.html`. Markup/design untouched | Point it at the real page instead of relying on the redirect |
 | `landing-page/sitemap.xml` | `<loc>https://loopstudio.app/privacy-policy.html</loc>` -> `.../datenschutz.html`; `/impressum.html` stays | A sitemap must list canonical URLs, and the old one now redirects |
 | `landing-page/README.md`, `landing-page/CLAUDE.md` | Update the file listing / page list: `datenschutz.html` is the privacy page, `privacy-policy.html` is a redirect, `web/recht.css` exists | Both files describe the repo's pages and are wrong the moment this ships |
 | `design/draft/<screen>/round-1/` (workspace repo) | The Designer's round files and renders | The design round this task waits for |
 | `design/STATUS.md` (workspace repo) | Round entry, and the handoff/implementation status when exported | The project's own design log |
+
+`landing-page/404.html` is deliberately **not** in this table: it has no footer and no legal link
+(see Context found), so there is nothing in it to repoint. Criterion 17 asserts it stays unchanged.
 
 ## Acceptance criteria
 
@@ -194,7 +202,10 @@ fresh text would be harder for the lawyer to diff. (d) Touching the generated We
 16. `landing-page/sitemap.xml` lists `https://loopstudio.app/`,
     `https://loopstudio.app/impressum.html` and `https://loopstudio.app/datenschutz.html`, and no
     longer lists `privacy-policy.html`.
-17. `404.html`'s footer privacy link points at `datenschutz.html`; nothing else in that file changes.
+17. `landing-page/404.html` is byte-for-byte identical to the same file on the base branch `dev`
+    (`git diff dev...HEAD -- 404.html` is empty). The file contains no `footer` element, no
+    `impressum`, `datenschutz` or `privacy-policy` string, and exactly one `<a>`, whose `href` is
+    `index.html` - so no link in it needed repointing.
 18. `npx --yes html-validate@8 "*.html"` reports no finding on `impressum.html`, `datenschutz.html`
     or `privacy-policy.html`, and no new finding on `index.html` or `404.html` compared with the
     same command on the base branch.
@@ -216,8 +227,10 @@ three steps are reported explicitly in the implementation and test reports.
 2. Render check from `.\serve.ps1`: `http://localhost:8843/impressum.html`,
    `/datenschutz.html`, `/privacy-policy.html` and `/index.html`, each at 1440 px and 390 px, with
    screenshots - criteria 2, 7, 13, 14.
-3. Link check: every `href` on the two new pages, plus the footer of `index.html` and `404.html`,
-   resolved against the repo (a relative target must exist as a file) - criteria 12, 17, 19.
+3. Link check: every `href` on the two new pages, plus the footer of `index.html`, resolved against
+   the repo (a relative target must exist as a file) - criteria 12, 19. For criterion 17,
+   `git diff dev...HEAD -- 404.html` must print nothing, and a grep of `404.html` for
+   `footer|impressum|datenschutz|privacy-policy` must return no match.
 4. Text assertions for criteria 4, 5, 6, 8, 9, 10, 11, 15, 16, 20: grep the built files for the
    required and the forbidden strings and paste the results. A forbidden-string grep that returns
    a match is a failure, not a note.
@@ -243,6 +256,7 @@ three steps are reported explicitly in the implementation and test reports.
 - Screenshots: `impressum.html` and `datenschutz.html` at 1440 px and 390 px, full page, from
   `serve.ps1` - four images minimum, plus one of the `index.html` footer showing the two live links.
 - The required/forbidden string greps from test-plan step 4, pasted with their exact command lines.
+- The empty output of `git diff dev...HEAD -- 404.html`, pasted, as the evidence for criterion 17.
 - The request-host list from test-plan step 5 for both pages.
 - The design round is evidenced by the round folder, the rendered PNGs and the
   `#design-loopstudio` post; the handoff by `design/STATUS.md`'s entry and the exported folder.
@@ -254,8 +268,8 @@ three steps are reported explicitly in the implementation and test reports.
 - No push or merge to `main` (that is the live Netlify deploy, and the lawyer reviews the `dev` PR
   first) and no change to the Netlify site settings.
 - No edit to `css/*.min.css` or `js/webflow.js` - generated export artifacts.
-- No redesign of `404.html` beyond the one footer href, and no change to `index.html` other than
-  the two footer hrefs on line 579.
+- No change to `404.html` at all - not its design, not its markup, not a link: it has none to
+  repoint. No change to `index.html` other than the two footer hrefs on line 579.
 - No new dependency, no build step, no third-party script, font or CDN.
 - No work in `loop-studio-frontend` or `loop-studio-backend`.
 - No change to the workbook form's markup or behaviour.
@@ -288,8 +302,11 @@ three steps are reported explicitly in the implementation and test reports.
   the 301 actually fires is checked on the deploy preview, not locally.
 - Google may keep `/privacy-policy.html` in its index for a while after the 301; nothing to do
   beyond the sitemap change.
-- `404.html` stays on the retired Webflow design, so its footer now links two pages in the new
-  design. A visible inconsistency, deliberately not fixed here - a separate task.
+- `404.html` has no footer and no Impressum/Datenschutz link at all (Tester finding, 2026-09-30).
+  The Impressum is therefore not reachable in one click from a 404 page - a pre-existing gap, not
+  one this task creates, and it cannot be closed without giving `404.html` a footer, i.e. a
+  redesign of a page still on the retired Webflow design. Named for the lawyer's review and for a
+  separate task; deliberately not fixed here.
 - The old privacy text's own legal-basis choices (e.g. Art. 6 para. 1 lit. f for log files) are
   carried over as they stand; this task does not re-argue them.
 
@@ -299,7 +316,8 @@ three steps are reported explicitly in the implementation and test reports.
 - A cookie consent banner - the site sets no cookies and no web storage (verified).
 - AGB, Widerrufsbelehrung, Preisangabenverordnung items - nothing is sold on the page; the CTAs are
   a Calendly call, a PDF and a link into the app.
-- Redesigning `404.html`, or any other page of the landing page.
+- Redesigning `404.html`, or any other page of the landing page - including adding a footer with
+  legal links to `404.html`.
 - The app's own privacy text and legal pages at `app.loopstudio.app` (`loop-studio-frontend`).
 - A full compliance audit of the site (the `marketing-site-compliance` skill's 27 checks) - only the
   legal-page presence items this task's criteria name are covered.
