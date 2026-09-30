@@ -4,7 +4,7 @@ company: loopstudio
 status: ready
 size: M
 branch: feature/impressum-and-datenschutz-pages-for-the-landing-
-design: needed (Legal text page template - Impressum + Datenschutz, /impressum.html + /datenschutz.html)
+design: handoff at design/handoff/legal-pages/ (Legal Pages)
 base: dev
 ---
 
