@@ -170,7 +170,8 @@ already called "Basis" (`index.html:431`). No block moves (LS-82-D3); no price c
 | `web/fassung4.css` | `.schritt h3 em` (113) uses the new step-accent token | AC 7 |
 | `web/fassung9.css` | `.kasten` / `.kasten__w` (7-8): the approved frame/baseline treatment, with a dated comment | AC 5, 6 |
 | `index.html` | Pricing section `#pakete` (404-426): the "what costs 20 €" line and the offer-sequence clarity copy; hero frame markup (99) **only** if the approved treatment needs a wrapper/modifier class | AC 8, 9, 10, 5 |
-| `design/handoff/landing-page/README.md` (design workspace `C:\code\loopstudio`, **not this repo**; written and committed there by the design step, not by the Implementer) | Record the round-2 pick: which round and variant, the new token values, their measured contrast ratios, and whether the 1c "dark text on green, never white" rule still holds — i.e. fill the "Design tokens" section the mechanical export left empty | AC 1, 2 |
+| `design/handoff/landing-page/README.md` (design workspace `C:\code\loopstudio`, **not this repo**; written there by **this task's Implementer step** — Christian, 2026-09-30, answered the Tester's two `spec` verdicts with **code**: the export is what is wrong, not the criteria) | Record the round-2 pick: round 2 and the picked variant, the token values with their measured contrast ratios copied from `design/draft/Landing Page/round-2/README.md` (rows 1 and 3 of its decision table: `--cta-bg #22C194` with `--cta-fg #111111` = **8.20:1**, step accent `#7FDCC0` on the navy panel `#243060` = **7.74:1**, and the other values that README names — hover keeps the rest-state surface so the hover ratio equals the rest ratio, focus ring `#273EA2` on `#F4EFE6` = 7.98:1), and whether the 1c "dark text on green, never white" rule still holds — i.e. write the **Design tokens** section the mechanical export left empty and remove its "Design tokens" bullet from "What this export could not fill in" (line 62 of that file today) | AC 1, 2, 2a |
+| `design/handoff/landing-page/` (design workspace `C:\code\loopstudio`, **not this repo**) | `git add` the whole folder and commit it there, so it is tracked (Christian, 2026-09-30: "commit `design/handoff/landing-page/` on the task branch so it is tracked"). Which branch that workspace has checked out is **unverified** from this session — no commands could be run; the Implementer commits on whatever branch is checked out there and names it in the report | AC 2c |
 | `design/handoff/landing/README.md` | **not changed** — round 1c, kept as history | AC 2d |
 
 ## Acceptance criteria
@@ -285,12 +286,15 @@ top-to-bottom; and the link list of the changed sections.
 - **AC 1:** the Slack permalink of the round's overview post in `#design-loopstudio`, plus the file
   list of `design/draft/Landing Page/round-2/`.
 - **AC 2:** four read-backs in the close-out, one per sub-point — (a) the token and ratio lines
-  quoted verbatim from `design/handoff/landing-page/README.md`; (b) the output of
+  quoted verbatim from `design/handoff/landing-page/README.md`, and one grep over that file showing
+  `#22C194`, `#111111` and `#7FDCC0` present and no "Design tokens" bullet left under "What this
+  export could not fill in"; (b) the output of
   `git -C C:\code\loopstudio log -1 --date=iso -- "design/draft/Landing Page/round-2"` next to
   `git log --date=iso --diff-filter=M --name-only -- web/` on this branch, the former earlier than
   the first `web/` commit; (c) `git -C C:\code\loopstudio status --porcelain design/handoff/landing-page/`
   printing nothing, and `git -C C:\code\loopstudio log -1 --oneline -- design/handoff/landing-page/`
-  naming the commit that landed it; (d) `git -C C:\code\loopstudio status --porcelain design/handoff/landing/`
+  naming the commit that landed it — that commit is made by this task's Implementer step, and the
+  report names the branch it landed on; (d) `git -C C:\code\loopstudio status --porcelain design/handoff/landing/`
   printing nothing and no diff for that folder. Folder mtimes are not evidence for any of the four.
 - **AC 3:** `rg "btn--tuerkis|--cta-bg|--cta-fg" web/` output in the report, showing the four
   declaration sites referencing the tokens, and one `grep -c 'btn--tuerkis' index.html` = 8.
@@ -318,9 +322,11 @@ top-to-bottom; and the link list of the changed sections.
   or the Lenis/GSAP motion.
 - Not edit `knowledge-base/`, `loop-studio-frontend`, `loop-studio-backend`, or any other repo. The
   one exception is the design workspace `C:\code\loopstudio`, and there only
-  `design/handoff/landing-page/`, `design/draft/Landing Page/round-2/` and `design/STATUS.md`,
-  written and committed by the design step (Dev Manager / Designer) — the Implementer and the Tester
-  edit nothing outside this worktree, and nobody edits `design/handoff/landing/`.
+  `design/handoff/landing-page/`, `design/draft/Landing Page/round-2/` and `design/STATUS.md`. The
+  round's own files are written and committed by the design step (Dev Manager / Designer); filling in
+  and committing `design/handoff/landing-page/` is this task's Implementer step (Christian,
+  2026-09-30) and is the Implementer's only write outside this worktree. The Tester edits nothing
+  outside this worktree, and nobody edits `design/handoff/landing/`.
 - Not fold in `design/DETAILS.md`'s open consolidation round (D-1…D-25) — it stays its own thread.
 - Not add a dependency, a build step, a tracker or an externally hosted font.
 - Not restart any process; nothing here runs under PM2.
@@ -339,10 +345,13 @@ top-to-bottom; and the link list of the changed sections.
   numbers on the page need re-specifying before the copy lands.
 - html-validate reports a finding on the branch that is not on the base commit and is not explained by
   the diff: stop and report it rather than "fixing" unrelated markup.
-- Implementation is about to start and `design/handoff/landing-page/` has no round-2 export carrying
-  the picked variant's token values and ratios (AC 2a), with no waiver from Christian in the task
+- Implementation is about to start and `design/draft/Landing Page/round-2/` is missing, or carries no
+  picked variant with token values and ratios, and there is no waiver from Christian in the task
   thread: stop (LS-82-D5). Do not fall back to `design/handoff/landing/` — that folder is round 1c
-  and its values are the ones this task is changing.
+  and its values are the ones this task is changing. If the round-2 draft is there but the export at
+  `design/handoff/landing-page/README.md` is missing the token values and ratios, that is **not** a
+  stop: the Implementer writes them into the export from the draft's decision table and commits the
+  folder (Christian, 2026-09-30 — code, not spec).
 
 ## Risks and open questions
 
@@ -358,7 +367,9 @@ top-to-bottom; and the link list of the changed sections.
   no Designer session: it links the variants but leaves "Design tokens" (and three other template
   sections) under "What this export could not fill in". AC 2a therefore needs a hand edit in the
   design workspace; it is not produced by the export step on its own, and no change in this repo can
-  satisfy it.
+  satisfy it. Christian assigned that hand edit — and the commit of the folder — to this task's
+  Implementer step (2026-09-30), with the values taken from the round-2 decision table; the three
+  non-token sections stay as the exporter left them, since AC 2a covers token values and ratios only.
 - Two handoff folders exist for this one screen — `landing/` (round 1c, the former repo) and
   `landing-page/` (round 2, the `<route-slug>` convention). AC 2 fixes which one this task uses;
   consolidating or archiving the older folder is a design-workspace housekeeping item, not part of
@@ -391,6 +402,9 @@ top-to-bottom; and the link list of the changed sections.
 - Refactoring the 19-file `fassung*.css` override stack into one stylesheet — tempting while in
   there, and a separate task.
 - Rewriting, merging or archiving `design/handoff/landing/` (round 1c) — history, left as it is.
+- The four non-token sections the mechanical export left open in
+  `design/handoff/landing-page/README.md` ("About the design files", "Fidelity", "Interactions &
+  behavior", "State management") — only the **Design tokens** gap is closed here (AC 2a).
 - Splitting this into smaller slices. The feature is cut as **one** slice (CONCEPT.md §Slices): one
   design round decides the CTA pairing, the frame treatment and the offer-sequence copy together,
   and a partial landing would put a reviewed page half on the old pairing. Size L is expected here.
@@ -413,3 +427,12 @@ What to decide:
   Tester's verdict: spec
 
 Answer: code (C) for both (Christian Wenzel, 2026-09-30, terminal front desk): 1. write the token values with their ratios (#22C194, #111111, #7FDCC0 and the others the export names) into design/handoff/landing-page/README.md and close the "What this export could not fill in" gap; 2. commit design/handoff/landing-page/ on the task branch so it is tracked. No spec change.
+
+**Folded in (Architect amend, 2026-10-01):** AC 2a and AC 2c are unchanged — Christian's answer is
+"code", so the criteria stand and the artefact is what must change. The amend only moves the work:
+"Files to change" now assigns filling in the export's **Design tokens** section (with the round-2
+values `#22C194` / `#111111` = 8.20:1 and `#7FDCC0` on `#243060` = 7.74:1, and the removal of the
+"Design tokens" bullet at line 62) and committing `design/handoff/landing-page/` to this task's
+Implementer step; "Will not do" allows that one write outside this worktree; and the last stop
+condition no longer fires on a token-less export — the Implementer fills it in from
+`design/draft/Landing Page/round-2/README.md` instead of stopping.
