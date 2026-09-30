@@ -35,7 +35,7 @@
 <link rel="stylesheet" href="web/fassung17.css">
 <link rel="stylesheet" href="web/fassung19.css">
 <link rel="stylesheet" href="web/zugang.css">
-<!-- Liegt zuoberst: nur auf den Rechtsseiten geladen. -->
+<!-- Loaded last so it wins the cascade; only on the legal pages. -->
 <link rel="stylesheet" href="web/recht.css">
 <link rel="icon" type="image/svg+xml" href="bilder/logo/icon-gradient.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="bilder/logo/favicon-32.png">
@@ -50,8 +50,8 @@
 <body>
 
 <!-- ==================== NAVIGATION ====================
-     Wie auf impressum.html: dieselbe Pille, Sprungmarken zurueck
-     auf index.html, kein Burger (der braucht web/seite.js). -->
+     As on impressum.html: the same pill, in-page anchors pointing
+     back at index.html, no burger (that one needs web/seite.js). -->
 <nav class="nav" aria-label="Hauptnavigation">
   <div class="nav__in">
     <a href="index.html#top" class="nav__logo" aria-label="Loop Studio"><img src="bilder/logo/loop-studio-dunkel.png" alt="Loop Studio" width="120" height="73"></a>
@@ -267,8 +267,8 @@
 </main>
 
 <!-- ==================== FOOTER ====================
-     Wie auf impressum.html: die Leiste aus index.html, ohne den
-     Schritt-Block und ohne den Termin-Knopf. -->
+     As on impressum.html: the bar from index.html, without the step
+     block and without the booking button. -->
 <footer class="fuss">
   <div class="wrap">
     <div class="fuss__leiste">

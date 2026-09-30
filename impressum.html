@@ -35,7 +35,7 @@
 <link rel="stylesheet" href="web/fassung17.css">
 <link rel="stylesheet" href="web/fassung19.css">
 <link rel="stylesheet" href="web/zugang.css">
-<!-- Liegt zuoberst: nur auf den Rechtsseiten geladen. -->
+<!-- Loaded last so it wins the cascade; only on the legal pages. -->
 <link rel="stylesheet" href="web/recht.css">
 <link rel="icon" type="image/svg+xml" href="bilder/logo/icon-gradient.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="bilder/logo/favicon-32.png">
@@ -50,11 +50,10 @@
 <body>
 
 <!-- ==================== NAVIGATION ====================
-     Dieselbe Pille wie auf der Startseite, die Sprungmarken zeigen
-     zurueck auf index.html. Kein Burger und kein Mobilmenue: beide
-     brauchen web/seite.js, und auf einer Rechtsseite laeuft kein
-     Bewegungsskript. Unter 1000 px blendet fassung2.css die Links
-     aus; zurueck geht es ueber das Logo. -->
+     The same pill as on the start page; the in-page anchors point
+     back at index.html. No burger and no mobile menu: both need
+     web/seite.js, and a legal page runs no motion script. Below
+     1000 px fassung2.css hides the links; the logo leads back. -->
 <nav class="nav" aria-label="Hauptnavigation">
   <div class="nav__in">
     <a href="index.html#top" class="nav__logo" aria-label="Loop Studio"><img src="bilder/logo/loop-studio-dunkel.png" alt="Loop Studio" width="120" height="73"></a>
@@ -137,8 +136,8 @@
 </main>
 
 <!-- ==================== FOOTER ====================
-     Die Leiste aus index.html, ohne den Schritt-Block und ohne den
-     Termin-Knopf: auf einer Rechtsseite wird kein Calendly geladen. -->
+     The bar from index.html, without the step block and without the
+     booking button: a legal page loads no Calendly. -->
 <footer class="fuss">
   <div class="wrap">
     <div class="fuss__leiste">
