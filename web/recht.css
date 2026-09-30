@@ -101,7 +101,7 @@ html{scroll-padding-top:calc(var(--nav-h) + 28px)}
    That address is today's canonical and sits in sitemap.xml, so it
    keeps resolving. The meta refresh does the work; this is what a
    visitor sees if the browser does not follow it. */
-.umzug{background:var(--papier);padding:calc(var(--nav-h) + clamp(56px,8vw,104px)) 0 clamp(72px,9vw,120px)}
+.umzug{background:var(--papier);padding:clamp(96px,12vw,160px) 0 clamp(72px,9vw,120px)}
 .umzug__in{max-width:34rem;margin:0 auto;text-align:center}
 .umzug h1{font-family:var(--display);font-weight:700;font-size:clamp(2.4rem,5vw,3.4rem);line-height:.92;color:var(--tinte);margin:18px 0 0}
 .umzug p{margin-top:16px;color:var(--text)}
