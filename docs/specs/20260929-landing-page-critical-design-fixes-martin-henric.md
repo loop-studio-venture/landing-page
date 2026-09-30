@@ -394,3 +394,22 @@ top-to-bottom; and the link list of the changed sections.
 - Splitting this into smaller slices. The feature is cut as **one** slice (CONCEPT.md §Slices): one
   design round decides the CTA pairing, the frame treatment and the offer-sequence copy together,
   and a partial landing would put a reviewed page half on the old pairing. Size L is expected here.
+
+
+## Review answers (Christian, 2026-09-30)
+
+Question from the Tester round:
+still a `spec` verdict after the Architect's amend round
+What to decide:
+1. "Export README names round 2 + picked variant and states the token values with their ratios; nothing left unde…" fails (fail — line 62 still reads "Design tokens" was not written by this export; #22C194, #111111, #7FDCC0 appear nowhere in the file). Should the spec change (A), the test (B) or the code (C)? *Recommendation:* A (the spec is wrong), the Tester's own verdict.
+2. "`design/handoff/landing-page/` tracked and committed" fails (fail — prints ?? design/handoff/landing-page/; git log -1 -- design/handoff/landing-page/ is empty). Should the spec change (A), the test (B) or the code (C)? *Recommendation:* A (the spec is wrong), the Tester's own verdict.
+• criterion: Export README names round 2 + picked variant **and states the token values with their ratios**; nothing left under "What this export could not fill in"
+  test: read `C:\code\loopstudio\design\handoff\landing-page\README.md`
+  result: fail — line 62 still reads "Design tokens" was not written by this export; #22C194, #111111, #7FDCC0 appear nowhere in the file
+  Tester's verdict: spec
+• criterion: `design/handoff/landing-page/` tracked and committed
+  test: `git -C C:\code\loopstudio status --porcelain design/handoff/landing-page/`
+  result: fail — prints ?? design/handoff/landing-page/; git log -1 -- design/handoff/landing-page/ is empty
+  Tester's verdict: spec
+
+Answer: code (C) for both (Christian Wenzel, 2026-09-30, terminal front desk): 1. write the token values with their ratios (#22C194, #111111, #7FDCC0 and the others the export names) into design/handoff/landing-page/README.md and close the "What this export could not fill in" gap; 2. commit design/handoff/landing-page/ on the task branch so it is tracked. No spec change.
