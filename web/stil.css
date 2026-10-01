@@ -42,6 +42,29 @@
   --sand:#CBBDA2;
   --sand-linie:#DFD4BE;
 
+  /* Runde 2, Variante A ("Hellerer Gruenton, dunkle Schrift", 2026-09-29,
+     Review Martin Henrich): die acht Haupt-Knoepfe (.btn--tuerkis) haben ab
+     jetzt eine eigene Paarung statt --tuerkis + Literal. Das Gruen wird eine
+     Stufe heller, die Schrift bleibt #111111 — die Regel aus Farbrunde 1c
+     ("dunkle Schrift auf Gruen, nie weiss") bleibt damit unangetastet, der
+     Kontrast steigt von 5,78:1 auf 8,20:1. Der Hover behaelt die Flaeche und
+     laesst den Versatz aus .btn:hover die Arbeit machen (1c), also gilt
+     8,20:1 auch dort und im Fokus.
+     --tuerkis selbst bleibt #1BA17B: es faerbt Eyebrow, .schritt__nr,
+     .nav__tag, .hl, Badge, Fahne und die Haekchen weiter.
+     Die Paarung steht nur hier; die vier Deklarationsstellen
+     (stil.css, fassung2.css, fassung10.css, zugang.css) verweisen darauf. */
+  --cta-bg:#22C194;
+  --cta-fg:#111111;
+
+  /* Runde 2, Variante A: das Akzentwort in den vier Schritt-Ueberschriften
+     (.schritt h3 em) auf dem Navy-Panel --tinte #243060. Vorher stand dort
+     --blau #273EA2 — 1,38:1, blau auf dunkelblau. Jetzt 7,74:1, und immer
+     noch erkennbar eine zweite Farbe neben der weissen Ueberschrift.
+     --blau bleibt #273EA2: es steht auf hellem Grund ueberall sonst richtig.
+     Das Marken-Gruen taugt hier nicht — #1BA17B auf Navy sind nur 3,86:1. */
+  --akzent-navy:#7FDCC0;
+
   /* --- Schrift: KEIN Grau. Alles navy-getoent. --- */
   --text:#2B3557;
   --text-leise:#5A6795;
@@ -113,8 +136,8 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .btn--navy{background:var(--navy);color:#fff}
 .btn--navy:hover{background:var(--navy-tief)}
 .btn--weiss{background:#fff;color:var(--navy)}
-.btn--tuerkis{background:var(--tuerkis);color:#111111}
-.btn--tuerkis:hover{background:var(--tuerkis);color:#111111}
+.btn--tuerkis{background:var(--cta-bg);color:var(--cta-fg)}
+.btn--tuerkis:hover{background:var(--cta-bg);color:var(--cta-fg)}
 .btn--rand{border:2px solid var(--navy);color:var(--navy)}
 .btn--rand:hover{background:var(--navy);color:#fff}
 .btn--rand-hell{border:2px solid rgba(255,255,255,.35);color:#fff}

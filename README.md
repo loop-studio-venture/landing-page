@@ -1,7 +1,7 @@
 # Loop Studio landing page
 
 The public, pre-login marketing site of Loop Studio at **loopstudio.app**: start page, Impressum,
-privacy policy, and the 404 page. Everything after login lives in the app
+Datenschutzerklärung, and the 404 page. Everything after login lives in the app
 (`app.loopstudio.app`, repo `loop-studio-frontend`); this site only links to it
 (`https://app.loopstudio.app/login` and the sign-up entry points).
 
@@ -17,15 +17,24 @@ overwrite edits made here.
 
 ```
 index.html            start page
-impressum.html        legal notice (German law requires it)
-privacy-policy.html   privacy policy
+impressum.html        legal notice (German law requires it), German, current design
+datenschutz.html      privacy policy for THIS WEBSITE (loopstudio.app) only, German,
+                      current design; it links to the app's own policy for app.loopstudio.app
+privacy-policy.html   redirect to datenschutz.html (the old canonical address)
+_redirects            Netlify rule: /privacy-policy.html -> /datenschutz.html, 301
 404.html              not-found page (Netlify serves it for unknown paths)
+web/                  the current design: hand-written CSS/JS (stil, lego, fassung*, zugang),
+                      recht.css only on the three legal pages, fonts/ self-hosted
+bilder/               images of the current design
 css/                  loopstudio-app.webflow.shared.min.css + page styles (exported, minified)
 js/                   webflow.js runtime (exported, minified) - interactions, no app logic
 fonts/                Plus Jakarta Sans (self-hosted)
 images/               exported assets; file names carry Webflow ids
 serve.ps1             local preview server (PowerShell, no dependencies)
 ```
+
+`404.html` is still the retired Webflow export; only `index.html` and the two legal pages are on
+the current design.
 
 ## Preview locally
 
@@ -39,8 +48,10 @@ No build step, no `npm install`. Open the URL in a browser; edit files and reloa
 ## Deploy
 
 **Netlify, from the `main` branch.** Every merge to `main` publishes the site. There is no
-build command and no deploy configuration in the repo; the Netlify site settings hold the
-domain and the branch.
+build command; the Netlify site settings hold the domain and the branch. The only deploy
+configuration in the repo is `_redirects` (the 301 from the old privacy address), and it only
+takes effect if the publish directory is the repository root - `privacy-policy.html` stays on
+disk as a working fallback either way.
 
 ## Branching
 
@@ -51,10 +62,16 @@ repos and every other Loop Studio repository.
 
 ## Conventions
 
-- Copy is **German** first; keep the register of the existing pages.
+- Copy is **German** first; keep the register of the existing pages: "du" on the marketing
+  pages, the formal "Sie" on the legal pages (`impressum.html`, `datenschutz.html`,
+  `privacy-policy.html`; Christian, 2026-09-30).
 - Links into the app go to `https://app.loopstudio.app/...` (never the dev domain).
 - The exported CSS and `webflow.js` are minified and generated; prefer adding a small
   hand-written stylesheet or script over editing the minified files, and say so in the commit.
-- Legal pages (`impressum.html`, `privacy-policy.html`) change only on Christian's instruction.
+- Legal pages (`impressum.html`, `datenschutz.html`) change only on Christian's instruction.
+- `datenschutz.html` describes the **website** only (Christian, 2026-09-30). The logged-in
+  product at `app.loopstudio.app` has its own privacy policy, which this page links to; never
+  describe app processing here, and when the app gains a processor, that other notice is the
+  one to change.
 - No trackers, no third-party scripts without a decision recorded in the workspace knowledge
   base.

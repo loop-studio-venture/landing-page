@@ -5,8 +5,9 @@ structure, and deploy are in [README.md](./README.md); this file holds the rules
 
 ## What this is
 
-The static, pre-login marketing site of Loop Studio (`loopstudio.app`): start page, Impressum,
-privacy policy, 404. It is **not** the app; the app is `loop-studio-frontend` (Nuxt) next to this
+The static, pre-login marketing site of Loop Studio (`loopstudio.app`): start page, Impressum
+(`impressum.html`), Datenschutzerklärung (`datenschutz.html`, with `privacy-policy.html` left in
+place as a redirect to it), 404. It is **not** the app; the app is `loop-studio-frontend` (Nuxt) next to this
 repo, reached at `app.loopstudio.app`. Cross-repo context (architecture, decisions, glossary)
 lives in the workspace's `../knowledge-base/`; screen designs in `../design/`.
 
@@ -17,9 +18,17 @@ lives in the workspace's `../knowledge-base/`; screen designs in `../design/`.
 - Minified exported files (`css/*.min.css`, `js/webflow.js`) are generated artifacts: change
   behaviour or styling by adding a small hand-written file and linking it, unless the task is
   explicitly about the exported file. Keep such additions readable and commented.
+  `web/recht.css` is such a file: it is loaded last and only on the three legal pages
+  (`impressum.html`, `datenschutz.html`, `privacy-policy.html`) and holds what long legal text
+  needs on top of the chain `index.html` loads.
 - Every page must keep working when opened from `serve.ps1` (relative paths, no build step).
 - Links into the app always use `https://app.loopstudio.app/...`.
-- Copy is German first. Do not change legal pages without an explicit instruction.
+- Copy is German first. Do not change legal pages without an explicit instruction. The legal
+  pages address the reader as "Sie" (Christian, 2026-09-30); every other page keeps "du".
+- `datenschutz.html` covers **this website (`loopstudio.app`) only** (Christian, 2026-09-30).
+  The logged-in product at `app.loopstudio.app` has its own privacy policy and this page links
+  to it; app processing is never described here. A new processor in the app changes that other
+  notice, not this repo.
 - No third-party scripts, trackers, or fonts from external hosts without a recorded decision.
 - Branch rule: never commit to `main` (that deploys to Netlify) or `dev`; work on `fix/` or
   `feature/` branches from `dev`.
