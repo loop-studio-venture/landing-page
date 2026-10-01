@@ -62,12 +62,14 @@ repos and every other Loop Studio repository.
 
 ## Conventions
 
-- Copy is **German** first; keep the register of the existing pages.
+- Copy is **German** first; keep the register of the existing pages: "du" on the marketing
+  pages, the formal "Sie" on the legal pages (`impressum.html`, `datenschutz.html`,
+  `privacy-policy.html`; Christian, 2026-09-30).
 - Links into the app go to `https://app.loopstudio.app/...` (never the dev domain).
 - The exported CSS and `webflow.js` are minified and generated; prefer adding a small
   hand-written stylesheet or script over editing the minified files, and say so in the commit.
 - Legal pages (`impressum.html`, `datenschutz.html`) change only on Christian's instruction.
-- `datenschutz.html` describes the **website** only (Christian, 2026-10-01). The logged-in
+- `datenschutz.html` describes the **website** only (Christian, 2026-09-30). The logged-in
   product at `app.loopstudio.app` has its own privacy policy, which this page links to; never
   describe app processing here, and when the app gains a processor, that other notice is the
   one to change.

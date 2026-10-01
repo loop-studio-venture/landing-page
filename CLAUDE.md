@@ -23,8 +23,9 @@ lives in the workspace's `../knowledge-base/`; screen designs in `../design/`.
   needs on top of the chain `index.html` loads.
 - Every page must keep working when opened from `serve.ps1` (relative paths, no build step).
 - Links into the app always use `https://app.loopstudio.app/...`.
-- Copy is German first. Do not change legal pages without an explicit instruction.
-- `datenschutz.html` covers **this website (`loopstudio.app`) only** (Christian, 2026-10-01).
+- Copy is German first. Do not change legal pages without an explicit instruction. The legal
+  pages address the reader as "Sie" (Christian, 2026-09-30); every other page keeps "du".
+- `datenschutz.html` covers **this website (`loopstudio.app`) only** (Christian, 2026-09-30).
   The logged-in product at `app.loopstudio.app` has its own privacy policy and this page links
   to it; app processing is never described here. A new processor in the app changes that other
   notice, not this repo.
