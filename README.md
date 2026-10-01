@@ -18,7 +18,8 @@ overwrite edits made here.
 ```
 index.html            start page
 impressum.html        legal notice (German law requires it), German, current design
-datenschutz.html      privacy policy, German, current design
+datenschutz.html      privacy policy for THIS WEBSITE (loopstudio.app) only, German,
+                      current design; it links to the app's own policy for app.loopstudio.app
 privacy-policy.html   redirect to datenschutz.html (the old canonical address)
 _redirects            Netlify rule: /privacy-policy.html -> /datenschutz.html, 301
 404.html              not-found page (Netlify serves it for unknown paths)
@@ -66,5 +67,9 @@ repos and every other Loop Studio repository.
 - The exported CSS and `webflow.js` are minified and generated; prefer adding a small
   hand-written stylesheet or script over editing the minified files, and say so in the commit.
 - Legal pages (`impressum.html`, `datenschutz.html`) change only on Christian's instruction.
+- `datenschutz.html` describes the **website** only (Christian, 2026-10-01). The logged-in
+  product at `app.loopstudio.app` has its own privacy policy, which this page links to; never
+  describe app processing here, and when the app gains a processor, that other notice is the
+  one to change.
 - No trackers, no third-party scripts without a decision recorded in the workspace knowledge
   base.

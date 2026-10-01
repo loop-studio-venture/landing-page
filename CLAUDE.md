@@ -24,6 +24,10 @@ lives in the workspace's `../knowledge-base/`; screen designs in `../design/`.
 - Every page must keep working when opened from `serve.ps1` (relative paths, no build step).
 - Links into the app always use `https://app.loopstudio.app/...`.
 - Copy is German first. Do not change legal pages without an explicit instruction.
+- `datenschutz.html` covers **this website (`loopstudio.app`) only** (Christian, 2026-10-01).
+  The logged-in product at `app.loopstudio.app` has its own privacy policy and this page links
+  to it; app processing is never described here. A new processor in the app changes that other
+  notice, not this repo.
 - No third-party scripts, trackers, or fonts from external hosts without a recorded decision.
 - Branch rule: never commit to `main` (that deploys to Netlify) or `dev`; work on `fix/` or
   `feature/` branches from `dev`.
