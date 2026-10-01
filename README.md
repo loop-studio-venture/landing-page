@@ -21,7 +21,8 @@ impressum.html        legal notice (German law requires it), German, current des
 datenschutz.html      privacy policy for THIS WEBSITE (loopstudio.app) only, German,
                       current design; it links to the app's own policy for app.loopstudio.app
 privacy-policy.html   redirect to datenschutz.html (the old canonical address)
-_redirects            Netlify rule: /privacy-policy.html -> /datenschutz.html, 301
+_redirects            Netlify rules: /privacy-policy.html -> /datenschutz.html (301); interim
+                      /agb + /agb.html -> Terms of Service on Notion (302, LS-90 removes it)
 404.html              not-found page (Netlify serves it for unknown paths)
 web/                  the current design: hand-written CSS/JS (stil, lego, fassung*, zugang),
                       recht.css only on the three legal pages, fonts/ self-hosted
