@@ -46,10 +46,14 @@ page — sections, motion, mascot art, fonts and structure stay (LS-82-D4).
 - The price stays **20 €** (it is what is live, what the review names, and what three visible spots
   on the page say). `knowledge-base/` is not edited by this task (LS-82-S1-Q4).
 - The `"Was ist der Unterschied zur Software für 15 Euro?"` string in the JSON-LD `FAQPage`
-  (`index.html:546`) is **not** touched in this slice — it is structured data, not visible copy, and
-  changing it depends on the same unanswered LS-82-S1-Q4 (the concept now records this in-page
-  contradiction, LS-82-D8). Default is: leave it. Say the word at gate 1 and it is aligned to 20 €
-  in the same change (one string).
+  (`index.html:546` as read when this spec was written; the block now sits two lines lower, at
+  `index.html:548`, after the pricing-copy edit) is **not** touched in this slice — it is structured
+  data, not visible copy, and changing it depends on the same unanswered LS-82-S1-Q4 (the concept
+  records this in-page contradiction, LS-82-D8). This is no longer this spec's default but a
+  recorded decision: **82-S1-Q15 (2026-10-01, Dev Manager decision policy from the feature's
+  DECISIONS.md)** — "this slice leaves the '15 Euro' string in the JSON-LD FAQPage at
+  `index.html:546` unchanged; it becomes a one-string fix to 20 € once Christian answers
+  LS-82-S1-Q4." AC 14 makes that testable; it is no longer a gate-1 offer to align it here.
 - The pricing block is not moved; `#pakete` keeps its position between `#lego` and `#fuer-wen`
   (LS-82-D3). Criterion 5 is text/clarity only.
 - Review point 4 ("Oder wir." / its header, ~1:54–2:13) is not implemented here (LS-82-S1-Q1); its
@@ -157,7 +161,8 @@ lines of `#zeigen` / `#saeulen`). The 20 € card gains a short German line nami
 jedem Paket drin"* and is the natural place to make the sequence explicit: software → the four steps
 the software runs → optional consulting packages that include the software rather than adding to it.
 The word "Basis" must not be used for the software tier, because the 490 € consulting package is
-already called "Basis" (`index.html:431`). No block moves (LS-82-D3); no price changes.
+already called "Basis" (`index.html:431`). No block moves (LS-82-D3); no price changes. The JSON-LD
+`FAQPage` question string is not part of this copy pass (82-S1-Q15, 2026-10-01).
 
 ## Files to change
 
@@ -169,10 +174,18 @@ already called "Basis" (`index.html:431`). No block moves (LS-82-D3); no price c
 | `web/zugang.css` | `.mobmenu a.btn--tuerkis` (54) references `--cta-fg` | AC 3 — mobile-menu Login |
 | `web/fassung4.css` | `.schritt h3 em` (113) uses the new step-accent token | AC 7 |
 | `web/fassung9.css` | `.kasten` / `.kasten__w` (7-8): the approved frame/baseline treatment, with a dated comment | AC 5, 6 |
-| `index.html` | Pricing section `#pakete` (404-426): the "what costs 20 €" line and the offer-sequence clarity copy; hero frame markup (99) **only** if the approved treatment needs a wrapper/modifier class | AC 8, 9, 10, 5 |
+| `index.html` | Pricing section `#pakete` (404-426): the "what costs 20 €" line and the offer-sequence clarity copy; hero frame markup (99) **only** if the approved treatment needs a wrapper/modifier class. The JSON-LD `FAQPage` block is **not** edited — its "15 Euro" question string stays as it is (82-S1-Q15) | AC 8, 9, 10, 5, 14 |
 | `design/handoff/landing-page/README.md` (design workspace `C:\code\loopstudio`, **not this repo**; written there by **this task's Implementer step** — Christian, 2026-09-30, answered the Tester's two `spec` verdicts with **code**: the export is what is wrong, not the criteria) | Record the round-2 pick: round 2 and the picked variant, the token values with their measured contrast ratios copied from `design/draft/Landing Page/round-2/README.md` (rows 1 and 3 of its decision table: `--cta-bg #22C194` with `--cta-fg #111111` = **8.20:1**, step accent `#7FDCC0` on the navy panel `#243060` = **7.74:1**, and the other values that README names — hover keeps the rest-state surface so the hover ratio equals the rest ratio, focus ring `#273EA2` on `#F4EFE6` = 7.98:1), and whether the 1c "dark text on green, never white" rule still holds — i.e. write the **Design tokens** section the mechanical export left empty and remove its "Design tokens" bullet from "What this export could not fill in" (line 62 of that file today) | AC 1, 2, 2a |
 | `design/handoff/landing-page/` (design workspace `C:\code\loopstudio`, **not this repo**) | `git add` the whole folder and commit it there, so it is tracked (Christian, 2026-09-30: "commit `design/handoff/landing-page/` on the task branch so it is tracked"). Which branch that workspace has checked out is **unverified** from this session — no commands could be run; the Implementer commits on whatever branch is checked out there and names it in the report | AC 2c |
 | `design/handoff/landing/README.md` | **not changed** — round 1c, kept as history | AC 2d |
+
+Both design-workspace rows above are a write **outside this worktree**. If the acting role's path
+guard refuses `C:\code\loopstudio\design\handoff\landing-page\…`, that role does not route around
+the guard (82-S1-Q14, closed 2026-10-01 as a technical note with nothing for a human to decide): it
+reports the refused path and the guard's own message, and the write is carried out by the role that
+already has write range in the design workspace — the design step / Dev Manager that wrote
+`design/draft/Landing Page/round-2/` — from the same round-2 decision table. AC 2a and AC 2c are
+unchanged either way; only which role performs them may move.
 
 ## Acceptance criteria
 
@@ -234,7 +247,10 @@ already called "Basis" (`index.html:431`). No block moves (LS-82-D3); no price c
     changed sections resolves (relative links to files in this repo, `https://app.loopstudio.app/...`
     for app links).
 14. Untouched: `impressum.html`, `privacy-policy.html`, `404.html`, every `bilder/` asset, every
-    font, all JS, the section order, and all prices (20 € / 490 € / 1.690 € / 3.900 € / 590 €).
+    font, all JS, the section order, and all prices (20 € / 490 € / 1.690 € / 3.900 € / 590 €). The
+    JSON-LD `FAQPage` block in `index.html` is untouched too: its question string still reads
+    *"Was ist der Unterschied zur Software für 15 Euro?"* on this branch, byte-identical to the base
+    commit — `git diff` shows no change inside the `application/ld+json` block (82-S1-Q15).
 
 ## Test plan
 
@@ -296,6 +312,9 @@ top-to-bottom; and the link list of the changed sections.
   naming the commit that landed it — that commit is made by this task's Implementer step, and the
   report names the branch it landed on; (d) `git -C C:\code\loopstudio status --porcelain design/handoff/landing/`
   printing nothing and no diff for that folder. Folder mtimes are not evidence for any of the four.
+  If a role's path guard refused the design-workspace write, the close-out quotes the refused path
+  and the guard message and names the role that landed it instead (82-S1-Q14) — the four read-backs
+  above are still what proves AC 2.
 - **AC 3:** `rg "btn--tuerkis|--cta-bg|--cta-fg" web/` output in the report, showing the four
   declaration sites referencing the tokens, and one `grep -c 'btn--tuerkis' index.html` = 8.
 - **AC 4, 7:** a table in the implementation report: pairing → both hex values → measured ratio →
@@ -310,7 +329,10 @@ top-to-bottom; and the link list of the changed sections.
   points at the recorded handoff decision.
 - **AC 12-13:** both html-validate runs (base commit and branch) pasted with their exit codes; the
   desktop + phone screenshots; the checked link list with each target's result.
-- **AC 14:** `git diff --stat` for the whole branch, showing only the files in "Files to change".
+- **AC 14:** `git diff --stat` for the whole branch, showing only the files in "Files to change", plus
+  `git diff -U0 -- index.html` in the report showing no hunk inside the `application/ld+json` block
+  and one grep over `index.html` on the branch still printing the *"Software für 15 Euro"* question
+  string once (82-S1-Q15).
 
 ## Will not do
 
@@ -318,6 +340,9 @@ top-to-bottom; and the link list of the changed sections.
   Architect step — the Dev Manager starts the round when the task reaches `awaiting-design`.
 - Not push, merge or rebase; never touch `main` (Netlify) or `dev` (LS-82-D6). No PR merge by an agent.
 - Not move the pricing block, not change any price, not restructure or reorder any section.
+- Not edit the JSON-LD `FAQPage` block in `index.html` — the "15 Euro" string stays as it is in this
+  slice (82-S1-Q15, 2026-10-01); aligning it to 20 € is a later one-string change once LS-82-S1-Q4
+  is answered.
 - Not edit `impressum.html`, `privacy-policy.html`, `404.html`, `web/bewegung.js`, any image, any font,
   or the Lenis/GSAP motion.
 - Not edit `knowledge-base/`, `loop-studio-frontend`, `loop-studio-backend`, or any other repo. The
@@ -327,6 +352,10 @@ top-to-bottom; and the link list of the changed sections.
   and committing `design/handoff/landing-page/` is this task's Implementer step (Christian,
   2026-09-30) and is the Implementer's only write outside this worktree. The Tester edits nothing
   outside this worktree, and nobody edits `design/handoff/landing/`.
+- Not route around a path guard, a denied tool or a read/write confinement to reach the design
+  workspace — no copying through a scratch path, no shell redirect, no `git -C` write trick
+  (82-S1-Q14, closed 2026-10-01: the Implementer declining was correct). The refusal is reported and
+  the write moves to a role that has the range.
 - Not fold in `design/DETAILS.md`'s open consolidation round (D-1…D-25) — it stays its own thread.
 - Not add a dependency, a build step, a tracker or an externally hosted font.
 - Not restart any process; nothing here runs under PM2.
@@ -342,7 +371,8 @@ top-to-bottom; and the link list of the changed sections.
 - The frame fix cannot be made without editing `web/bewegung.js` or changing `#kasten`/`.kasten__w`:
   stop — that is behaviour, not styling, and needs its own decision.
 - Christian answers LS-82-S1-Q4 with 15 € (or any price change): stop, the pricing copy and the
-  numbers on the page need re-specifying before the copy lands.
+  numbers on the page need re-specifying before the copy lands. Until he answers, the JSON-LD "15
+  Euro" string is simply left alone (82-S1-Q15) — that is not a stop.
 - html-validate reports a finding on the branch that is not on the base commit and is not explained by
   the diff: stop and report it rather than "fixing" unrelated markup.
 - Implementation is about to start and `design/draft/Landing Page/round-2/` is missing, or carries no
@@ -352,6 +382,12 @@ top-to-bottom; and the link list of the changed sections.
   `design/handoff/landing-page/README.md` is missing the token values and ratios, that is **not** a
   stop: the Implementer writes them into the export from the draft's decision table and commits the
   folder (Christian, 2026-09-30 — code, not spec).
+- A path guard refuses the design-workspace write for AC 2a / AC 2c: stop that write, report the
+  refused path and the guard message in the task thread, and hand the export fill-in and the commit
+  to the role that has write range there (the design step / Dev Manager) — do not route around the
+  guard and do not drop AC 2a or AC 2c (82-S1-Q14, 2026-10-01). Work in this repo may continue
+  meanwhile only if the round-2 draft itself already carries the picked variant's token values and
+  ratios (AC 2b's ordering is about the draft and the export, not about who typed them).
 
 ## Risks and open questions
 
@@ -359,8 +395,10 @@ top-to-bottom; and the link list of the changed sections.
   LS-82-S1-Q4 names, `index.html:546` — inside the JSON-LD `FAQPage` — asks *"Was ist der
   Unterschied zur Software für 15 Euro?"* while the visible pricing headline, card, meta description
   and visible FAQ all say 20 €. Invisible to a reader, but it is what Google may surface. Verified
-  in this worktree; folded back into the concept's LS-82-S1-Q4 (LS-82-D8). Left out of the criteria
-  to keep the slice as the concept cut it; a one-string fix if Christian says 20 € stands.
+  in this worktree; folded back into the concept's LS-82-S1-Q4 (LS-82-D8). **Decided for this slice:
+  leave it** (82-S1-Q15, 2026-10-01) — AC 14 now pins it as untouched, and it becomes a one-string
+  fix to 20 € once Christian answers LS-82-S1-Q4. The contradiction stays live on the page until
+  then; that is a known, accepted state, not an oversight.
 - The JSON-LD `FAQPage` block (532-553) and the visible FAQ (522-528) contain different questions
   altogether — pre-existing, unrelated to this review, not touched here.
 - The round-2 handoff at `design/handoff/landing-page/` was written by the mechanical exporter, with
@@ -370,6 +408,13 @@ top-to-bottom; and the link list of the changed sections.
   satisfy it. Christian assigned that hand edit — and the commit of the folder — to this task's
   Implementer step (2026-09-30), with the values taken from the round-2 decision table; the three
   non-token sections stay as the exporter left them, since AC 2a covers token values and ratios only.
+- **AC 2a / AC 2c may need a role swap, not a spec change.** The Implementer's write guard refused
+  `C:\code\loopstudio\design\handoff\landing-page\…` and it declined to route around the guard;
+  82-S1-Q14 was closed on 2026-10-01 as a technical note with nothing for a human to decide. The
+  criteria stand unchanged; "Files to change" and the last stop condition now say what happens when
+  the guard refuses (report it, hand the write to the design step / Dev Manager). If that role's
+  range also turns out to exclude the path, the task reports a blocked AC 2a/2c rather than
+  silently closing out — AC 2a is then undertested by nobody's fault but still unmet.
 - Two handoff folders exist for this one screen — `landing/` (round 1c, the former repo) and
   `landing-page/` (round 2, the `<route-slug>` convention). AC 2 fixes which one this task uses;
   consolidating or archiving the older folder is a design-workspace housekeeping item, not part of
@@ -397,6 +442,8 @@ top-to-bottom; and the link list of the changed sections.
 - Repositioning the pricing block (LS-82-D3) and any change to prices or package names.
 - Review point 4 (LS-82-S1-Q1) and anything in `design/DETAILS.md`'s consolidation round.
 - `knowledge-base/domains/consulting-offer.md`'s 15 € line — owned elsewhere.
+- The in-page JSON-LD `FAQPage` "15 Euro" string (`index.html:546`, now 548) — deliberately left as
+  it is in this slice (82-S1-Q15); it is a one-string follow-up to LS-82-S1-Q4, not work here.
 - Legal pages, the 404 page, the Webflow-era `css/*.min.css` artefacts, and the demo pages
   `web/lego-demo.html` / `web/monster-buehne.html`.
 - Refactoring the 19-file `fassung*.css` override stack into one stylesheet — tempting while in
@@ -436,3 +483,21 @@ values `#22C194` / `#111111` = 8.20:1 and `#7FDCC0` on `#243060` = 7.74:1, and t
 Implementer step; "Will not do" allows that one write outside this worktree; and the last stop
 condition no longer fires on a token-less export — the Implementer fills it in from
 `design/draft/Landing Page/round-2/README.md` instead of stopping.
+
+**Folded in (Architect amend 2, 2026-10-01)** — the two decisions recorded on 2026-10-01 (Dev
+Manager decision policy, night):
+
+- **82-S1-Q14** ("AC 2a has no actor with write range"; closed as a technical note, nothing for a
+  human to choose): AC 2a and AC 2c are **unchanged**. The spec now says what happens when the
+  acting role's path guard refuses `C:\code\loopstudio\design\handoff\landing-page\…` — a note under
+  "Files to change", a "Will not do" line against routing around a guard, a new last stop condition
+  (report the refused path and hand the write to the design step / Dev Manager), an evidence line
+  under AC 2, and a risk bullet. No criterion was added, removed or weakened.
+- **82-S1-Q15** (the JSON-LD "15 Euro" string stays unchanged in this slice): the Assumptions bullet
+  now cites the recorded decision instead of offering the change at gate 1; AC 14 pins the JSON-LD
+  block as untouched and byte-identical to the base commit, with a read-back under "Verification and
+  evidence"; "Approach", "Files to change" (`index.html` row), "Will not do", the LS-82-S1-Q4 stop
+  condition, the first risk bullet and "Out of scope" say the same thing once each. The alignment to
+  20 € remains a one-string follow-up to LS-82-S1-Q4, outside this slice.
+
+Everything else in this spec is unchanged, and it stays `status: ready`, `size: L`.
