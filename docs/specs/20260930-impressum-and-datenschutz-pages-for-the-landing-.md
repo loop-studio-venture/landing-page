@@ -452,3 +452,31 @@ three steps are reported explicitly in the implementation and test reports.
   legal-page presence items this task's criteria name are covered.
 - The 15 EUR / 20 EUR contradiction in `index.html`'s JSON-LD - it belongs to the open task
   `20260929-price-20-eur-everywhere-app-landing-page-knowled`.
+
+
+## Review answers (Christian, 2026-10-01)
+
+Review loop cap reached, Reviewer still requested changes:
+1. [blocking] datenschutz.html:125 — The external product-policy link substitutes for the app-processing disclosures explicitly required by the amended spec.
+   Scenario: An app user reads this declaration and finds no App section, account/session explanation or required processor disclosures; sections 03–08 explicitly cover only the website despite the lead claiming both domains.
+   Suggested fix: Implement the app section from the two authorised knowledge-base sources, retain shared disclosures for both surfaces, and escalate only genuinely missing facts rather than replacing the required section with an external notice.
+2. [blocking] impressum.html:18 — font licence needed: Thunder.
+   Scenario: The new legal pages preload and render Thunder, but the supplied Fonts report is truncated before its licence evidence, no Review answers record an exception, and the licence register was inaccessible.
+   Suggested fix: Provide the complete free/licensed status and applicable validity evidence for Thunder before approval.
+3. [should-fix] datenschutz.html:125 — The product privacy-policy link is visually indistinguishable from surrounding body text.
+   Scenario: A sighted reader looking for the product notice sees ordinary paragraph text: the link has the same colour and weight and no underline or border.
+   Suggested fix: Apply a persistent underline to inline legal-text links, rather than styling only mailto and company-card links.
+4. [should-fix] README.md:21 — The documentation omits the required dual-domain scope.
+   Scenario: A maintainer consulting README.md or CLAUDE.md sees only a pre-login site's privacy page and has no indication that changes must also account for app processing.
+   Suggested fix: Once the app section is implemented, document both covered domains in README.md and CLAUDE.md as criterion 21 requires.
+5. [should-fix] design/STATUS.md:1741 — The design status and handoff still describe an unapproved, unexported round despite the implemented template.
+   Scenario: The next designer reads 'awaiting a pick' and 'no handoff exported' and cannot distinguish pending design work from the implemented variant.
+   Suggested fix: Have the design-record owner reconcile STATUS.md and the handoff with the actual recorded approval and implementation state without inventing a pick.
+
+Answer: fix 20260930-impressum-and-datenschutz-pages-for-the-landing-: Christian's answers to the review (2026-09-30, terminal front desk):
+1. [blocking, app section] Option B: the landing-page Datenschutzerklaerung covers the WEBSITE only. Rewrite the lead so it no longer claims to cover the app, and add a clearly visible (underlined) link to the Loop Studio app's own privacy policy. Do NOT add an app section here. The app gets its own privacy page in a separate task (20260930-in-app-privacy-policy-datenschutzerklaerung-for-); until its URL exists, link to the app's planned legal page as a placeholder route agreed in that task or leave a clearly marked TODO in the spec, never an invented text.
+2. [blocking, font] Thunder (Thunder-BoldLC) is FREE for commercial use: it is on C:\ai\skills\_shared\skills\font-licensing\references\free-fonts.md since 2026-09-17 (Christian Wenzel: "I have the Thunder font, and it's free for commercial use"); licensed-fonts.md row says "free - lives on the free list since 2026-09-17". Answer: free. No change needed.
+3. [should-fix] underline inline legal-text links: yes, fix it.
+4. [should-fix] README/CLAUDE.md scope: document that the Datenschutz page covers the website only and points to the app policy (not dual-domain).
+5. [should-fix] design/STATUS.md + handoff: reconcile with the recorded pick (Legal Pages variant A by Christian, 2026-09-30) - do not invent anything.
+Continue the build.
