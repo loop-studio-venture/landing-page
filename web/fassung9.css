@@ -3,8 +3,21 @@
    ============================================================ */
 .held{padding:calc(var(--nav-h) + 180px) 0 140px}
 
-/* Kasten: Wort sitzt auf derselben Grundlinie wie "werden" */
-.kasten{display:inline-grid;grid-template-columns:100%;align-items:baseline;vertical-align:baseline;height:auto;line-height:.9;padding:.07em .18em .09em;overflow:hidden;margin-top:0}
+/* Kasten: Wort sitzt auf derselben Grundlinie wie "werden".
+   Runde 2 (2026-09-29, Review Martin Henrich): der Rahmen sass schief um das
+   Wort. Gemessen an der echten Thunder-Datei: Versalhoehe 0,70 em,
+   p-Unterlaenge 0,20 em, Schrift-Box 0,72/0,24 em. Bei line-height:.9 liegt
+   die Grundlinie 0,69 em unter der Zeilenkante, also blieben mit dem alten
+   padding .07/.09 oben 0,06 em ueber den Versalien und unten 0,30 em unter
+   der Grundlinie stehen — das Loch unter "Content." und "Shotlisten.", die
+   beide keine Unterlaenge haben.
+   Jetzt .25/.03: 0,24 em ueber der Versalhoehe, 0,24 em unter der Grundlinie,
+   Rahmen 1,18 em hoch. Alle drei Woerter sitzen auf einer Grundlinie und
+   damit optisch mittig; "Skripte." hat 0,04 em Luft, overflow:hidden
+   schneidet die Unterlaenge nicht ab.
+   Hoehe bleibt auto und die Breite setzt weiter bewegung.js inline — an
+   #kasten, .kasten__w und dem Wortwechsel aendert sich nichts. */
+.kasten{display:inline-grid;grid-template-columns:100%;align-items:baseline;vertical-align:baseline;height:auto;line-height:.9;padding:.25em .18em .03em;overflow:hidden;margin-top:0}
 .kasten__w{grid-area:1/1;position:static;left:auto;top:auto;white-space:nowrap}
 
 /* Tool: kommt von unten, bleibt gleich hoch */

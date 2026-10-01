@@ -110,7 +110,9 @@ html.lenis,html.lenis body{height:auto}
 .schritt--an{opacity:1;transform:none;pointer-events:auto}
 .schritt__nr{font-family:var(--mono);color:var(--tuerkis);font-size:.68rem;letter-spacing:.22em;margin:0}
 .schritt h3{font-family:var(--display);font-weight:700;font-size:clamp(2.4rem,4.4vw,4.4rem);line-height:.95;color:#fff;margin:14px 0 18px;letter-spacing:.01em}
-.schritt h3 em{font-style:normal;color:var(--blau)}
+/* Runde 2 (2026-09-29): eine Regel, alle vier Schritt-Ueberschriften.
+   --akzent-navy statt --blau — 7,74:1 auf dem Navy-Panel statt 1,38:1. */
+.schritt h3 em{font-style:normal;color:var(--akzent-navy)}
 .schritt p{color:var(--text-hell);max-width:30rem;font-size:1.05rem;line-height:1.55;margin:0}
 .schritte__rechts{position:relative;height:min(68vh,620px);border:1px solid rgba(255,255,255,.12);border-radius:28px;background:rgba(255,255,255,.04);overflow:hidden}
 .visual{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:28px;opacity:0;transform:scale(.97);transition:opacity .5s,transform .6s;padding:28px;box-sizing:border-box}
