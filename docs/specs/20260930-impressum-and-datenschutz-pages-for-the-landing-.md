@@ -24,6 +24,20 @@ Rausnehmen", and the merged `dev` PR is shown to a lawyer before anything reache
 beide"):** the Datenschutzerklaerung's scope covers `loopstudio.app` **and** `app.loopstudio.app`,
 so the same page describes the app's processing as well - the app's own code is not touched.
 
+**Amended again 2026-10-01 - supersedes D1 (Christian's review answers of 2026-09-30, binding):**
+(a) the Datenschutzerklaerung covers the **website `loopstudio.app` only**; the lead says so, the
+page has **no app section**, and it carries a clearly visible, underlined link to the Loop Studio
+app's own privacy policy. That policy is built by task
+`20260930-in-app-privacy-policy-datenschutzerklaerung-for-` (LS-112), whose spec agrees the public
+route `https://app.loopstudio.app/datenschutz` (LS-112-D2); until that task ships, the link points
+at this agreed route and is marked as a placeholder in an HTML comment - no app privacy text is
+written here. (b) Both legal pages use the formal **"Sie"**; the rest of the site keeps "du".
+(c) The Impressum keeps the sentence offering e-mail plus the Calendly booking as the second fast
+contact channel. (d) Thunder is free for commercial use (font-licensing `free-fonts.md`, since
+2026-09-17) - not an issue. (e) Inline links in the legal text are underlined. Wherever a passage
+below still describes D1's "two surfaces" / "app part", this amendment wins; the acceptance
+criteria below are already rewritten to it.
+
 ## Assumptions
 
 - The company data in `impressum.html` today is current and is carried over unchanged: Loop Studio
@@ -33,8 +47,7 @@ so the same page describes the app's processing as well - the app's own code is 
   para. 1 no. 2 DDG's "second fast contact channel" is therefore covered by e-mail plus the
   Calendly booking only - flagged for the lawyer, not solved here.
 - No Datenschutzbeauftragte(r) is appointed; the old privacy page's own section 2 says so and is
-  carried over. The same applies to the app part - one Verantwortlicher, one contact address, for
-  both surfaces.
+  carried over.
 - The landing page's hosting provider is Netlify (`README.md`: "Netlify, from the `main` branch")
   and is named as a recipient **for the landing page only**. Unverified: whether Netlify Inc. or an
   EU entity is the contracting party - the page names "Netlify" and the Implementer does not invent
@@ -57,8 +70,9 @@ so the same page describes the app's processing as well - the app's own code is 
 - The legal pages load the same Plausible snippet as `index.html:43-48` and today's legal pages, so
   their page views keep being counted. They load no Calendly, no GSAP/Lenis motion scripts and no
   form.
-- German text, "du" register, matching `index.html` - the site's own convention (`CLAUDE.md`: "Copy
-  is German first").
+- German text in the formal **"Sie"** register on both legal pages (Christian, 2026-09-30, binding;
+  amendment 2026-10-01 above) - the rest of the site keeps its "du". (Originally: "du", matching
+  `index.html`.)
 - Netlify's publish directory is the repository root, so a `_redirects` file at the root takes
   effect. Unverified (the deploy config is in the Netlify site settings, not in the repo) - which is
   why `privacy-policy.html` also stays on disk as a working fallback redirect page.
@@ -238,19 +252,15 @@ says about the app, not the app.
 8. `datenschutz.html` has a section for each of: Verantwortlicher (identical company data to
    `impressum.html`), no Datenschutzbeauftragte(r), purposes and legal bases, Server-Logfiles,
    recipients, third-country transfer, storage period, data-subject rights incl. the right to
-   complain to a supervisory authority, and the right to withdraw consent. These sections apply to
-   both surfaces named in criterion 22; Verantwortlicher, rights, third-country transfer and storage
-   period are stated once for the whole declaration, not duplicated per surface.
-9. The website part of `datenschutz.html` names, by name, every third party the landing page itself
-   contacts: "Plausible" (cookieless, EU-hosted, with purpose and legal basis), "Calendly" (stating
-   it is loaded only when the visitor clicks the booking button, per `index.html:574` and
-   `web/bewegung.js:35-36`), and the hosting provider "Netlify". The app's recipients are criterion
-   25 and are not mixed into this part.
-10. The website part of `datenschutz.html` states that **this website** (`loopstudio.app`) sets no
-    cookies and no browser storage, and that fonts are served from the site's own server - and
-    contains no passage describing analysis cookies, a cookie consent banner, or a contact form on
-    the website. The statement is explicitly scoped to the website, so it does not read as a claim
-    about the app (see criterion 24).
+   complain to a supervisory authority, and the right to withdraw consent - all of them about
+   this website only.
+9. `datenschutz.html` names, by name, every third party the landing page itself contacts:
+   "Plausible" (cookieless, EU-hosted, with purpose and legal basis), "Calendly" (stating it is
+   loaded only when the visitor clicks the booking button, per `index.html:574` and
+   `web/bewegung.js:35-36`), and the hosting provider "Netlify".
+10. `datenschutz.html` states that this website sets no cookies and no browser storage, and that
+    fonts are served from the site's own server - and contains no passage describing analysis
+    cookies, a cookie consent banner, or a contact form on the website.
 11. The workbook form at `index.html:502` is not described in `datenschutz.html` as a processing
     activity, and no privacy notice is added to it - it has no backend (`index.html:511`).
 12. `index.html:579`'s footer links resolve: the Impressum link points at `impressum.html`, the
@@ -278,37 +288,34 @@ says about the app, not the app.
     absolute app link uses `https://app.loopstudio.app/...`.
 20. No new external host is introduced: apart from the existing Plausible snippet copied from
     `index.html:43-48`, neither new page loads a script, stylesheet, font or image from a
-    third-party domain. Naming the app's processors in the text (criterion 25) is text only - it
+    third-party domain. The link to the app's privacy policy (criterion 23) is an `href` only - it
     adds no request.
 21. `README.md` and `CLAUDE.md` in `landing-page/` describe the pages as shipped
-    (`datenschutz.html` as the privacy page covering both `loopstudio.app` and `app.loopstudio.app`,
-    `privacy-policy.html` as a redirect, `web/recht.css`).
-22. `datenschutz.html` carries a Geltungsbereich statement near the top that names both
-    `loopstudio.app` and `app.loopstudio.app` as covered by this declaration, and the page contains
-    no sentence saying the app is not its subject (the draft's scope sentence, recorded as open
-    question 3 in `design/handoff/legal-pages/README.md`, is deliberately reversed by D1).
-23. `datenschutz.html` is split so a reader can tell from a heading alone which surface a passage is
-    about: every app passage sits under one heading whose text contains "App" (e.g. "Nutzung der App
-    (app.loopstudio.app)") and all website-only passages sit outside it.
-24. The app part of `datenschutz.html` describes, each as its own passage with purpose and legal
-    basis: Registrierung und Nutzerkonto, the technically necessary storage in the browser that keeps
-    the user logged in, hosting and database at Google Cloud in the EU region `europe-west3`
-    (Frankfurt), storage of files the user uploads, payment processing, transactional e-mail,
-    AI processing of user content, error diagnostics, and the import/analysis of social-media
-    content.
-25. The app part names these recipients by name: "Google Cloud", "Stripe", "Brevo", "OpenAI",
-    "Sentry" and "Apify" - the processors documented in
-    `knowledge-base/architecture/system-overview.md:11-26` and
-    `knowledge-base/architecture/deployment.md:5-20,46-54`. No processor is named anywhere on the
-    page that is not documented in one of those two files or observed in the landing page's own
-    source.
-26. "Netlify" appears only in the website part: no sentence on the page connects Netlify with the
-    app or with `app.loopstudio.app`, and the app's hosting is attributed to Google Cloud (D2,
-    Christian 2026-09-30).
-27. The third-country paragraph stays generic: it states that transfers outside the EU/EEA can occur
-    with providers such as OpenAI, Stripe, Sentry and the hosting providers, and names the legal
-    mechanism (EU standard contractual clauses and/or an adequacy decision) - without asserting a
-    legal entity, a company address or a DPA reference for any single provider, Netlify included.
+    (`datenschutz.html` as the privacy page for the website `loopstudio.app` only, pointing to the
+    app's own privacy policy; `privacy-policy.html` as a redirect; `web/recht.css`; the legal pages'
+    "Sie" register).
+22. The lead of `datenschutz.html` (`.recht__lead`) says the declaration applies only to this
+    website (`loopstudio.app`) and does not claim to cover `app.loopstudio.app`; section 01 says
+    the app is not the subject of this declaration. The page has no app section: none of "Google
+    Cloud", "Stripe", "Brevo", "OpenAI", "Sentry", "Apify", "europe-west3" appears on it, and
+    "Netlify" is never connected with the app. (Supersedes D1's criteria 22-27, amendment
+    2026-10-01.)
+23. The page links the app's own privacy policy at `https://app.loopstudio.app/datenschutz` (the
+    route agreed in task `20260930-in-app-privacy-policy-datenschutzerklaerung-for-`, LS-112-D2),
+    from the lead and from section 01, and an HTML comment next to it marks it as a placeholder
+    until that task ships the page. No app privacy text is written here.
+24. Every inline link inside the legal text of both pages (`.recht p a`, `.recht ul li a`,
+    `.recht dd a`) carries a persistent underline (a bottom border) and the teal link colour, so it
+    is distinguishable from body text by more than colour; the table of contents keeps its own
+    hairline rows.
+25. Both legal pages and the `privacy-policy.html` transition page address the reader with the
+    formal "Sie": no "du", "dich", "dir", "dein*", "kannst", "hast" and similar du-forms remain in
+    their visible text or meta descriptions. `index.html` is unchanged and keeps "du".
+26. `impressum.html` keeps one sentence offering e-mail as the fastest contact and the Calendly
+    booking (via the booking button on the home page, linked to `index.html#gespraech`) as the
+    alternative - the second fast contact channel under section 5 (1) 2 DDG, pending the lawyer.
+27. The third-country paragraph stays generic: it names no legal entity, company address or DPA
+    reference for any provider, Netlify included (D2).
 
 ## Test plan
 
@@ -326,10 +333,10 @@ three steps are reported explicitly in the implementation and test reports.
    `footer|impressum|datenschutz|privacy-policy` must return no match.
 4. Text assertions for criteria 4, 5, 6, 8, 9, 10, 11, 15, 16, 20 and 22-27: grep the built files
    for the required and the forbidden strings and paste the results. A forbidden-string grep that
-   returns a match is a failure, not a note. The app-scope set explicitly includes: required
-   `app.loopstudio.app`, `Google Cloud`, `Stripe`, `Brevo`, `OpenAI`, `Sentry`, `Apify`,
-   `europe-west3` (or "Frankfurt"); and a check that no line containing `Netlify` also contains
-   `App`/`app.loopstudio.app` (criterion 26).
+   returns a match is a failure, not a note. Forbidden on `datenschutz.html` (criterion 22):
+   `Google Cloud`, `Stripe`, `Brevo`, `OpenAI`, `Sentry`, `Apify`, `europe-west3`.
+   Required: `https://app.loopstudio.app/datenschutz` twice (criterion 23). Forbidden on the three
+   legal pages: the du-forms of criterion 25.
 5. Network check for criterion 20: load both pages in a browser with devtools and list every
    request host; only `localhost`/the site's own origin and `plausible.io` may appear - naming a
    processor in the text must not add a request.
@@ -338,15 +345,15 @@ three steps are reported explicitly in the implementation and test reports.
 
 1. Open the landing page, scroll to the dark footer, click "Impressum" and then "Datenschutz" -
    both open a page that looks like the same website, in German, and you can get back with the logo.
-2. Read the Datenschutz page top to bottom - the scope sentence names both loopstudio.app and the
-   app; the website part lists Plausible, Calendly and Netlify and says this website sets no
-   cookies; the App part lists Google Cloud, Stripe, Brevo, OpenAI, Sentry and Apify - and nothing
-   anywhere says the app runs on Netlify or that the website has a contact form.
+2. Read the Datenschutz page top to bottom - it speaks to you as "Sie", the first paragraph says it
+   covers this website only and has an underlined link to the Loop Studio app's own privacy policy;
+   the page lists Plausible, Calendly and Netlify, says this website sets no cookies, and has no
+   app section and no contact-form passage.
 3. Read the Impressum - address, both Geschaeftsfuehrer, Amtsgericht Koeln HRB 126238 and the mail
    address are there, and there is no USt-IdNr. and no phone number.
 4. Open `/privacy-policy.html` directly - you land on the Datenschutz page.
 5. Look at both pages on a phone - the text column is readable, headings are not cramped, nothing
-   scrolls sideways, and the App part is as easy to find as the rest.
+   scrolls sideways, and the underlined links are easy to spot.
 
 ## Verification and evidence
 
