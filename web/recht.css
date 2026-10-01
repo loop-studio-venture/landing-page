@@ -46,7 +46,12 @@ html{scroll-padding-top:calc(var(--nav-h) + 28px)}
 /* ---------- Body text ---------- */
 .recht p{color:var(--text);margin-top:14px}
 .recht p:first-child{margin-top:0}
-.recht a[href^="mailto"]{color:var(--tuerkis-tief);border-bottom:1px solid var(--tuerkis);padding-bottom:1px}
+/* Every link inside running legal text carries the same persistent
+   hairline underline, not only the mailto ones: in a wall of fine
+   print a link that differs by colour alone is missed (Reviewer
+   finding 3, 2026-10-01). The table of contents below is excluded
+   on purpose - its rows already have their own hairline. */
+.recht p a,.recht ul li a,.recht dd a{color:var(--tuerkis-tief);border-bottom:1px solid var(--tuerkis);padding-bottom:1px}
 .recht ul{margin-top:16px;display:flex;flex-direction:column;gap:10px}
 .recht ul li{position:relative;padding-left:26px;color:var(--text)}
 .recht ul li::before{content:"";position:absolute;left:0;top:.72em;width:14px;height:1px;background:var(--linie-stark)}
@@ -57,7 +62,6 @@ html{scroll-padding-top:calc(var(--nav-h) + 28px)}
 .recht dl{display:grid;grid-template-columns:minmax(0,13rem) minmax(0,1fr);gap:0}
 .recht dt{font-family:var(--mono);font-size:.64rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text-leise);padding:13px 0;border-top:1px solid var(--linie)}
 .recht dd{padding:13px 0;border-top:1px solid var(--linie);color:var(--tinte);font-weight:500}
-.recht dd a{color:var(--tuerkis-tief);border-bottom:1px solid var(--tuerkis)}
 @media(max-width:620px){
   .recht dl{grid-template-columns:1fr}
   .recht dt{padding-bottom:0;border-top:1px solid var(--linie)}
