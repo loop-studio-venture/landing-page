@@ -1,8 +1,1 @@
 /privacy-policy.html /datenschutz.html 301!
-
-# INTERIM (2026-10-02): /agb points to the Terms of Service on Notion until the real AGB page exists.
-# LS-90 (task 20261001-agb-page-and-a-tiktok-section-in-the-privacy-pol) MUST delete the two /agb lines
-# below when it adds agb.html - the "!" forces the redirect even when a file exists, so agb.html would
-# never be served while they stay. 302 (temporary) so no cache pins the Notion address.
-/agb      https://venturelabsteam.notion.site/Terms-of-Service-25df75d2f21b80799d5ff6631d460e96 302!
-/agb.html https://venturelabsteam.notion.site/Terms-of-Service-25df75d2f21b80799d5ff6631d460e96 302!
