@@ -1,8 +1,9 @@
 /* ============================================================
    recht.css - the long legal text pages: impressum.html,
-   datenschutz.html and the privacy-policy.html transition page.
+   datenschutz.html, agb.html and the privacy-policy.html
+   transition page.
 
-   Loaded LAST, and only on those three pages. Everything else on
+   Loaded LAST, and only on those four pages. Everything else on
    them (nav pill, buttons, eyebrow, footer, tokens, both fonts)
    comes from the same stylesheet chain index.html loads; nothing
    here invents a colour, a font or a radius. Design round
@@ -37,6 +38,18 @@ html{scroll-padding-top:calc(var(--nav-h) + 28px)}
 .recht__lead{margin-top:20px;font-size:1.12rem;line-height:1.55;color:var(--text)}
 .recht__stand{margin-top:22px;padding-top:14px;border-top:1px solid var(--linie)}
 .recht__hinweis{max-width:40rem;margin-top:20px;color:var(--text)}
+
+/* ---------- The draft notice (agb.html) ----------
+   The AGB go live as a draft until a lawyer has read them
+   (LS-122-D6), and the page has to say so where nobody can miss
+   it. Same card as .recht__karte below - white ground, hairline,
+   var(--r) - with the turquoise edge of the marked footer link and
+   the mono label of .abschnitt__nr, so it reads as part of the
+   page and still stands out from the running text. Nothing new is
+   invented: every colour, font and radius is an existing token. */
+.recht__entwurf{max-width:40rem;margin:30px auto 0;background:var(--weiss);border:1px solid var(--linie);border-left:3px solid var(--tuerkis);border-radius:var(--r);padding:20px 26px 24px}
+.recht__entwurf-marke{font-family:var(--mono);font-size:.64rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--tuerkis-tief)}
+.recht__entwurf b{color:var(--tinte);font-weight:600}
 
 /* 40rem is roughly 75 characters at 17px - the wide end of the
    45-75 band a long text wants, and wider than the marketing
@@ -74,15 +87,23 @@ html{scroll-padding-top:calc(var(--nav-h) + 28px)}
 .stand{font-family:var(--mono);font-size:.64rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--text-leise)}
 
 /* ---------- Table of contents ----------
-   Only on the nine-section Datenschutz page; four sections do not
-   need one (round-1 README, "it answers the question honestly
-   instead of uniformly"). */
+   On the nine-section Datenschutz page and the seventeen-section
+   AGB page; the four sections of the Impressum do not need one
+   (round-1 README, "it answers the question honestly instead of
+   uniformly"). */
 .recht__inhalt{margin-top:34px;padding-top:6px;border-top:1px solid var(--linie-stark)}
 .recht__inhalt h2{font-family:var(--mono);font-size:.64rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--text-leise);margin:16px 0 4px}
 .recht__inhalt ol{display:grid;grid-auto-flow:column;grid-template-rows:repeat(5,auto);grid-template-columns:1fr 1fr;gap:0 34px}
 .recht__inhalt li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--linie);font-size:.95rem}
 .recht__inhalt li i{font-family:var(--mono);font-style:normal;font-size:.7rem;font-weight:600;letter-spacing:.1em;color:var(--tuerkis-tief);padding-top:3px}
 .recht__inhalt a{color:var(--tinte)}
+/* The row count above is tuned for the nine entries of
+   datenschutz.html. A longer list needs its own: with 17 entries
+   (agb.html) five rows would spill into an implicit third column,
+   so --lang sets ceil(17/2) = 9 rows in the same two columns. It
+   stands before the media query below on purpose - same
+   specificity, so the one-column rule has to come last to win. */
+.recht__inhalt--lang ol{grid-template-rows:repeat(9,auto)}
 @media(max-width:700px){.recht__inhalt ol{grid-auto-flow:row;grid-template-rows:none;grid-template-columns:1fr}}
 
 /* ---------- Section rhythm ----------
