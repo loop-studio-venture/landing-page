@@ -78,7 +78,7 @@
       <p class="eyebrow">Rechtliches</p>
       <h1>AGB</h1>
       <p class="recht__lead">Allgemeine Geschäftsbedingungen der Loop Studio GmbH für das Abonnement der Loop Studio App unter app.loopstudio.app — einschließlich der Nutzung durch Agenturen.</p>
-      <p class="stand recht__stand">Stand: 2. Oktober 2026</p>
+      <p class="stand recht__stand">Stand: 3. Oktober 2026</p>
     </header>
 
     <div class="recht__spalte">
@@ -163,11 +163,27 @@
               GAP: the app has no § 312k BGB Kündigungsbutton
                 (LS-122-D7) - see the comment above section 06
            14 Datenschutz und Löschung nach Vertragsende
-              loop-studio-backend/.../service/accountDeletion/AccountDeletionServiceImpl.java:119-178
+              (these line numbers were re-read on 2026-10-03 for the two
+               deletion branches of LS-122-D18)
+              loop-studio-backend/.../service/stripe/events/StripeEventServiceImpl.java:116-131
+                - a failed payment only records Stripe's state
+                  (past_due); Stripe runs its own retries and only its
+                  final failure ends the subscription - the
+                  "Zahlungsausfall" that starts the 30-day branch
+              loop-studio-backend/.../service/stripe/events/StripeEventServiceImpl.java:199-216
+                - on customer.subscription.deleted only the internal
+                  StripeSubscription row is deleted or updated; no
+                  customer data is touched
+              loop-studio-backend/.../service/accountDeletion/AccountDeletionServiceImpl.java:119-193
                 - deleting the account deletes the user's content
-                  immediately
-              GAP: nothing deletes customer data when a contract ends
-                (LS-122-D17) - see the comment above section 14
+                  immediately; the only immediate hard delete there is
+              loop-studio-backend/.../service/brevo/BrevoServiceImpl.java:34
+                - Brevo sends the app's e-mails; none of its call sites
+                  is a contract-end or deletion-reminder mail
+              GAP: nothing deletes customer data when a contract ends,
+                and neither the 30-day retention nor the reminder mail
+                exists in the app (LS-122-D17 / LS-122-D18) - see the
+                comment above section 14; the app task is LS-122-S2
            15 Besondere Bedingungen für Agenturen
               loop-studio-backend/.../service/agency/AgencySeatBillingServiceImpl.java:100-118
                 - seat billing starts with the seat count as the
@@ -348,23 +364,46 @@
         <p>Diese Beschränkungen gelten auch für unsere gesetzlichen Vertreter, Mitarbeitenden und Erfüllungsgehilfen. Zwingende gesetzliche Vorschriften, insbesondere zum Schutz von Verbrauchern, bleiben unberührt.</p>
       </section>
 
-      <!-- GAP (LS-122-D17, verified in the code on 2026-10-02): no code
-           path deletes customer data when a CONTRACT ends.
+      <!-- GAP (LS-122-D17 / LS-122-D18, re-read in the code on
+           2026-10-03): as of 2026-10-03 no code path deletes customer
+           data when a CONTRACT ends, there is no 30-day retention and
+           no reminder e-mail for such a deletion.
            handleCustomerSubscriptionDeletedEvent
            (loop-studio-backend/.../service/stripe/events/StripeEventServiceImpl.java:199-216)
            removes only the internal StripeSubscription row, which is
-           what the access gate reads; the immediate hard delete of user
-           data exists only on ACCOUNT deletion
-           (loop-studio-backend/.../service/accountDeletion/AccountDeletionServiceImpl.java:119-178).
-           The section below states the contractual rule of LS-122-D3.
-           Closing the gap in the app is part of the one follow-up task
-           filed under LS-122 for the three app gaps. -->
+           what the access gate reads; no customer data is touched.
+           A failed payment records nothing but Stripe's state
+           (loop-studio-backend/.../service/stripe/events/StripeEventServiceImpl.java:116-131,
+           past_due) and only Stripe's final failure ends access
+           (LS-30-D3 / LS-30-D5) - that is the "Zahlungsausfall" branch
+           below. The immediate hard delete of user data exists only on
+           ACCOUNT deletion
+           (loop-studio-backend/.../service/accountDeletion/AccountDeletionServiceImpl.java:119-193),
+           and nothing calls it at contract end. No scheduled job keeps
+           or deletes anything after 30 days (the @Scheduled beans are
+           token refreshes, Apify usage, scraping and processing
+           timeouts), and no mail of the sender
+           (loop-studio-backend/.../service/brevo/BrevoServiceImpl.java:34)
+           is a contract-end or deletion-reminder mail - its call sites
+           are account verification, password reset, agency
+           invites/access requests, wallet notices and the Apify quota
+           alarm.
+           The section below states the contractual rule of LS-122-D18
+           (immediate on a declared end, 30 days plus a reminder mail on
+           an end caused by a missing payment). Building it in the app is
+           the app task LS-122-S2
+           (20261002-agb-promises-the-app-must-keep-deletion-after-co),
+           which also closes the two other app gaps this page names. -->
       <section class="abschnitt" id="datenschutz">
         <p class="abschnitt__nr">14</p>
         <h2>Datenschutz und Löschung nach Vertragsende</h2>
         <p>Personenbezogene Daten verarbeiten wir nach den Vorgaben der Datenschutz-Grundverordnung. Was beim Besuch dieser Website anfällt, steht in der <a href="datenschutz.html">Datenschutzerklärung dieser Website</a>; was in der App verarbeitet wird, steht in der Datenschutzerklärung der Loop Studio App, auf die diese Erklärung verlinkt.</p>
         <h3>Löschung nach Vertragsende</h3>
-        <p>Nach dem Ende des Vertrags löschen wir Ihre Kundendaten und die von Ihnen in der App gespeicherten Inhalte unverzüglich. Ausgenommen sind Unterlagen, die wir aufgrund gesetzlicher Aufbewahrungspflichten weiter aufbewahren müssen — insbesondere Rechnungen und sonstige buchhalterische Belege. Diese bewahren wir für die gesetzlichen Aufbewahrungsfristen auf und verwenden sie ausschließlich dafür.</p>
+        <p>Was nach dem Ende des Vertrags mit Ihren Daten geschieht, richtet sich danach, <b>wodurch</b> der Vertrag endet.</p>
+        <p><b>Endet der Vertrag durch eine Erklärung</b> — durch Ihre Kündigung, durch unsere Kündigung nach Abschnitt 06, durch Ihren Widerruf nach Abschnitt 05 oder durch Ihre kostenfreie Kündigung in der Testphase nach Abschnitt 04 —, löschen wir Ihr Nutzerkonto, Ihre Kundendaten und die von Ihnen in der App gespeicherten Inhalte mit dem Ende des Vertrags <b>unverzüglich</b>.</p>
+        <p><b>Endet der Vertrag, weil eine fällige Zahlung ausgeblieben ist</b> (Zahlungsausfall nach Abschnitt 04), bewahren wir Ihr Nutzerkonto, Ihre Kundendaten und Ihre Inhalte noch <b>30 Tage</b> ab dem Ende des Vertrags auf und löschen sie nach Ablauf dieser 30 Tage. Das gilt auch dann, wenn der Vertrag gekündigt wird, während eine fällige Zahlung noch offen ist.</p>
+        <p>Vor dieser Löschung weisen wir Sie rechtzeitig per <b>E-Mail an die E-Mail-Adresse Ihres Nutzerkontos</b> darauf hin, damit Sie Inhalte sichern können, die Sie behalten möchten.</p>
+        <p>Ausgenommen von der Löschung sind in beiden Fällen Unterlagen, die wir aufgrund gesetzlicher Aufbewahrungspflichten weiter aufbewahren müssen — insbesondere Rechnungen und sonstige buchhalterische Belege. Diese bewahren wir für die gesetzlichen Aufbewahrungsfristen auf und verwenden sie ausschließlich dafür.</p>
         <p>Löschen Sie Ihr Nutzerkonto in der App, werden Ihre dort gespeicherten Inhalte unmittelbar gelöscht; das Abonnement endet damit ebenfalls. Sichern Sie Inhalte, die Sie behalten möchten, vorher.</p>
         <p>Ihre Rechte als betroffene Person — Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit, Widerspruch und Beschwerde bei einer Aufsichtsbehörde — ergeben sich aus der Datenschutz-Grundverordnung und sind in den genannten Datenschutzerklärungen beschrieben. Sie bestehen unabhängig von diesem Vertrag.</p>
       </section>
