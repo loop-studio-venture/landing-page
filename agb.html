@@ -78,7 +78,7 @@
       <p class="eyebrow">Rechtliches</p>
       <h1>AGB</h1>
       <p class="recht__lead">Allgemeine Geschäftsbedingungen der Loop Studio GmbH für das Abonnement der Loop Studio App unter app.loopstudio.app — einschließlich der Nutzung durch Agenturen.</p>
-      <p class="stand recht__stand">Stand: 2. Oktober 2026</p>
+      <p class="stand recht__stand">Stand: 3. Oktober 2026</p>
     </header>
 
     <div class="recht__spalte">
@@ -156,6 +156,11 @@
                   references only; no card data
               loop-studio-backend/.../service/stripe/StripeServiceImpl.java:161-180
                 - the Stripe customer portal the app can open
+              DECISION LS-122-D23 (Christian, 2026-10-03) - the
+                contracting entity "Stripe Payments Europe, Limited"
+                and its Dublin address are NOT read from any file in
+                these repos; no repo names a Stripe entity. A Stripe
+                invoice naming a different entity overrides this.
            06 Laufzeit und Kündigung
               landing-page/index.html:410 - "Monatlich kündbar"
               landing-page/impressum.html:92 - contact@loopstudio.app
@@ -238,7 +243,17 @@
         <p>Das Abonnement der App kostet <b>20 € pro Monat</b>. Das ist der Betrag, den Sie zahlen: Er ist ein Bruttopreis und enthält die gesetzliche Umsatzsteuer.</p>
         <p>Abgerechnet wird monatlich im Voraus für den jeweiligen Abrechnungsmonat. Der erste Abrechnungsmonat beginnt mit dem Ende der Testphase, in den übrigen Fällen mit dem Vertragsschluss. Preisänderungen richten sich nach Abschnitt 16.</p>
         <h3>Zahlung über Stripe</h3>
-        <p>Die Zahlung läuft über unseren Zahlungsdienstleister <b>Stripe</b>. Ihre Zahlungsdaten geben Sie im Bezahlvorgang bei Stripe ein, nicht bei uns. Wir selbst speichern <b>keine Kartendaten</b>, sondern nur die Referenzen auf Ihren Stripe-Kunden und Ihr Stripe-Abonnement sowie den Status und die Laufzeitdaten des Abonnements.</p>
+        <p>Die Zahlung läuft über unseren Zahlungsdienstleister <b>Stripe Payments Europe, Limited</b> („Stripe“). Ihre Zahlungsdaten geben Sie im Bezahlvorgang bei Stripe ein, nicht bei uns. Wir selbst speichern <b>keine Kartendaten</b>, sondern nur die Referenzen auf Ihren Stripe-Kunden und Ihr Stripe-Abonnement sowie den Status und die Laufzeitdaten des Abonnements.</p>
+
+        <div class="recht__karte">
+          <dl>
+            <dt>Zahlungsdienstleister</dt>
+            <dd>Stripe Payments Europe, Limited</dd>
+            <dt>Anschrift</dt>
+            <dd>1 Grand Canal Street Lower<br>Grand Canal Dock<br>Dublin, D02 H210<br>Ireland</dd>
+          </dl>
+        </div>
+
         <p>Der fällige Betrag wird über die von Ihnen angegebene Zahlungsmethode eingezogen. Aus der App heraus können Sie das Kundenportal von Stripe aufrufen und dort Ihre Abrechnungsdaten verwalten.</p>
         <p>Bleibt eine fällige Zahlung aus, behalten wir uns vor, den Zugang zur App zu sperren, bis die Zahlung erfolgt ist, und das Abonnement nach Abschnitt 06 zu beenden. Ihre gesetzlichen Rechte bleiben unberührt; ebenso bleibt es Ihnen unbenommen, die Zahlung bei einem Mangel zu mindern oder zurückzubehalten, soweit das Gesetz das zulässt.</p>
       </section>
