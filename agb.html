@@ -156,6 +156,30 @@
                   references only; no card data
               loop-studio-backend/.../service/stripe/StripeServiceImpl.java:161-180
                 - the Stripe customer portal the app can open
+              DECISION LS-122-D23 (Christian, 2026-10-03) - the
+                contracting entity "Stripe Payments Europe, Limited"
+                and its Dublin address are NOT read from any file in
+                these repos; no repo names a Stripe entity. A Stripe
+                invoice naming a different entity overrides this.
+           05 Widerrufsrecht für Verbraucher
+              DECISION LS-122-D25 (Christian, 2026-10-03) - consumers
+                keep the full fourteen-day right of withdrawal: we
+                collect no express request to begin the service before
+                the withdrawal period ends and no acknowledgement that
+                the right is thereby lost (§ 356 Abs. 4 BGB), so the
+                right cannot end early and we claim no Wertersatz
+                (§ 357a BGB)
+              DECISION LS-122-D24 (Christian, 2026-10-03) - the premise
+                of D25: the own immediate-start consent step at
+                checkout is dropped; Stripe Checkout (the payment data
+                plus the explicit purchase confirmation) is the
+                consent, so there is no place where such a declaration
+                is collected
+              Both facts rest on those two decisions and on no file in
+                these repos. If the app ever starts collecting the
+                § 356 Abs. 4 BGB declaration (D24's route: inside
+                Stripe Checkout's own options), this section changes
+                with it.
            06 Laufzeit und Kündigung
               landing-page/index.html:410 - "Monatlich kündbar"
               landing-page/impressum.html:92 - contact@loopstudio.app
@@ -254,7 +278,17 @@
         <p>Das Abonnement der App kostet <b>20 € pro Monat</b>. Das ist der Betrag, den Sie zahlen: Er ist ein Bruttopreis und enthält die gesetzliche Umsatzsteuer.</p>
         <p>Abgerechnet wird monatlich im Voraus für den jeweiligen Abrechnungsmonat. Der erste Abrechnungsmonat beginnt mit dem Ende der Testphase, in den übrigen Fällen mit dem Vertragsschluss. Preisänderungen richten sich nach Abschnitt 16.</p>
         <h3>Zahlung über Stripe</h3>
-        <p>Die Zahlung läuft über unseren Zahlungsdienstleister <b>Stripe</b>. Ihre Zahlungsdaten geben Sie im Bezahlvorgang bei Stripe ein, nicht bei uns. Wir selbst speichern <b>keine Kartendaten</b>, sondern nur die Referenzen auf Ihren Stripe-Kunden und Ihr Stripe-Abonnement sowie den Status und die Laufzeitdaten des Abonnements.</p>
+        <p>Die Zahlung läuft über unseren Zahlungsdienstleister <b>Stripe Payments Europe, Limited</b> („Stripe“). Ihre Zahlungsdaten geben Sie im Bezahlvorgang bei Stripe ein, nicht bei uns. Wir selbst speichern <b>keine Kartendaten</b>, sondern nur die Referenzen auf Ihren Stripe-Kunden und Ihr Stripe-Abonnement sowie den Status und die Laufzeitdaten des Abonnements.</p>
+
+        <div class="recht__karte">
+          <dl>
+            <dt>Zahlungsdienstleister</dt>
+            <dd>Stripe Payments Europe, Limited</dd>
+            <dt>Anschrift</dt>
+            <dd>1 Grand Canal Street Lower<br>Grand Canal Dock<br>Dublin, D02 H210<br>Ireland</dd>
+          </dl>
+        </div>
+
         <p>Der fällige Betrag wird über die von Ihnen angegebene Zahlungsmethode eingezogen. Aus der App heraus können Sie das Kundenportal von Stripe aufrufen und dort Ihre Abrechnungsdaten verwalten.</p>
         <p>Bleibt eine fällige Zahlung aus, behalten wir uns vor, den Zugang zur App zu sperren, bis die Zahlung erfolgt ist, und das Abonnement nach Abschnitt 06 zu beenden. Ihre gesetzlichen Rechte bleiben unberührt; ebenso bleibt es Ihnen unbenommen, die Zahlung bei einem Mangel zu mindern oder zurückzubehalten, soweit das Gesetz das zulässt.</p>
       </section>
@@ -268,15 +302,8 @@
         <p>Um Ihr Widerrufsrecht auszuüben, müssen Sie uns — Loop Studio GmbH, Hansaring 79–81, 50670 Köln, <a href="mailto:contact@loopstudio.app">contact@loopstudio.app</a> — mittels einer eindeutigen Erklärung über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren. Eine E-Mail genügt. Zur Wahrung der Frist reicht es aus, dass Sie die Erklärung vor Ablauf der Frist absenden.</p>
         <h3>Folgen des Widerrufs</h3>
         <p>Wenn Sie diesen Vertrag widerrufen, haben wir Ihnen alle Zahlungen, die wir von Ihnen erhalten haben, unverzüglich und spätestens binnen vierzehn Tagen ab dem Tag zurückzuzahlen, an dem die Mitteilung über Ihren Widerruf bei uns eingegangen ist. Für die Rückzahlung verwenden wir dasselbe Zahlungsmittel, das Sie bei der ursprünglichen Zahlung eingesetzt haben, es sei denn, mit Ihnen wurde ausdrücklich etwas anderes vereinbart; Ihnen werden wegen dieser Rückzahlung keine Entgelte berechnet.</p>
-        <!-- GAP (LS-122-S1-Q3, carried as a draft position): the app has
-             no checkbox with which a customer expressly asks us to start
-             the service before the withdrawal period is over and confirms
-             knowing that the right then expires (§ 356 Abs. 4 BGB). The
-             paragraph below therefore states the statutory condition and
-             claims nothing about the checkout. Adding the checkbox is
-             part of the one follow-up task filed under LS-122 for the
-             three app gaps. -->
-        <p>Haben Sie ausdrücklich verlangt, dass wir mit der Leistung vor Ablauf der Widerrufsfrist beginnen, erlischt Ihr Widerrufsrecht erst, wenn wir die Leistung vollständig erbracht haben und Sie vor Beginn ausdrücklich zugestimmt und Ihre Kenntnis davon bestätigt haben, dass Sie Ihr Widerrufsrecht mit vollständiger Vertragserfüllung verlieren. Haben Sie die App bis zum Widerruf genutzt, können wir einen Wertersatz verlangen, soweit das Gesetz das vorsieht.</p>
+        <p>Wir verlangen von Ihnen <b>keine ausdrückliche Aufforderung</b>, mit der Leistung schon vor Ablauf der Widerrufsfrist zu beginnen, und wir lassen Sie auch <b>nicht bestätigen</b>, dass Sie Ihr Widerrufsrecht mit vollständiger Vertragserfüllung verlieren (§ 356 Abs. 4 BGB). Ihr Widerrufsrecht bleibt deshalb die <b>vollen vierzehn Tage</b> bestehen; es endet nicht früher, auch wenn Sie die App in dieser Zeit bereits genutzt haben.</p>
+        <p>Ein anteiliger Wertersatz für eine bis zum Widerruf bereits erbrachte Leistung (§ 357a BGB) käme nur in Betracht, wenn Sie den Beginn der Leistung innerhalb der Widerrufsfrist ausdrücklich verlangt hätten. Da wir eine solche Erklärung nicht einholen, verlangen wir keinen Wertersatz.</p>
         <p>Der Widerruf ist unabhängig von der Kündigung nach Abschnitt 06 und von der kostenfreien Kündigung in der Testphase nach Abschnitt 04.</p>
       </section>
 
