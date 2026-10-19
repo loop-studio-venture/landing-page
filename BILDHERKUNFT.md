@@ -15,3 +15,4 @@
 | `bilder/monster-web.png`, `-mund-auf.png`, `-kaut.png` | seit 04.09. auf gleiche Figurhöhe normiert (820 px auf 900×900, unten mittig) — Skript im Session-Scratchpad, Vorlagen die `_frei`-Originale | eigenes Material |
 | `bilder/story.mp4`, `story.jpg` | Christians eigenes YouTube-Video (RoZh2NASzNE), 720p, 5,2 MB, selbst gehostet — Original bei YouTube | eigenes Material |
 | `bilder/logo/favicon-32.png`, `apple-touch-icon.png`, `favicon-512.png` | aus `icon-gradient.svg` per QuickLook (`qlmanage -t`) gerendert | eigenes Material |
+| `bilder/lupi/*.webp` | Lupi, das Loop-Studio-Monster (Kanon seit 09.10.2026), `01_Corporate Design/Monster/Final/` (`frei/kanon.png`, `frei/emotionen/07_staunt.png`, `03_mampft.png`, `frei/posen/P5_filmt_sich.png`), freigestellt mit macOS Vision, 900 × 900 (Figur 820 px, unten mittig) bzw. 1200 × 800, WebP q85 | eigenes Material |
