@@ -1,0 +1,9 @@
+{
+  "name": "loopstudio-og-bild",
+  "private": true,
+  "type": "module",
+  "description": "Generator for the share preview image and the derived icons (see erzeugen.mjs)",
+  "dependencies": {
+    "sharp": "^0.34.0"
+  }
+}
