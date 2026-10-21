@@ -1,2 +1,5 @@
 # Dev Manager task specs are not versioned (cluster decision 2026-10-02)
 /docs/specs/
+
+# Installed dependencies of the image generator (werkzeuge/og-bild)
+werkzeuge/og-bild/node_modules/
