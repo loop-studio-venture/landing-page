@@ -1,9 +1,10 @@
 /* ============================================================
    recht.css - the long legal text pages: impressum.html,
    datenschutz.html, agb.html and the privacy-policy.html
-   transition page.
+   transition page; also claude-connector.html, a fifth page that
+   reuses the same long-text layout (documentation, not a legal page).
 
-   Loaded LAST, and only on those four pages. Everything else on
+   Loaded LAST, and only on those five pages. Everything else on
    them (nav pill, buttons, eyebrow, footer, tokens, both fonts)
    comes from the same stylesheet chain index.html loads; nothing
    here invents a colour, a font or a radius. Design round
