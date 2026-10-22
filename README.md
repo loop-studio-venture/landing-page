@@ -20,6 +20,9 @@ index.html            start page
 impressum.html        legal notice (German law requires it), German, current design
 datenschutz.html      privacy policy for THIS WEBSITE (loopstudio.app) only, German,
                       current design; it links to the app's own policy for app.loopstudio.app
+claude-connector.html documentation of the Loop Studio connector for Claude (setup, permissions,
+                      disconnect, the rule), German "du" first, then English; built on the legal-page
+                      skeleton and recht.css, but not a legal page
 agb.html              general terms and conditions (AGB) for the app subscription, German,
                       current design; a draft until a lawyer has read it, and the page says so
 privacy-policy.html   redirect to datenschutz.html (the old canonical address)
@@ -30,7 +33,7 @@ favicon.ico           icon fetched by convention at /favicon.ico (generated)
 icon-192.png          manifest icons (generated from bilder/logo/favicon-512.png)
 icon-512.png
 web/                  the current design: hand-written CSS/JS (stil, lego, fassung*, zugang),
-                      recht.css only on the four legal pages, fonts/ self-hosted
+                      recht.css only on the four legal pages and claude-connector.html, fonts/ self-hosted
 bilder/               images of the current design; og-lupi.png is the share preview
                       image (1200x630, generated)
 css/                  loopstudio-app.webflow.shared.min.css + page styles (exported, minified)
@@ -42,8 +45,8 @@ werkzeuge/            tools: meta-check.mjs (share-tag check), og-bild/ (generat
                       preview image and icons), scrollshots.mjs, deploy.sh
 ```
 
-`404.html` is still the retired Webflow export; only `index.html` and the three legal pages
-(`impressum.html`, `datenschutz.html`, `agb.html`) are on the current design.
+`404.html` is still the retired Webflow export; only `index.html`, the three legal pages
+(`impressum.html`, `datenschutz.html`, `agb.html`) and `claude-connector.html` are on the current design.
 
 ## Preview locally
 
@@ -76,7 +79,8 @@ repository.
 
 - Copy is **German** first; keep the register of the existing pages: "du" on the marketing
   pages, the formal "Sie" on the legal pages (`impressum.html`, `datenschutz.html`, `agb.html`,
-  `privacy-policy.html`; Christian, 2026-09-30).
+  `privacy-policy.html`; Christian, 2026-09-30). `claude-connector.html` is not a legal page: it
+  uses "du".
 - Links into the app go to `https://app.loopstudio.app/...` (never the dev domain).
 - The exported CSS and `webflow.js` are minified and generated; prefer adding a small
   hand-written stylesheet or script over editing the minified files, and say so in the commit.

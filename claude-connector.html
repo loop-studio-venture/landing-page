@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loop Studio als Claude-Connector — Loop Studio</title>
+<meta name="description" content="So verbindest du Loop Studio mit Claude: Einrichtung, die Berechtigungen, die Claude bekommt, das Trennen der Verbindung und die Regel, dass der Connector nie etwas veröffentlicht. Deutsch und Englisch.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:title" content="Loop Studio als Claude-Connector — Loop Studio">
+<meta property="og:description" content="Einrichtung, Berechtigungen und Regeln des Loop-Studio-Connectors für Claude. Deutsch und Englisch.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Loop Studio">
+<meta property="og:locale" content="de_DE">
+<meta property="og:url" content="https://loopstudio.app/claude-connector.html">
+<link rel="canonical" href="https://loopstudio.app/claude-connector.html">
+<meta property="og:image" content="https://loopstudio.app/bilder/og-lupi.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Lupi, das Maskottchen von Loop Studio, neben dem Schriftzug LOOP STUDIO auf hellem Grund.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Loop Studio als Claude-Connector — Loop Studio">
+<meta name="twitter:description" content="Einrichtung, Berechtigungen und Regeln des Loop-Studio-Connectors für Claude. Deutsch und Englisch.">
+<meta name="twitter:image" content="https://loopstudio.app/bilder/og-lupi.png">
+<meta name="twitter:image:alt" content="Lupi, das Maskottchen von Loop Studio, neben dem Schriftzug LOOP STUDIO auf hellem Grund.">
+<meta name="theme-color" content="#F4EFE6">
+<link rel="preload" href="web/fonts/Thunder-BoldLC.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="web/stil.css">
+<link rel="stylesheet" href="web/lego.css">
+<link rel="stylesheet" href="web/fassung2.css">
+<link rel="stylesheet" href="web/fassung4.css">
+<link rel="stylesheet" href="web/fassung5.css">
+<link rel="stylesheet" href="web/fassung6.css">
+<link rel="stylesheet" href="web/fassung7.css">
+<link rel="stylesheet" href="web/fassung8.css">
+<link rel="stylesheet" href="web/fassung9.css">
+<link rel="stylesheet" href="web/fassung10.css">
+<link rel="stylesheet" href="web/fassung11.css">
+<link rel="stylesheet" href="web/fassung12.css">
+<link rel="stylesheet" href="web/fassung13.css">
+<link rel="stylesheet" href="web/fassung14.css">
+<link rel="stylesheet" href="web/fassung15.css">
+<link rel="stylesheet" href="web/fassung16.css">
+<link rel="stylesheet" href="web/fassung17.css">
+<link rel="stylesheet" href="web/fassung19.css">
+<link rel="stylesheet" href="web/zugang.css">
+<!-- Loaded last so it wins the cascade; only on the legal pages and this documentation page. -->
+<link rel="stylesheet" href="web/recht.css">
+<link rel="icon" type="image/svg+xml" href="bilder/logo/icon-gradient.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="bilder/logo/favicon-32.png">
+<link rel="apple-touch-icon" href="bilder/logo/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-qSPICwq-9lY3y-6CiZuOi.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+</head>
+<body>
+
+<!-- ==================== NAVIGATION ====================
+     The same pill as on the start page; the in-page anchors point
+     back at index.html. No burger and no mobile menu: both need
+     web/seite.js, and a legal page runs no motion script. Below
+     1000 px fassung2.css hides the links; the logo leads back. -->
+<nav class="nav" aria-label="Hauptnavigation">
+  <div class="nav__in">
+    <a href="index.html#top" class="nav__logo" aria-label="Loop Studio"><img src="bilder/logo/loop-studio-dunkel.png" alt="Loop Studio" width="120" height="73"></a>
+    <div class="nav__links">
+      <a href="index.html#zeigen" class="nav__link">So funktioniert's</a>
+      <a href="index.html#monster" class="nav__link">Warum Social Media</a>
+      <a href="index.html#saeulen" class="nav__link">Leistungen</a>
+      <a href="index.html#pakete" class="nav__link">Preise</a>
+      <a href="index.html#faq" class="nav__link">FAQ</a>
+    </div>
+    <div class="nav__rechts">
+      <a href="index.html#gespraech" class="btn btn--rand-hell btn--sm">Gespräch buchen</a>
+      <a href="https://app.loopstudio.app/login?lang=de" class="btn btn--tuerkis btn--sm">Login</a>
+    </div>
+  </div>
+</nav>
+
+<main class="recht">
+  <div class="wrap">
+
+    <header class="recht__kopf">
+      <p class="eyebrow">Dokumentation</p>
+      <h1>Loop Studio als Claude-Connector</h1>
+      <p class="recht__lead">Mit dem Connector liest Claude deine Wettbewerber, gespeicherten Ideen und potenziellen Kunden aus Loop Studio und legt Vorschläge für dich an. Er veröffentlicht nie etwas. Diese Seite zeigt, wie du ihn einrichtest, was Claude darf und wie du die Verbindung wieder trennst. <a href="#english">English version below</a>.</p>
+      <p class="stand recht__stand">Stand: 22. Oktober 2026</p>
+    </header>
+
+    <div class="recht__spalte" id="deutsch">
+
+      <section class="abschnitt" id="einrichtung">
+        <p class="abschnitt__nr">01</p>
+        <h2>Einrichtung</h2>
+        <p>Du brauchst ein Loop-Studio-Konto auf app.loopstudio.app und einen Claude-Zugang, der eigene Connectoren erlaubt.</p>
+        <ul>
+          <li>Öffne in Claude <b>Einstellungen → Connectors</b> und wähle <b>Eigenen Connector hinzufügen</b> (englisch: <i>Settings → Connectors → Add custom connector</i>).</li>
+          <li>Trage als Adresse <code>https://app.loopstudio.app/api/mcp</code> ein und bestätige.</li>
+          <li>Claude öffnet die Anmeldung von Loop Studio. Melde dich an und prüfe auf der Zustimmungsseite, welche Berechtigungen angefragt werden.</li>
+          <li>Erteile die Berechtigungen, die du möchtest. Danach kannst du Claude in einem Gespräch nach deinen Loop-Studio-Daten fragen.</li>
+        </ul>
+      </section>
+
+      <section class="abschnitt" id="berechtigungen">
+        <p class="abschnitt__nr">02</p>
+        <h2>Was Claude darf</h2>
+        <p>Du erteilst jede Berechtigung einzeln. Claude sieht nur die Werkzeuge, zu denen du eine Berechtigung erteilt hast.</p>
+        <ul>
+          <li><b>Wettbewerber lesen</b> (<code>competitors:read</code>): deine beobachteten Wettbewerber und deren gespeicherte Beiträge.</li>
+          <li><b>Ideen lesen</b> (<code>ideas:read</code>): deine gespeicherten Ideen und deine eigenen Ideen.</li>
+          <li><b>Potenzielle Kunden lesen</b> (<code>prospects:read</code>): die potenziellen Kunden in deinem Akquise-Trichter.</li>
+          <li><b>Vorschläge anlegen</b> (<code>suggestions:write</code>): Claude legt einen Vorschlag für dich an, den du von Hand übernimmst.</li>
+          <li><b>Verbindung behalten</b> (<code>offline_access</code>): Claude bleibt verbunden, ohne dass du dich jedes Mal neu anmeldest. Diese Berechtigung gibt keine Daten frei.</li>
+        </ul>
+        <p>Die Werkzeuge, die Claude sieht, mit ihrem Titel in der Verbindung:</p>
+        <ul>
+          <li><b>Lesen:</b> List tracked competitors, Top stored posts of one competitor, List saved ideas, Read one saved idea, List your own ideas, Read one of your own ideas, List your prospects, Read one prospect.</li>
+          <li><b>Schreiben:</b> File a suggestion for you. Das ist das einzige Werkzeug, das etwas anlegt: einen Vorschlag in Loop Studio, nichts anderes.</li>
+        </ul>
+      </section>
+
+      <section class="abschnitt" id="trennen">
+        <p class="abschnitt__nr">03</p>
+        <h2>Verbindung trennen</h2>
+        <p>Du kannst die Verbindung jederzeit trennen: Öffne in Loop Studio dein <a href="https://app.loopstudio.app/profile">Profil</a>, suche den Abschnitt <b>Verbundene Apps</b> und trenne dort Claude. Danach hat Claude sofort keinen Zugriff mehr.</p>
+      </section>
+
+      <section class="abschnitt" id="regel">
+        <p class="abschnitt__nr">04</p>
+        <h2>Die Regel</h2>
+        <p>Der Connector veröffentlicht und plant niemals etwas – weder in Loop Studio noch auf einem verbundenen Kanal. Er aktualisiert keine Konten, versendet keine E-Mails und ändert kein Abonnement. Was Claude anlegt, ist ein Vorschlag, den du prüfst.</p>
+      </section>
+
+      <section class="abschnitt" id="fragen">
+        <p class="abschnitt__nr">05</p>
+        <h2>Fragen</h2>
+        <p>Schreib uns an <a href="mailto:contact@loopstudio.app">contact@loopstudio.app</a>. Wie Loop Studio mit deinen Daten umgeht, steht in der <a href="https://app.loopstudio.app/datenschutz">Datenschutzerklärung der App</a>.</p>
+      </section>
+
+    </div>
+
+    <div class="recht__spalte" id="english" lang="en">
+
+      <header class="recht__kopf">
+        <h2>Loop Studio as a Claude connector</h2>
+        <p class="recht__lead">The connector lets Claude read your competitors, saved ideas and prospects from Loop Studio and file suggestions for you. It never publishes anything. This section shows how to set it up, what Claude may do and how to disconnect.</p>
+      </header>
+
+      <section class="abschnitt" id="setup">
+        <p class="abschnitt__nr">01</p>
+        <h2>Setup</h2>
+        <p>You need a Loop Studio account at app.loopstudio.app and a Claude plan that allows custom connectors.</p>
+        <ul>
+          <li>In Claude, open <b>Settings → Connectors</b> and choose <b>Add custom connector</b>.</li>
+          <li>Enter the address <code>https://app.loopstudio.app/api/mcp</code> and confirm.</li>
+          <li>Claude opens the Loop Studio sign-in. Log in and check on the consent page which permissions are requested.</li>
+          <li>Grant the permissions you want. Then you can ask Claude about your Loop Studio data in a conversation.</li>
+        </ul>
+      </section>
+
+      <section class="abschnitt" id="permissions">
+        <p class="abschnitt__nr">02</p>
+        <h2>What Claude may do</h2>
+        <p>You grant each permission on its own. Claude only sees the tools you granted a permission for.</p>
+        <ul>
+          <li><b>Read competitors</b> (<code>competitors:read</code>): the competitors you track and their stored posts.</li>
+          <li><b>Read ideas</b> (<code>ideas:read</code>): your saved ideas and your own ideas.</li>
+          <li><b>Read prospects</b> (<code>prospects:read</code>): the prospects in your outreach funnel.</li>
+          <li><b>File suggestions</b> (<code>suggestions:write</code>): Claude files a suggestion for you, which you accept by hand.</li>
+          <li><b>Stay connected</b> (<code>offline_access</code>): Claude stays connected without asking you to log in again each time. It does not release any data.</li>
+        </ul>
+        <p>The tools Claude sees, by their title in the connection:</p>
+        <ul>
+          <li><b>Read:</b> List tracked competitors, Top stored posts of one competitor, List saved ideas, Read one saved idea, List your own ideas, Read one of your own ideas, List your prospects, Read one prospect.</li>
+          <li><b>Write:</b> File a suggestion for you. It is the only tool that creates anything: a suggestion in Loop Studio, nothing else.</li>
+        </ul>
+      </section>
+
+      <section class="abschnitt" id="disconnect">
+        <p class="abschnitt__nr">03</p>
+        <h2>Disconnect</h2>
+        <p>You can disconnect at any time: open your <a href="https://app.loopstudio.app/profile">profile</a> in Loop Studio, find the section <b>Verbundene Apps</b> (connected apps) and disconnect Claude there. Claude then has no access at once.</p>
+      </section>
+
+      <section class="abschnitt" id="rule">
+        <p class="abschnitt__nr">04</p>
+        <h2>The rule</h2>
+        <p>The connector never publishes or schedules anything, in Loop Studio or on any connected channel. It does not refresh accounts, send e-mail or change a subscription. What Claude files is a suggestion that you review.</p>
+      </section>
+
+      <section class="abschnitt" id="questions">
+        <p class="abschnitt__nr">05</p>
+        <h2>Questions</h2>
+        <p>Write to <a href="mailto:contact@loopstudio.app">contact@loopstudio.app</a>. How Loop Studio handles your data is described in the <a href="https://app.loopstudio.app/datenschutz">app's privacy policy</a> (German).</p>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<!-- ==================== FOOTER ====================
+     The bar from index.html, without the step block and without the
+     booking button: a documentation page loads no Calendly. -->
+<footer class="fuss">
+  <div class="wrap">
+    <div class="fuss__leiste">
+      <img class="fuss__logo" src="bilder/logo/loop-studio-hell.png" alt="Loop Studio" width="180">
+      <nav class="fuss__links" aria-label="Footer"><a href="https://app.loopstudio.app/login?lang=de">Zum Tool</a><a href="index.html#pakete">Preise</a><a href="index.html#downloads">Workbook</a><a href="index.html#faq">FAQ</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a></nav>
+      <p class="fuss__unten"><span>© 2026 Loop Studio GmbH</span></p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

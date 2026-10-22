@@ -19,7 +19,8 @@ lives in the workspace's `../knowledge-base/`; screen designs in `../design/`.
   behaviour or styling by adding a small hand-written file and linking it, unless the task is
   explicitly about the exported file. Keep such additions readable and commented.
   `web/recht.css` is such a file: it is loaded last and only on the four legal pages
-  (`impressum.html`, `datenschutz.html`, `privacy-policy.html`, `agb.html`) and holds what long
+  (`impressum.html`, `datenschutz.html`, `privacy-policy.html`, `agb.html`) and on the fifth page
+  `claude-connector.html` (documentation, "du", not a legal page), and holds what long
   legal text needs on top of the chain `index.html` loads.
 - Every page must keep working when opened from `serve.ps1` (relative paths, no build step).
 - Links into the app always use `https://app.loopstudio.app/...`.
