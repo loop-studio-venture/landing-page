@@ -58,7 +58,7 @@
   --cta-fg:#111111;
 
   /* Runde 2, Variante A: das Akzentwort in den vier Schritt-Ueberschriften
-     (.schritt h3 em) auf dem Navy-Panel --tinte #243060. Vorher stand dort
+     (.schritt h2 em) auf dem Navy-Panel --tinte #243060. Vorher stand dort
      --blau #273EA2 — 1,38:1, blau auf dunkelblau. Jetzt 7,74:1, und immer
      noch erkennbar eine zweite Farbe neben der weissen Ueberschrift.
      --blau bleibt #273EA2: es steht auf hellem Grund ueberall sonst richtig.
@@ -279,7 +279,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .saeule--an{border-color:var(--blau);background:var(--blau-zart)}
 .saeule--an .schalter{background:var(--blau)}
 .saeule--an .schalter::after{transform:translateX(19px)}
-.saeule h4{margin-bottom:8px}
+.saeule h3{margin-bottom:8px}
 .saeule p{font-size:.94rem;color:var(--text-leise);line-height:1.5}
 .wer{margin-top:auto;padding-top:20px;display:flex;flex-wrap:wrap;gap:6px}
 .wer span{font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:5px 9px;border-radius:5px}
@@ -291,7 +291,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .wer .w-selbst{display:none}
 .saeule:not(.saeule--an) .wer span{display:none}
 .saeule:not(.saeule--an) .wer .w-selbst{display:inline-block}
-.saeule:not(.saeule--an) h4,.saeule:not(.saeule--an) p{opacity:.5}
+.saeule:not(.saeule--an) h3,.saeule:not(.saeule--an) p{opacity:.5}
 .saeule:not(.saeule--an) .saeule__icon{opacity:.4}
 .menge{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:34px}
 .menge__opts{display:inline-flex;background:var(--weiss);border:2px solid var(--sand-linie);border-radius:999px;padding:4px;gap:2px}

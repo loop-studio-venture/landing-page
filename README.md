@@ -20,23 +20,33 @@ index.html            start page
 impressum.html        legal notice (German law requires it), German, current design
 datenschutz.html      privacy policy for THIS WEBSITE (loopstudio.app) only, German,
                       current design; it links to the app's own policy for app.loopstudio.app
+claude-connector.html documentation of the Loop Studio connector for Claude (setup, permissions,
+                      disconnect, the rule), German "du" first, then English; built on the legal-page
+                      skeleton and recht.css, but not a legal page
 agb.html              general terms and conditions (AGB) for the app subscription, German,
                       current design; a draft until a lawyer has read it, and the page says so
 privacy-policy.html   redirect to datenschutz.html (the old canonical address)
 _redirects            Netlify rule: /privacy-policy.html -> /datenschutz.html (301)
 404.html              not-found page (Netlify serves it for unknown paths)
+site.webmanifest      web app manifest (name, icons, theme colour)
+favicon.ico           icon fetched by convention at /favicon.ico (generated)
+icon-192.png          manifest icons (generated from bilder/logo/favicon-512.png)
+icon-512.png
 web/                  the current design: hand-written CSS/JS (stil, lego, fassung*, zugang),
-                      recht.css only on the four legal pages, fonts/ self-hosted
-bilder/               images of the current design
+                      recht.css only on the four legal pages and claude-connector.html, fonts/ self-hosted
+bilder/               images of the current design; og-lupi.png is the share preview
+                      image (1200x630, generated)
 css/                  loopstudio-app.webflow.shared.min.css + page styles (exported, minified)
 js/                   webflow.js runtime (exported, minified) - interactions, no app logic
 fonts/                Plus Jakarta Sans (self-hosted)
 images/               exported assets; file names carry Webflow ids
 serve.ps1             local preview server (PowerShell, no dependencies)
+werkzeuge/            tools: meta-check.mjs (share-tag check), og-bild/ (generator of the
+                      preview image and icons), scrollshots.mjs, deploy.sh
 ```
 
-`404.html` is still the retired Webflow export; only `index.html` and the three legal pages
-(`impressum.html`, `datenschutz.html`, `agb.html`) are on the current design.
+`404.html` is still the retired Webflow export; only `index.html`, the three legal pages
+(`impressum.html`, `datenschutz.html`, `agb.html`) and `claude-connector.html` are on the current design.
 
 ## Preview locally
 
@@ -45,7 +55,9 @@ serve.ps1             local preview server (PowerShell, no dependencies)
 .\serve.ps1 -Port 9000
 ```
 
-No build step, no `npm install`. Open the URL in a browser; edit files and reload.
+No build step, no `npm install` for the site itself. Open the URL in a browser; edit files and
+reload. Only regenerating the derived images (`bilder/og-lupi.png`, `icon-*.png`, `favicon.ico`)
+needs `npm --prefix werkzeuge/og-bild install`, then `node werkzeuge/og-bild/erzeugen.mjs`.
 
 ## Deploy
 
@@ -59,14 +71,16 @@ disk as a working fallback either way.
 
 `main` is the live site and is never committed to directly. `dev` is the integration branch;
 work happens on `fix/<slug>` or `feature/<slug>` branches cut from `dev`, merged into `dev` by
-pull request, and `dev` is merged into `main` after a check of the preview. Same rule as the app
-repos and every other Loop Studio repository.
+pull request, and `dev` is merged into `main` after a check of the preview and after
+`node werkzeuge/meta-check.mjs` exits 0. Same rule as the app repos and every other Loop Studio
+repository.
 
 ## Conventions
 
 - Copy is **German** first; keep the register of the existing pages: "du" on the marketing
   pages, the formal "Sie" on the legal pages (`impressum.html`, `datenschutz.html`, `agb.html`,
-  `privacy-policy.html`; Christian, 2026-09-30).
+  `privacy-policy.html`; Christian, 2026-09-30). `claude-connector.html` is not a legal page: it
+  uses "du".
 - Links into the app go to `https://app.loopstudio.app/...` (never the dev domain).
 - The exported CSS and `webflow.js` are minified and generated; prefer adding a small
   hand-written stylesheet or script over editing the minified files, and say so in the commit.
