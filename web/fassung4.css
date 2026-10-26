@@ -67,7 +67,7 @@ html.lenis,html.lenis body{height:auto}
 .tool__avatar{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#273EA2,#1BA17B);flex:none}
 .tool__haupt{padding:22px 26px 26px;position:relative;min-width:0}
 .tool__kopf{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-.tool__kopf h4{font-size:1.25rem;font-weight:600;margin:0;font-family:var(--sans)}
+.tool__kopf .tool__titel{font-size:1.25rem;font-weight:600;margin:0;font-family:var(--sans)}
 .tool__import{display:flex;align-items:center;gap:10px;background:#EEF0F4;border-radius:999px;padding:6px 6px 6px 16px;font-size:.82rem;color:#334155}
 .tool__feld{background:#fff;border:1px solid #E1E4EA;border-radius:999px;padding:8px 14px;min-width:280px;font-family:var(--mono);font-size:.7rem;color:#334155;display:flex;align-items:center;gap:2px;height:34px;box-sizing:border-box}
 .tool__caret{width:1px;height:14px;background:#334155;animation:blinzeln 1s steps(2) infinite}
@@ -109,10 +109,10 @@ html.lenis,html.lenis body{height:auto}
 .schritt{grid-area:1/1;opacity:0;transform:translateY(26px);transition:opacity .45s,transform .6s cubic-bezier(.2,.8,.2,1);pointer-events:none}
 .schritt--an{opacity:1;transform:none;pointer-events:auto}
 .schritt__nr{font-family:var(--mono);color:var(--tuerkis);font-size:.68rem;letter-spacing:.22em;margin:0}
-.schritt h3{font-family:var(--display);font-weight:700;font-size:clamp(2.4rem,4.4vw,4.4rem);line-height:.95;color:#fff;margin:14px 0 18px;letter-spacing:.01em}
+.schritt h2{font-family:var(--display);font-weight:700;font-size:clamp(2.4rem,4.4vw,4.4rem);line-height:.95;color:#fff;margin:14px 0 18px;letter-spacing:.01em}
 /* Runde 2 (2026-09-29): eine Regel, alle vier Schritt-Ueberschriften.
    --akzent-navy statt --blau — 7,74:1 auf dem Navy-Panel statt 1,38:1. */
-.schritt h3 em{font-style:normal;color:var(--akzent-navy)}
+.schritt h2 em{font-style:normal;color:var(--akzent-navy)}
 .schritt p{color:var(--text-hell);max-width:30rem;font-size:1.05rem;line-height:1.55;margin:0}
 .schritte__rechts{position:relative;height:min(68vh,620px);border:1px solid rgba(255,255,255,.12);border-radius:28px;background:rgba(255,255,255,.04);overflow:hidden}
 .visual{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:28px;opacity:0;transform:scale(.97);transition:opacity .5s,transform .6s;padding:28px;box-sizing:border-box}
