@@ -7,7 +7,8 @@ structure, and deploy are in [README.md](./README.md); this file holds the rules
 
 The static, pre-login marketing site of Loop Studio (`loopstudio.app`): start page, Impressum
 (`impressum.html`), Datenschutzerklärung (`datenschutz.html`, with `privacy-policy.html` left in
-place as a redirect to it), AGB (`agb.html`), 404. It is **not** the app; the app is `loop-studio-frontend` (Nuxt) next to this
+place as a redirect to it), AGB (`agb.html`), the draft Teilnahmebedingungen Loopi Run
+(`teilnahmebedingungen.html`, noindex, linked from nowhere), the Loopi Run game under `spiel/`, 404. It is **not** the app; the app is `loop-studio-frontend` (Nuxt) next to this
 repo, reached at `app.loopstudio.app`. Cross-repo context (architecture, decisions, glossary)
 lives in the workspace's `../knowledge-base/`; screen designs in `../design/`.
 
@@ -20,8 +21,13 @@ lives in the workspace's `../knowledge-base/`; screen designs in `../design/`.
   explicitly about the exported file. Keep such additions readable and commented.
   `web/recht.css` is such a file: it is loaded last and only on the four legal pages
   (`impressum.html`, `datenschutz.html`, `privacy-policy.html`, `agb.html`) and on the fifth page
-  `claude-connector.html` (documentation, "du", not a legal page), and holds what long
+  `claude-connector.html` (documentation, "du", not a legal page) and on the draft terms
+  `teilnahmebedingungen.html`, and holds what long
   legal text needs on top of the chain `index.html` loads.
+- `spiel/` is the Loopi Run game and is produced only by `werkzeuge/sync-spiel.mjs` from the commit in
+  `werkzeuge/spiel-pin.txt`: never edit a file in it by hand, never copy game files in another way;
+  `_headers` holds its cache rules. `teilnahmebedingungen.html` is a draft for the two managing
+  directors: keep it `noindex`, out of `sitemap.xml` and unlinked until they say otherwise.
 - Every page must keep working when opened from `serve.ps1` (relative paths, no build step).
 - Links into the app always use `https://app.loopstudio.app/...`.
 - Copy is German first. Do not change legal pages without an explicit instruction. The legal

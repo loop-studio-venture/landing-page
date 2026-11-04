@@ -25,8 +25,13 @@ claude-connector.html documentation of the Loop Studio connector for Claude (set
                       skeleton and recht.css, but not a legal page
 agb.html              general terms and conditions (AGB) for the app subscription, German,
                       current design; a draft until a lawyer has read it, and the page says so
+teilnahmebedingungen.html  DRAFT terms of the Loopi Run promotion, German "Sie", noindex, not in the
+                      sitemap, linked from nowhere until the two managing directors have read it
 privacy-policy.html   redirect to datenschutz.html (the old canonical address)
-_redirects            Netlify rule: /privacy-policy.html -> /datenschutz.html (301)
+_redirects            Netlify rules: /privacy-policy.html -> /datenschutz.html (301), /spiel -> /spiel/ (301)
+_headers              Netlify header rules, only for /spiel/ (no-cache page, immutable ?v= files)
+spiel/                the Loopi Run browser game at loopstudio.app/spiel/; produced ONLY by
+                      werkzeuge/sync-spiel.mjs from the pinned commit, never edited by hand
 404.html              not-found page (Netlify serves it for unknown paths)
 site.webmanifest      web app manifest (name, icons, theme colour)
 favicon.ico           icon fetched by convention at /favicon.ico (generated)
@@ -42,7 +47,8 @@ fonts/                Plus Jakarta Sans (self-hosted)
 images/               exported assets; file names carry Webflow ids
 serve.ps1             local preview server (PowerShell, no dependencies)
 werkzeuge/            tools: meta-check.mjs (share-tag check), og-bild/ (generator of the
-                      preview image and icons), scrollshots.mjs, deploy.sh
+                      preview image and icons), scrollshots.mjs, deploy.sh,
+                      sync-spiel.mjs + spiel-pin.txt (the game sync and its pin), test/
 ```
 
 `404.html` is still the retired Webflow export; only `index.html`, the three legal pages
@@ -59,12 +65,33 @@ No build step, no `npm install` for the site itself. Open the URL in a browser; 
 reload. Only regenerating the derived images (`bilder/og-lupi.png`, `icon-*.png`, `favicon.ico`)
 needs `npm --prefix werkzeuge/og-bild install`, then `node werkzeuge/og-bild/erzeugen.mjs`.
 
+## The Loopi Run game (`spiel/`)
+
+`spiel/` is the browser game from the private repo `loop-studio-venture/loopi-run`, committed here
+because Netlify builds nothing. It is copied by a script from **one pinned commit**
+(`werkzeuge/spiel-pin.txt`, a full 40-character hash on the `dev` history of `loopi-run`); the
+home page only has a teaser section with a link to `/spiel/`.
+
+```
+node werkzeuge/sync-spiel.mjs            # fetch the pinned commit (your own git credentials) and replace spiel/
+node werkzeuge/sync-spiel.mjs --check    # offline: spiel/ is consistent with the pin
+node --test werkzeuge/test/*.test.mjs    # the script's own tests (no network)
+```
+
+To move the game: put the new commit hash into `werkzeuge/spiel-pin.txt`, run the sync, commit
+the pin and `spiel/` together. Exactly `index.html`, `game.js` and `assets/` are copied, byte for
+byte; the only change is a `?v=<first 10 characters of the pin>` on the references in `index.html`.
+A bad pin (abbreviation, branch, tag, unknown hash) or a pinned commit with symlinks, submodules,
+`.md` files or `.DS_Store` makes the script refuse and leave `spiel/` as it was. `/spiel/` is never
+linked with a query string: any URL parameter on a real domain makes a run a test run without a code.
+
 ## Deploy
 
 **Netlify, from the `main` branch.** Every merge to `main` publishes the site. There is no
 build command; the Netlify site settings hold the domain and the branch. The only deploy
-configuration in the repo is `_redirects` (the 301 from the old privacy address), and it only
-takes effect if the publish directory is the repository root - `privacy-policy.html` stays on
+configuration in the repo is `_redirects` (the 301 from the old privacy address and the one for
+`/spiel`) and `_headers` (caching for `/spiel/`), and they only take effect if the publish
+directory is the repository root - `privacy-policy.html` stays on
 disk as a working fallback either way.
 
 ## Branching
