@@ -1,0 +1,22 @@
+# Netlify header rules. Only /spiel/ (the synced Loopi Run game, see werkzeuge/sync-spiel.mjs).
+#
+# The page is never cached, so a new pin reaches visitors at once. game.js and everything under
+# assets/ may be cached for a year: they are only ever requested with ?v=<first 10 characters of
+# the pinned commit> (index.html carries it on every reference, game.js adds it to the files it
+# loads itself). A cache keys on the full URL, so a new pin means new URLs and the content behind
+# an old URL never changes.
+# Rules do not overlap: no path is matched by both a no-cache and an immutable rule.
+# Media types (video/mp4, audio/mpeg, image/webp, font/woff2) and byte ranges for the MP4 files
+# come from Netlify itself; add a Content-Type rule here only for a type seen wrong on a preview.
+
+/spiel/
+  Cache-Control: no-cache
+
+/spiel/index.html
+  Cache-Control: no-cache
+
+/spiel/game.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/spiel/assets/*
+  Cache-Control: public, max-age=31536000, immutable

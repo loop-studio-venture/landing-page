@@ -1,0 +1,12 @@
+{
+  "name": "Loopi Run",
+  "short_name": "Loopi Run",
+  "start_url": "../",
+  "scope": "../",
+  "theme_color": "#F4EFE6",
+  "background_color": "#F4EFE6",
+  "icons": [
+    { "src": "favicon_v1_192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon_512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

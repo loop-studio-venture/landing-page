@@ -26,6 +26,9 @@ $mime = @{
   ".woff2"= "font/woff2"
   ".woff" = "font/woff"
   ".ttf"  = "font/ttf"
+  ".webp" = "image/webp"
+  ".mp4"  = "video/mp4"
+  ".mp3"  = "audio/mpeg"
 }
 
 while ($listener.IsListening) {
@@ -34,7 +37,8 @@ while ($listener.IsListening) {
   $response = $context.Response
   try {
     $path = [System.Uri]::UnescapeDataString($request.Url.AbsolutePath)
-    if ($path -eq "/") { $path = "/index.html" }
+    # A path ending in "/" serves the index.html of that folder (/ and /spiel/).
+    if ($path.EndsWith("/")) { $path = $path + "index.html" }
     $filePath = Join-Path $Root ($path.TrimStart("/"))
     if (Test-Path $filePath -PathType Leaf) {
       $ext = [System.IO.Path]::GetExtension($filePath).ToLower()
