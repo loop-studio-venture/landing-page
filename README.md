@@ -29,7 +29,12 @@ teilnahmebedingungen.html  DRAFT terms of the Loopi Run promotion, German "Sie",
                       sitemap, linked from nowhere until the two managing directors have read it
 privacy-policy.html   redirect to datenschutz.html (the old canonical address)
 _redirects            Netlify rules: /privacy-policy.html -> /datenschutz.html (301), /spiel -> /spiel/ (301)
-_headers              Netlify header rules, only for /spiel/ (no-cache page, immutable ?v= files)
+_headers              Netlify header rules: /spiel/ (no-cache page, immutable ?v= files) and the
+                      Content-Type of the association file below
+.well-known/apple-app-site-association
+                      Apple association file (webcredentials only) that lets iOS offer the passkeys of
+                      the iPhone app (relying party loopstudio.app); extensionless on purpose, served
+                      as application/json by the exact-path rule in _headers
 spiel/                the Loopi Run browser game at loopstudio.app/spiel/; produced ONLY by
                       werkzeuge/sync-spiel.mjs from the pinned commit, never edited by hand
 404.html              not-found page (Netlify serves it for unknown paths)
@@ -48,7 +53,8 @@ images/               exported assets; file names carry Webflow ids
 serve.ps1             local preview server (PowerShell, no dependencies)
 werkzeuge/            tools: meta-check.mjs (share-tag check), og-bild/ (generator of the
                       preview image and icons), scrollshots.mjs, deploy.sh,
-                      sync-spiel.mjs + spiel-pin.txt (the game sync and its pin), test/
+                      sync-spiel.mjs + spiel-pin.txt (the game sync and its pin), test/ (sync-spiel and
+                      aasa tests)
 ```
 
 `404.html` is still the retired Webflow export; only `index.html`, the three legal pages
@@ -90,7 +96,8 @@ linked with a query string: any URL parameter on a real domain makes a run a tes
 **Netlify, from the `main` branch.** Every merge to `main` publishes the site. There is no
 build command; the Netlify site settings hold the domain and the branch. The only deploy
 configuration in the repo is `_redirects` (the 301 from the old privacy address and the one for
-`/spiel`) and `_headers` (caching for `/spiel/`), and they only take effect if the publish
+`/spiel`) and `_headers` (caching for `/spiel/` and the JSON content type of
+`.well-known/apple-app-site-association`), and they only take effect if the publish
 directory is the repository root - `privacy-policy.html` stays on
 disk as a working fallback either way.
 
