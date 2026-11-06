@@ -53,8 +53,8 @@ images/               exported assets; file names carry Webflow ids
 serve.ps1             local preview server (PowerShell, no dependencies)
 werkzeuge/            tools: meta-check.mjs (share-tag check), og-bild/ (generator of the
                       preview image and icons), scrollshots.mjs, deploy.sh,
-                      sync-spiel.mjs + spiel-pin.txt (the game sync and its pin), test/ (sync-spiel and
-                      aasa tests)
+                      sync-spiel.mjs + spiel-pin.txt (the game sync and its pin), test/ (sync-spiel,
+                      aasa and Loopi tests)
 ```
 
 `404.html` is still the retired Webflow export; only `index.html`, the three legal pages
