@@ -7,7 +7,6 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { spawnSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -85,10 +84,33 @@ test('the association file is exactly the webcredentials entry of the iPhone app
   assert.deepEqual(Object.keys(JSON.parse(text)), ['webcredentials']);
 });
 
-test('the association file is not ignored by git', () => {
-  const r = spawnSync('git', ['-C', ROOT, 'check-ignore', '.well-known/apple-app-site-association'], { encoding: 'utf8' });
-  assert.equal(r.stdout, '');
-  assert.equal(r.status, 1);
+// True when a .gitignore pattern (no negations, no character classes) would ignore the path.
+function ignoredBy(gitignore, path) {
+  const parts = path.split('/');
+  return gitignore
+    .split(/\r?\n/)
+    .map((l) => l.trim())
+    .filter((l) => l !== '' && !l.startsWith('#') && !l.startsWith('!'))
+    .some((l) => {
+      const pattern = l.replace(/^\//, '').replace(/\/$/, '');
+      const anchored = l.slice(0, -1).includes('/');
+      const targets = anchored ? [path] : parts; // an unanchored pattern may match any path segment
+      return targets.some((t) => matches(pattern, t)) || parts.some((_, i) => matches(pattern, parts.slice(0, i + 1).join('/')));
+    });
+}
+
+test('the association file is not ignored by .gitignore', () => {
+  const path = '.well-known/apple-app-site-association';
+  assert.equal(ignoredBy(read('.gitignore'), path), false);
+});
+
+test('the ignore check sees a rule for the folder, the file name or a wildcard', () => {
+  const path = '.well-known/apple-app-site-association';
+  assert.equal(ignoredBy('.well-known/\n', path), true);
+  assert.equal(ignoredBy('/.well-known\n', path), true);
+  assert.equal(ignoredBy('apple-app-site-*\n', path), true);
+  assert.equal(ignoredBy('.*\n', path), true);
+  assert.equal(ignoredBy('/docs/specs/\nwerkzeuge/og-bild/node_modules/\n', path), false);
 });
 
 test('a trailing newline still parses to the same object', () => {
