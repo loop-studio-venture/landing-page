@@ -27,6 +27,12 @@ agb.html              general terms and conditions (AGB) for the app subscriptio
                       current design; a draft until a lawyer has read it, and the page says so
 privacy-policy.html   redirect to datenschutz.html (the old canonical address)
 _redirects            Netlify rule: /privacy-policy.html -> /datenschutz.html (301)
+_headers              Netlify header rules: the Content-Type of the association file below (the
+                      /spiel/ rules in it take effect once the Loopi Run game is published)
+.well-known/apple-app-site-association
+                      Apple association file (webcredentials only) that lets iOS offer the passkeys of
+                      the iPhone app (relying party loopstudio.app); extensionless on purpose, served
+                      as application/json by the exact-path rule in _headers
 404.html              not-found page (Netlify serves it for unknown paths)
 site.webmanifest      web app manifest (name, icons, theme colour)
 favicon.ico           icon fetched by convention at /favicon.ico (generated)
@@ -42,7 +48,7 @@ fonts/                Plus Jakarta Sans (self-hosted)
 images/               exported assets; file names carry Webflow ids
 serve.ps1             local preview server (PowerShell, no dependencies)
 werkzeuge/            tools: meta-check.mjs (share-tag check), og-bild/ (generator of the
-                      preview image and icons), scrollshots.mjs, deploy.sh
+                      preview image and icons), scrollshots.mjs, deploy.sh, test/ (aasa test)
 ```
 
 `404.html` is still the retired Webflow export; only `index.html`, the three legal pages
@@ -63,8 +69,9 @@ needs `npm --prefix werkzeuge/og-bild install`, then `node werkzeuge/og-bild/erz
 
 **Netlify, from the `main` branch.** Every merge to `main` publishes the site. There is no
 build command; the Netlify site settings hold the domain and the branch. The only deploy
-configuration in the repo is `_redirects` (the 301 from the old privacy address), and it only
-takes effect if the publish directory is the repository root - `privacy-policy.html` stays on
+configuration in the repo is `_redirects` (the 301 from the old privacy address) and `_headers`
+(the JSON content type of `.well-known/apple-app-site-association`), and they only take effect
+if the publish directory is the repository root - `privacy-policy.html` stays on
 disk as a working fallback either way.
 
 ## Branching
