@@ -1,0 +1,55 @@
+/* ============================================================
+   Fassung 20 — Lupi tritt auf (06.11.2026). Liegt zuoberst, nach fassung19.
+   Zwei Buehnen, gebaut nach design/handoff/landing-page/variant-a.html:
+   1 Lauf: die Seitenansicht quert das Band zwischen #story und #monster
+     einmal von rechts nach links (Blickrichtung) und bleibt links stehen.
+   2 Streak: sieben Tagesmarken in der Karte unter der Spielregeln-Matrix,
+     danach der Daumen hoch.
+   Der Markup-Zustand ist der Endzustand (Lupi steht, sieben Haken, Daumen
+   und Zeile sichtbar). Bewegt wird nur in web/bewegung.js Block 12, nur mit
+   GSAP und nur ohne prefers-reduced-motion. Lupi wird nie gespiegelt,
+   beschnitten oder umgefaerbt, nur gleichmaessig skaliert (Breite, Hoehe auto).
+   ============================================================ */
+
+/* ---- 1 Lauf ---- */
+.lauf{background:var(--creme);overflow:hidden;overflow:clip}
+.lauf__spur{position:relative;height:230px}
+.lauf__lupi{position:absolute;left:0;bottom:-11px;width:250px;height:auto;pointer-events:none}
+
+/* ---- 2 Streak ---- */
+.streak{max-width:56rem;margin:56px auto 0;display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:24px;align-items:end;background:var(--papier);border:1px solid var(--linie);border-radius:var(--r-lg);padding:36px 36px 0 40px;position:relative}
+.streak__txt{padding-bottom:36px}
+.streak__txt .h3{margin-top:12px}
+.streak__txt .gross{margin-top:12px;font-size:1.05rem;max-width:30rem}
+.streak__buehne{align-self:end;position:relative;height:250px}
+.streak__lupi{position:absolute;right:-6px;bottom:-11px;width:250px;height:auto;display:block;pointer-events:none}
+
+/* die sieben Marken; --tag und --gap setzen die Groesse je Breite */
+.streak__tage{list-style:none;margin:26px 0 0;padding:0;display:flex;gap:var(--gap,12px)}
+.streak__tage li{display:flex;flex-direction:column;align-items:center;gap:6px}
+.streak__tage b{font-family:var(--mono);font-size:.68rem;font-weight:600;letter-spacing:.08em;color:var(--text-leise)}
+.streak__tag{width:var(--tag,52px);height:var(--tag,52px);border-radius:50%;border:1.5px solid var(--linie-stark);background:var(--papier);display:flex;align-items:center;justify-content:center;transition:background-color .2s ease,border-color .2s ease}
+.streak__tag svg{width:55%;height:55%;fill:none;stroke:var(--cta-fg);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;transition:opacity .2s ease}
+.streak__tag--da{background:var(--cta-bg);border-color:var(--cta-bg)}
+/* eine leere Marke zeigt keinen Haken */
+.streak__tag:not(.streak__tag--da) svg{opacity:0}
+.streak__fertig{margin:22px 0 0;font-family:var(--sans);font-weight:700;font-size:1.02rem;color:var(--blau)}
+
+@media(max-width:900px){
+  .streak{grid-template-columns:1fr;padding:26px 22px 0;gap:0}
+  .streak__tage{--tag:44px;--gap:10px}
+  .streak__buehne{height:190px;justify-self:center;width:190px}
+  .streak__lupi{width:190px;right:0;bottom:-8px}
+}
+@media(max-width:700px){
+  .lauf__spur{height:170px}
+  .lauf__lupi{width:170px;bottom:-7px}
+}
+@media(max-width:520px){
+  .streak__tage{--tag:34px;--gap:6px}
+}
+
+/* Ohne Bewegung: nichts blendet um, jede Buehne zeigt ihren Endzustand */
+@media(prefers-reduced-motion:reduce){
+  .streak__tag,.streak__tag svg{transition:none}
+}

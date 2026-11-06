@@ -5,6 +5,7 @@
    3 Kasten             7 Monster füttern (Stein in den Mund, wird dicker)
    4 Szene (Maus)       8 Stationen-Rechner   9 Baukasten-Schleife
    5 Tool-Ablauf       10 Paket-Szenen       11 Story-Video, Zitate
+  12 Lupi tritt auf (Lauf durchs Band, Streak mit Daumen hoch)
    ============================================================ */
 (function () {
   'use strict';
@@ -572,6 +573,33 @@
   /* ---------- Matrix ---------- */
   if (hatGsap && sanft && $('#matrix')) {
     gsap.from('#matrix .matrix__punkt--du, #matrix .matrix__punkt--wir', { scale: 0, duration: .5, stagger: .07, ease: 'back.out(2)', scrollTrigger: { trigger: '#matrix', start: 'top 80%', once: true } });
+  }
+
+  /* ---------- 12 Lupi tritt auf ----------
+     Zwei Auftritte, jeder einmal pro Seitenaufruf (once). Das Markup zeigt schon den Endzustand;
+     dieser Block stellt den Anfang erst her, wenn GSAP da ist und keine reduzierte Bewegung
+     verlangt wird. Fehlt GSAP oder ist Bewegung aus, bleibt alles, wie es im HTML steht.
+     a) Lauf: die Seitenansicht kommt von rechts ausserhalb des Bildes und laeuft nach links zu
+        ihrem Ruheplatz, also nur in ihrer Blickrichtung (nie gespiegelt, nie zurueck).
+     b) Streak: sieben Marken fuellen sich im Abstand von 0,28 s, erst danach springt der Daumen
+        hoch ein. Die Marken bleiben gefuellt, auch wenn man nach oben zurueckscrollt. */
+  var laufLupi = $('#laufLupi'), laufBand = $('#lauf');
+  if (hatGsap && sanft && laufLupi && laufBand) {
+    /* Abstand vom Ruheplatz bis zum rechten Fensterrand (offsetLeft ignoriert die Transformation) */
+    var laufWeg = function () { return window.innerWidth - (laufLupi.offsetParent.getBoundingClientRect().left + laufLupi.offsetLeft); };
+    gsap.fromTo(laufLupi, { x: laufWeg }, { x: 0, duration: 3.2, ease: 'power2.out',
+      scrollTrigger: { trigger: laufBand, start: 'top 80%', once: true, invalidateOnRefresh: true } });
+  }
+  var streak = $('#streak');
+  if (hatGsap && sanft && streak) {
+    var STREAK_TAKT = .28, marken = $$('.streak__tag', streak), daumen = $('#streakLupi'), fertig = $('#streakFertig');
+    marken.forEach(function (m) { m.classList.remove('streak__tag--da'); });
+    gsap.set(daumen, { opacity: 0, scale: .6, transformOrigin: '50% 100%' });
+    gsap.set(fertig, { opacity: 0 });
+    var streakTl = gsap.timeline({ scrollTrigger: { trigger: streak, start: 'top 70%', once: true } });
+    marken.forEach(function (m, i) { streakTl.call(function () { m.classList.add('streak__tag--da'); }, null, i * STREAK_TAKT); });
+    streakTl.to(daumen, { opacity: 1, scale: 1, duration: .45, ease: 'back.out(1.7)' }, marken.length * STREAK_TAKT)
+      .to(fertig, { opacity: 1, duration: .4, ease: 'power1.out' }, marken.length * STREAK_TAKT);
   }
 
   /* ---------- Reveal ---------- */
