@@ -1,0 +1,8 @@
+/* Demo-Screen «Sprachnotizen» (Startseite, Tool-Demo). Gleiche Bausteine wie «Inspiration»
+   (.tool__kopf, .tool__spalten, .tool__zeile, .tool__tag); statt Reel-Vorschaubild ein
+   Wellenform-Kachel im selben 36x60-Format. Nur was dort fehlt steht hier. */
+.tool__notiz .tool__meta{display:block;white-space:normal}
+.tool__wave{width:36px;height:60px;border-radius:6px;background:var(--tuerkis-zart);display:flex;align-items:center;justify-content:center;gap:3px;overflow:visible!important}
+.tool__wave i{width:3px;border-radius:2px;background:var(--tuerkis-tief);height:14px}
+.tool__wave i:nth-child(2){height:30px}.tool__wave i:nth-child(3){height:20px}.tool__wave i:nth-child(4){height:36px}
+.tool__btn--rec{background:#E5484D}
