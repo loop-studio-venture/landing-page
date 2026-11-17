@@ -34,6 +34,7 @@
 <link rel="stylesheet" href="web/fassung7.css">
 <link rel="stylesheet" href="web/fassung8.css">
 <link rel="stylesheet" href="web/fassung9.css">
+<link rel="stylesheet" href="web/sprachnotizen.css">
 <link rel="stylesheet" href="web/fassung10.css">
 <!-- Calendly wird erst beim Klick geladen (web/bewegung.js). Das Stylesheet
      haengt sich dann vor fassung11.css ein, damit die Overrides dort greifen. -->
@@ -120,7 +121,7 @@
       <aside class="tool__seite">
         <img src="bilder/logo/loop-studio-dunkel.png" alt="" width="120" height="73">
         <div class="tool__nav tool__nav--an" data-s="inspiration"><i>💡</i>Inspiration</div>
-        <div class="tool__nav"><i>🎙️</i>Sprachnotizen</div>
+        <div class="tool__nav" data-s="sprachnotizen"><i>🎙️</i>Sprachnotizen</div>
         <div class="tool__nav" data-s="produktion"><i>🎬</i>Produktion</div>
         <div class="tool__nav" data-s="planung"><i>📅</i>Planung</div>
         <div class="tool__seite-unten">
@@ -164,6 +165,17 @@
                 <div class="tool__shot"><i></i>[Medium – vor dem Setup, direkter Blick]</div>
               </div>
             </div>
+          </div>
+        </div>
+        <!-- Screen: Sprachnotizen -->
+        <div class="tool__screen" data-s="sprachnotizen">
+          <div class="tool__kopf"><p class="tool__titel">Sprachnotizen</p><button type="button" class="tool__btn tool__btn--rec" tabindex="-1">● Aufnehmen</button></div>
+          <div class="tool__spalten"><span>Name</span><span>Länge</span><span>Gespeichert</span></div>
+          <div class="tool__liste tool__liste--notiz">
+            <div class="tool__zeile tool__notiz"><span class="tool__wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><div><b>Kunden zeigen, was schiefging</b><span class="tool__meta">„Letzte Woche rief ein Kunde an, weil sein Dach nach dem Sturm …“</span><span class="tool__tag">Transkribiert</span></div><span>0:48</span><span>heute</span></div>
+            <div class="tool__zeile tool__notiz"><span class="tool__wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><div><b>Was kostet ein Dachfenster?</b><span class="tool__meta">„Die Frage höre ich jede Woche, das wird ein ganzes Reel …“</span></div><span>1:12</span><span>16.11.</span></div>
+            <div class="tool__zeile tool__notiz"><span class="tool__wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><div><b>Morgens in der Werkstatt</b><span class="tool__meta">„Um sieben fangen wir an, erst Kaffee, dann der Tagesplan …“</span><span class="tool__tag">In Produktion</span></div><span>0:31</span><span>14.11.</span></div>
+            <div class="tool__zeile tool__notiz"><span class="tool__wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><div><b>Preis ehrlich erklären</b><span class="tool__meta">„Viele Kunden denken, wir sind teurer, als wir sind …“</span></div><span>0:56</span><span>12.11.</span></div>
           </div>
         </div>
         <!-- Screen 3: Planung -->
